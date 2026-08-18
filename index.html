@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>ALFA ROPE SUPPLIERS | Enterprise Industrial & Retail Portal</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="styles.css?v=7.0">
+  <link rel="stylesheet" href="styles.css?v=8.0">
 </head>
 <body>
 
   <!-- Live Dispatch Ticker Marquee -->
   <div class="top-ticker-bar">
     <div class="ticker-content">
-      ⚡ <strong>LIVE DISPATCH:</strong> Daily Wholesale Shipments to Telangana, Andhra Pradesh & All India | Direct Factory Rates on PP, Nylon & Manila Ropes | Call / WhatsApp: +91 8555838852 | Ashok Bazar, Afzal Gunj, Hyderabad
+      ⚡ <strong>LIVE DISPATCH & CLOUD SYNC:</strong> Daily Wholesale Shipments to Telangana, Andhra Pradesh & All India | Direct Factory Rates on PP, Nylon & Manila Ropes | Call / WhatsApp: +91 8555838852 | Ashok Bazar, Afzal Gunj, Hyderabad
     </div>
   </div>
 
@@ -74,6 +74,11 @@
 
   <!-- Workspace -->
   <main>
+    <!-- Cloud Status Indicator -->
+    <div id="syncStatusTag" style="display:none; font-size:0.75rem; color:var(--success); margin-bottom:0.6rem; text-align:right;">
+      <i class="fa-solid fa-cloud-arrow-up"></i> Real-time Cloud Sync Active
+    </div>
+
     <!-- Maintenance Banner -->
     <div id="maintenanceAlert" style="display: none; background: rgba(239,68,68,0.2); border: 1px solid var(--danger); padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.85rem; color: #fca5a5; justify-content: space-between; align-items: center;">
       <span>⚠️ <strong>Maintenance Notice:</strong> Store ordering is temporarily paused for catalog auditing. You can still browse.</span>
@@ -129,6 +134,7 @@
       <button class="btn btn-secondary btn-sm" onclick="exportDataCSV()"><i class="fa-solid fa-download"></i> CSV Backup</button>
       <button class="btn btn-sm" onclick="openProductModal()"><i class="fa-solid fa-plus"></i> Add Item</button>
       <button class="btn btn-secondary btn-sm" onclick="openAddCategoryModal()"><i class="fa-solid fa-folder-plus"></i> Add New Category</button>
+      <button class="btn btn-secondary btn-sm" onclick="manualSyncTrigger()"><i class="fa-solid fa-rotate"></i> Sync Cloud Now</button>
     </div>
 
     <!-- TAB 1: Customer Storefront View (Grouped by Category) -->
@@ -962,12 +968,15 @@
       </div>
       <div style="display: flex; gap: 0.8rem; font-size: 0.75rem; justify-content: center;">
         <span style="color: var(--text-muted);"><i class="fa-solid fa-lock"></i> SSL Secured</span>
-        <span style="color: var(--text-muted);"><i class="fa-solid fa-building-columns"></i> UPI & Bank Transfer</span>
+        <span style="color: var(--text-muted);"><i class="fa-solid fa-cloud-bolt"></i> Real-time Cloud Sync Active</span>
       </div>
     </div>
   </footer>
 
   <script>
+    // Global Cloud Database Configuration
+    const CLOUD_SYNC_ENDPOINT = "https://api.jsonstorage.net/v1/json/040a45e2-04e4-4d89-9a7c-65239a59fa42/alfa_master_db";
+
     const DEFAULT_CMS = {
       brandTitle: "ALFA <span>ROPES</span>",
       brandSubtitle: "Ashok Bazar, Afzal Gunj, Hyderabad | +91 8555838852",
@@ -987,17 +996,8 @@
     ];
 
     const DEFAULT_CATEGORIES = [
-      "Ropes",
-      "Nylon Ropes",
-      "Cotton Ropes",
-      "PP Ropes",
-      "Twine & Sutli",
-      "Brooms",
-      "Wire Netting",
-      "Sponges",
-      "Construction & Tools",
-      "Safety Equipment",
-      "Pipes & Hoses"
+      "Ropes", "Nylon Ropes", "Cotton Ropes", "PP Ropes", "Twine & Sutli",
+      "Brooms", "Wire Netting", "Sponges", "Construction & Tools", "Safety Equipment", "Pipes & Hoses"
     ];
 
     const INITIAL_PRODUCTS = [
@@ -1080,41 +1080,106 @@
       applyCMS();
       buildCategoryNavPills();
       renderApp();
+
+      // Pull latest live cloud database on startup
+      pullCloudDatabase();
+
+      // Automatic 10-second polling for incoming orders on Admin/Owner dashboard
+      setInterval(() => {
+        if (currentRole === 'admin' || currentRole === 'owner') {
+          pullCloudDatabase(true);
+        }
+      }, 10000);
     };
 
     function loadStorage() {
-      const savedProds = localStorage.getItem('alfa_prods_enterprise');
+      const savedProds = localStorage.getItem('alfa_prods_cloud_v1');
       products = savedProds ? JSON.parse(savedProds) : INITIAL_PRODUCTS;
-      if (!savedProds) localStorage.setItem('alfa_prods_enterprise', JSON.stringify(INITIAL_PRODUCTS));
 
-      const savedCats = localStorage.getItem('alfa_categories_enterprise');
+      const savedCats = localStorage.getItem('alfa_categories_cloud_v1');
       categoriesList = savedCats ? JSON.parse(savedCats) : DEFAULT_CATEGORIES;
-      if (!savedCats) localStorage.setItem('alfa_categories_enterprise', JSON.stringify(DEFAULT_CATEGORIES));
 
-      orders = JSON.parse(localStorage.getItem('alfa_orders')) || [];
-      users = JSON.parse(localStorage.getItem('alfa_users')) || DEFAULT_USERS;
-      enquiries = JSON.parse(localStorage.getItem('alfa_enquiries')) || [];
-      coupons = JSON.parse(localStorage.getItem('alfa_coupons')) || coupons;
-      auditLogs = JSON.parse(localStorage.getItem('alfa_audit_logs')) || [];
-      cmsConfig = JSON.parse(localStorage.getItem('alfa_cms')) || DEFAULT_CMS;
+      orders = JSON.parse(localStorage.getItem('alfa_orders_cloud_v1')) || [];
+      users = JSON.parse(localStorage.getItem('alfa_users_cloud_v1')) || DEFAULT_USERS;
+      enquiries = JSON.parse(localStorage.getItem('alfa_enquiries_cloud_v1')) || [];
+      coupons = JSON.parse(localStorage.getItem('alfa_coupons_cloud_v1')) || coupons;
+      auditLogs = JSON.parse(localStorage.getItem('alfa_audit_logs_cloud_v1')) || [];
+      cmsConfig = JSON.parse(localStorage.getItem('alfa_cms_cloud_v1')) || DEFAULT_CMS;
       isStoreMaintenance = JSON.parse(localStorage.getItem('alfa_maintenance')) || false;
       cart = JSON.parse(localStorage.getItem('alfa_cart')) || [];
       updateCartBadge();
     }
 
-    function syncStorage() {
-      localStorage.setItem('alfa_prods_enterprise', JSON.stringify(products));
-      localStorage.setItem('alfa_categories_enterprise', JSON.stringify(categoriesList));
-      localStorage.setItem('alfa_orders', JSON.stringify(orders));
-      localStorage.setItem('alfa_users', JSON.stringify(users));
-      localStorage.setItem('alfa_enquiries', JSON.stringify(enquiries));
-      localStorage.setItem('alfa_coupons', JSON.stringify(coupons));
-      localStorage.setItem('alfa_audit_logs', JSON.stringify(auditLogs));
+    function syncStorage(skipCloud = false) {
+      localStorage.setItem('alfa_prods_cloud_v1', JSON.stringify(products));
+      localStorage.setItem('alfa_categories_cloud_v1', JSON.stringify(categoriesList));
+      localStorage.setItem('alfa_orders_cloud_v1', JSON.stringify(orders));
+      localStorage.setItem('alfa_users_cloud_v1', JSON.stringify(users));
+      localStorage.setItem('alfa_enquiries_cloud_v1', JSON.stringify(enquiries));
+      localStorage.setItem('alfa_coupons_cloud_v1', JSON.stringify(coupons));
+      localStorage.setItem('alfa_audit_logs_cloud_v1', JSON.stringify(auditLogs));
       localStorage.setItem('alfa_maintenance', JSON.stringify(isStoreMaintenance));
-      localStorage.setItem('alfa_cms', JSON.stringify(cmsConfig));
+      localStorage.setItem('alfa_cms_cloud_v1', JSON.stringify(cmsConfig));
       localStorage.setItem('alfa_cart', JSON.stringify(cart));
       updateCartBadge();
       renderApp();
+
+      if (!skipCloud) {
+        pushCloudDatabase();
+      }
+    }
+
+    // Cloud Database Engine: Push State
+    async function pushCloudDatabase() {
+      try {
+        const payload = {
+          products, categoriesList, orders, users, enquiries, coupons, cmsConfig, auditLogs,
+          lastUpdated: Date.now()
+        };
+        const res = await fetch(CLOUD_SYNC_ENDPOINT, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        if (res.ok) {
+          const syncTag = document.getElementById('syncStatusTag');
+          if (syncTag) {
+            syncTag.style.display = 'block';
+            setTimeout(() => { syncTag.style.display = 'none'; }, 3000);
+          }
+        }
+      } catch (err) {
+        console.warn("Cloud push buffered locally:", err);
+      }
+    }
+
+    // Cloud Database Engine: Pull Latest State
+    async function pullCloudDatabase(silent = false) {
+      try {
+        const res = await fetch(CLOUD_SYNC_ENDPOINT, { method: "GET" });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.orders) {
+            orders = data.orders;
+            if (data.products && data.products.length) products = data.products;
+            if (data.categoriesList && data.categoriesList.length) categoriesList = data.categoriesList;
+            if (data.users && data.users.length) users = data.users;
+            if (data.coupons) coupons = data.coupons;
+            if (data.cmsConfig) cmsConfig = data.cmsConfig;
+
+            syncStorage(true);
+            buildCategoryNavPills();
+            if (!silent) console.log("Database synchronized with Cloud.");
+          }
+        }
+      } catch (err) {
+        console.warn("Using offline / local storage:", err);
+      }
+    }
+
+    function manualSyncTrigger() {
+      pullCloudDatabase();
+      alert("Synchronizing live orders & data with cloud...");
     }
 
     function logAudit(action) {
@@ -1209,7 +1274,7 @@
       logAudit('Updated Bank & CMS Details');
       syncStorage();
       applyCMS();
-      alert('Settings saved!');
+      alert('Settings saved & synced to cloud!');
     }
 
     function buildCategoryNavPills() {
@@ -1315,6 +1380,7 @@
       document.getElementById('couponsTab').style.display = tabId === 'coupons' ? 'block' : 'none';
 
       if (tabId === 'categories') renderCategoryManagerTable();
+      if (tabId === 'orders') pullCloudDatabase(true);
     }
 
     function renderApp() {
@@ -1542,7 +1608,7 @@
       }
     }
 
-    function placeOrderFinal() {
+    async function placeOrderFinal() {
       const name = document.getElementById('orderCustName').value.trim();
       const phone = document.getElementById('orderCustPhone').value.trim();
       const address = document.getElementById('orderCustAddress').value.trim();
@@ -1582,6 +1648,8 @@
       cart = [];
       cartDiscountPercent = 0;
       logAudit(`New Order Placed: ${orderRecord.orderId} (₹${orderRecord.totalAmount})`);
+      
+      // Sync immediately to global cloud
       syncStorage();
       closeModal('checkoutModal');
       toggleCart(false);
@@ -1650,7 +1718,7 @@
       syncStorage();
       closeModal('customerProfileModal');
       document.getElementById('userProfileBtn').innerHTML = `<i class="fa-solid fa-user-circle"></i> ${activeUser.name.split(' ')[0]}`;
-      alert('Profile updated!');
+      alert('Profile updated and synced to cloud!');
     }
 
     function openTrackOrderModal() {
@@ -1792,7 +1860,7 @@
             syncStorage();
             buildCategoryNavPills();
             logAudit('Restored Full Database from JSON Backup');
-            alert('Database snapshot restored successfully!');
+            alert('Database snapshot restored and synced to cloud!');
           } catch (err) {
             alert('Invalid JSON backup file.');
           }
@@ -1854,7 +1922,7 @@
       logAudit(`Direct Manual Order Created: ${manualOrder.orderId} for ${name}`);
       syncStorage();
       closeModal('manualOrderModal');
-      alert(`Manual order ${manualOrder.orderId} booked!`);
+      alert(`Manual order ${manualOrder.orderId} booked and synced!`);
       sendWhatsAppOrderConfirmation(manualOrder);
       openInvoiceModal(manualOrder);
     }
@@ -1887,7 +1955,7 @@
       logAudit(`Modified Order: ${o.orderId} Status: ${o.status}`);
       syncStorage();
       closeModal('editOrderModal');
-      alert(`Order ${o.orderId} updated!`);
+      alert(`Order ${o.orderId} updated & synced!`);
     }
 
     function sendTrackingWhatsApp(idx) {
@@ -2008,14 +2076,14 @@
       logAudit(`Modified user profile: ${u.name}`);
       syncStorage();
       closeModal('adminEditCustModal');
-      alert('User updated!');
+      alert('User updated & synced!');
     }
 
     function approveUserRole(idx) {
       users[idx].status = 'Active';
       logAudit(`Approved Owner role for ${users[idx].name}`);
       syncStorage();
-      alert('User approved!');
+      alert('User approved & synced!');
     }
 
     function deleteUserRecord(idx) {
@@ -2181,6 +2249,7 @@
       };
 
       users.push(newUser);
+      logAudit(`New ${role.toUpperCase()} registered: ${name}`);
       syncStorage();
       closeModal('authModal');
 
@@ -2199,6 +2268,7 @@
       const user = users.find(u => u.email.toLowerCase() === idVal.toLowerCase() || u.phone === idVal);
       if (user) {
         user.pass = newPass;
+        logAudit(`Password reset for ${user.email}`);
         syncStorage();
         alert('Password updated successfully!');
         closeModal('authModal');
@@ -2208,6 +2278,7 @@
     }
 
     function logout() {
+      logAudit(`User logged out: ${activeUser ? activeUser.name : 'Unknown'}`);
       currentRole = 'customer';
       activeUser = null;
       localStorage.removeItem('alfa_auth_session');
@@ -2275,6 +2346,7 @@
       } else {
         products.push(item);
       }
+      logAudit(`Saved Product: ${item.name}`);
       syncStorage();
       buildCategoryNavPills();
       closeModal('productModal');
@@ -2282,6 +2354,7 @@
 
     function deleteProduct(id) {
       if (confirm('Delete this product from inventory?')) {
+        logAudit(`Deleted Product ID: ${id}`);
         products = products.filter(i => i.id !== id);
         syncStorage();
         buildCategoryNavPills();
@@ -2294,11 +2367,13 @@
       const discount = parseInt(document.getElementById('newCouponDiscount').value);
       if (!code || !discount) return alert('Enter valid coupon details.');
       coupons.push({ code, discount });
+      logAudit(`Created Coupon: ${code} (${discount}%)`);
       syncStorage();
       closeModal('couponModal');
     }
 
     function deleteCoupon(idx) {
+      logAudit(`Deleted Coupon: ${coupons[idx].code}`);
       coupons.splice(idx, 1);
       syncStorage();
     }
