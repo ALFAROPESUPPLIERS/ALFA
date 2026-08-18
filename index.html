@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>ALFA ROPE SUPPLIERS | Enterprise Industrial & Retail Portal</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="styles.css?v=5.0">
+  <link rel="stylesheet" href="styles.css?v=6.0">
 </head>
 <body>
 
@@ -41,6 +41,11 @@
     </div>
   </header>
 
+  <!-- Categories Quick Navigation Header -->
+  <div class="category-nav-wrapper" id="catNavWrapper">
+    <div class="category-nav-container" id="categoryNavContainer"></div>
+  </div>
+
   <!-- Hero Greeting Banner -->
   <section class="hero-banner" id="heroBanner">
     <div class="hero-content">
@@ -56,7 +61,7 @@
 
   <!-- Workspace -->
   <main>
-    <!-- Maintenance Banner (Toggleable by Admin) -->
+    <!-- Maintenance Banner -->
     <div id="maintenanceAlert" style="display: none; background: rgba(239,68,68,0.2); border: 1px solid var(--danger); padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.85rem; color: #fca5a5; justify-content: space-between; align-items: center;">
       <span>⚠️ <strong>Maintenance Notice:</strong> Store ordering is temporarily paused for catalog auditing. You can still browse.</span>
     </div>
@@ -97,6 +102,7 @@
     <div id="managementTabs" class="tab-bar" style="display: none;">
       <button class="tab-btn active" onclick="switchTab('orders')"><i class="fa-solid fa-receipt"></i> Orders & Tracking</button>
       <button class="tab-btn" onclick="switchTab('inventory')"><i class="fa-solid fa-warehouse"></i> Inventory Manager</button>
+      <button class="tab-btn" onclick="switchTab('categories')"><i class="fa-solid fa-layer-group"></i> Category Manager</button>
       <button class="tab-btn" onclick="switchTab('advanced')"><i class="fa-solid fa-sliders"></i> Advanced Suite</button>
       <button class="tab-btn" onclick="switchTab('users')"><i class="fa-solid fa-user-gear"></i> Customer Accounts</button>
       <button class="tab-btn" onclick="switchTab('enquiries')"><i class="fa-solid fa-envelope-open-text"></i> Enquiries</button>
@@ -109,14 +115,11 @@
       <button class="btn btn-sm btn-success" onclick="openManualOrderModal()"><i class="fa-solid fa-plus-circle"></i> Direct Manual Order</button>
       <button class="btn btn-secondary btn-sm" onclick="exportDataCSV()"><i class="fa-solid fa-download"></i> CSV Backup</button>
       <button class="btn btn-sm" onclick="openProductModal()"><i class="fa-solid fa-plus"></i> Add Item</button>
-      <button class="btn btn-secondary btn-sm" onclick="openBulkPriceModal()"><i class="fa-solid fa-percent"></i> Bulk Price Modifier</button>
+      <button class="btn btn-secondary btn-sm" onclick="openAddCategoryModal()"><i class="fa-solid fa-folder-plus"></i> Add New Category</button>
     </div>
 
-    <!-- Customer Category Quick Filter Pills -->
-    <div id="categoryFilterBar" class="filter-bar"></div>
-
-    <!-- TAB 1: Customer Storefront Compact Grid -->
-    <div id="customerStoreView" class="product-grid"></div>
+    <!-- TAB 1: Customer Storefront View (Grouped by Category) -->
+    <div id="customerStoreView"></div>
 
     <!-- TAB 2: Orders & Tracking View (Admin / Owner) -->
     <div id="ordersTab" class="table-responsive" style="display: none;">
@@ -153,7 +156,27 @@
       </table>
     </div>
 
-    <!-- TAB 4: 14-Feature Advanced Suite Panel (Admin / Owner Exclusive) -->
+    <!-- TAB 4: Category Manager (Admin / Owner) -->
+    <div id="categoriesTab" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3>Manage Product Categories</h3>
+        <button class="btn btn-sm" onclick="openAddCategoryModal()">+ Add New Category</button>
+      </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Category Name</th>
+              <th>Total Products Assigned</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="categoriesTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 5: 14-Feature Advanced Suite Panel -->
     <div id="advancedTab" style="display: none;">
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
         
@@ -209,7 +232,7 @@
       </div>
     </div>
 
-    <!-- TAB 5: Customer Accounts & Role Control Master -->
+    <!-- TAB 6: Customer Accounts & Role Control Master -->
     <div id="usersTab" class="table-responsive" style="display: none;">
       <table>
         <thead>
@@ -226,7 +249,7 @@
       </table>
     </div>
 
-    <!-- TAB 6: Enquiries Hub -->
+    <!-- TAB 7: Enquiries Hub -->
     <div id="enquiriesTab" class="table-responsive" style="display: none;">
       <table>
         <thead>
@@ -242,7 +265,7 @@
       </table>
     </div>
 
-    <!-- TAB 7: Admin Bank Details & CMS Editor -->
+    <!-- TAB 8: Admin Bank Details & CMS Editor -->
     <div id="cmsTab" style="display: none;">
       <div class="modal-box" style="max-width: 800px; margin: 0 auto;">
         <h3 style="margin-bottom: 1.2rem; color: var(--primary); font-size: 1.1rem;"><i class="fa-solid fa-building-columns"></i> Official Bank Details & CMS Editor</h3>
@@ -297,7 +320,7 @@
       </div>
     </div>
 
-    <!-- TAB 8: Coupons Management -->
+    <!-- TAB 9: Coupons Management -->
     <div id="couponsTab" style="display: none;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
         <h3 style="font-size: 1rem;">Active Discount Vouchers</h3>
@@ -319,7 +342,7 @@
     </div>
   </main>
 
-  <!-- Floating Scroll Controllers (Top & Bottom Jump) -->
+  <!-- Floating Scroll Controllers -->
   <div class="floating-scroll-controls">
     <button class="scroll-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Scroll to Top"><i class="fa-solid fa-arrow-up"></i></button>
     <button class="scroll-btn" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})" title="Scroll to Bottom"><i class="fa-solid fa-arrow-down"></i></button>
@@ -423,7 +446,7 @@
     </div>
   </div>
 
-  <!-- CUSTOMER PROFILE & ORDER HISTORY MODAL -->
+  <!-- CUSTOMER PROFILE MODAL -->
   <div id="customerProfileModal" class="modal">
     <div class="modal-box" style="max-width: 680px;">
       <h3 style="margin-bottom: 1rem; font-size: 1.1rem;"><i class="fa-solid fa-id-card"></i> Customer Profile & Orders</h3>
@@ -624,7 +647,22 @@
     </div>
   </div>
 
-  <!-- BULK PRICE MODIFIER MODAL (Tool 2) -->
+  <!-- ADD / MANAGE CATEGORY MODAL -->
+  <div id="categoryModal" class="modal">
+    <div class="modal-box">
+      <h3 style="margin-bottom: 1rem; color: var(--primary); font-size: 1.1rem;"><i class="fa-solid fa-folder-plus"></i> Add New Category</h3>
+      <div class="form-group">
+        <label>Category Name</label>
+        <input type="text" id="newCatNameInput" placeholder="e.g. Steel Wires, Tarpaulins, Packaging Tape" required>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('categoryModal')">Cancel</button>
+        <button type="button" class="btn btn-sm" onclick="saveNewCategory()">Add Category</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BULK PRICE MODIFIER MODAL -->
   <div id="bulkPriceModal" class="modal">
     <div class="modal-box">
       <h3 style="margin-bottom: 1rem; color: var(--primary); font-size: 1.1rem;"><i class="fa-solid fa-percent"></i> Bulk Category Price Modifier</h3>
@@ -831,7 +869,7 @@
     </div>
   </div>
 
-  <!-- PRODUCT ADD/EDIT MODAL -->
+  <!-- PRODUCT ADD/EDIT MODAL (With Dynamic Category Selector) -->
   <div id="productModal" class="modal">
     <div class="modal-box">
       <h3 id="productModalHeading" style="margin-bottom: 1rem; font-size: 1.1rem;">Add Product Item</h3>
@@ -845,8 +883,8 @@
 
         <div class="form-row">
           <div class="form-group">
-            <label>Category</label>
-            <input type="text" id="prodCat" required>
+            <label>Select Category</label>
+            <select id="prodCatSelect" required></select>
           </div>
           <div class="form-group">
             <label>Diameter / Specs / Packing</label>
@@ -941,6 +979,20 @@
       { name: "Shop Owner", email: "owner", phone: "8555838852", pass: "9290", role: "owner", status: "Active", address: "Afzal Gunj, Hyderabad" }
     ];
 
+    const DEFAULT_CATEGORIES = [
+      "Ropes",
+      "Nylon Ropes",
+      "Cotton Ropes",
+      "PP Ropes",
+      "Twine & Sutli",
+      "Brooms",
+      "Wire Netting",
+      "Sponges",
+      "Construction & Tools",
+      "Safety Equipment",
+      "Pipes & Hoses"
+    ];
+
     const INITIAL_PRODUCTS = [
       { id: "ALFA-GOWA-30", name: "Gowa Rope (30 Pcs)", category: "Ropes", diameter: "30 Pcs Bundle", mrp: 110, price: 85, stock: 250, unit: "Bundle", description: "High-strength commercial Gowa rope bundle (30 pieces packing)." },
       { id: "ALFA-GOWA-40", name: "Gowa Rope (40 Pcs)", category: "Ropes", diameter: "40 Pcs Bundle", mrp: 140, price: 110, stock: 200, unit: "Bundle", description: "Industrial strength Gowa tying rope (40 pieces packing)." },
@@ -1002,6 +1054,7 @@
     let currentRole = 'customer';
     let activeUser = null;
     let products = [];
+    let categoriesList = [];
     let cart = [];
     let orders = [];
     let users = [];
@@ -1018,14 +1071,18 @@
       loadStorage();
       validateClientSession12Hours();
       applyCMS();
-      buildCategoryFilterPills();
+      buildCategoryNavPills();
       renderApp();
     };
 
     function loadStorage() {
-      const savedProds = localStorage.getItem('alfa_prods_compact');
+      const savedProds = localStorage.getItem('alfa_prods_cat_v1');
       products = savedProds ? JSON.parse(savedProds) : INITIAL_PRODUCTS;
-      if (!savedProds) localStorage.setItem('alfa_prods_compact', JSON.stringify(INITIAL_PRODUCTS));
+      if (!savedProds) localStorage.setItem('alfa_prods_cat_v1', JSON.stringify(INITIAL_PRODUCTS));
+
+      const savedCats = localStorage.getItem('alfa_categories_list');
+      categoriesList = savedCats ? JSON.parse(savedCats) : DEFAULT_CATEGORIES;
+      if (!savedCats) localStorage.setItem('alfa_categories_list', JSON.stringify(DEFAULT_CATEGORIES));
 
       orders = JSON.parse(localStorage.getItem('alfa_orders')) || [];
       users = JSON.parse(localStorage.getItem('alfa_users')) || DEFAULT_USERS;
@@ -1039,7 +1096,8 @@
     }
 
     function syncStorage() {
-      localStorage.setItem('alfa_prods_compact', JSON.stringify(products));
+      localStorage.setItem('alfa_prods_cat_v1', JSON.stringify(products));
+      localStorage.setItem('alfa_categories_list', JSON.stringify(categoriesList));
       localStorage.setItem('alfa_orders', JSON.stringify(orders));
       localStorage.setItem('alfa_users', JSON.stringify(users));
       localStorage.setItem('alfa_enquiries', JSON.stringify(enquiries));
@@ -1147,25 +1205,96 @@
       alert('Settings saved!');
     }
 
-    function buildCategoryFilterPills() {
-      const categories = ['all', ...new Set(products.map(p => p.category))];
-      const filterBox = document.getElementById('categoryFilterBar');
-      filterBox.innerHTML = categories.map(c => `
-        <button class="filter-chip ${selectedCategory === c ? 'active' : ''}" onclick="selectCategory('${c}')">
-          ${c === 'all' ? 'All Inventory' : c}
+    /* Category Filter Navigation */
+    function buildCategoryNavPills() {
+      const container = document.getElementById('categoryNavContainer');
+      const totalCount = products.length;
+      
+      let html = `
+        <button class="cat-pill ${selectedCategory === 'all' ? 'active' : ''}" onclick="selectCategory('all')">
+          <i class="fa-solid fa-border-all"></i> All Products <span class="cat-count-badge">${totalCount}</span>
         </button>
-      `).join('');
+      `;
+
+      categoriesList.forEach(cat => {
+        const count = products.filter(p => p.category === cat).length;
+        html += `
+          <button class="cat-pill ${selectedCategory === cat ? 'active' : ''}" onclick="selectCategory('${cat}')">
+            ${cat} <span class="cat-count-badge">${count}</span>
+          </button>
+        `;
+      });
+
+      container.innerHTML = html;
+
+      // Update dropdowns
+      const prodCatSelect = document.getElementById('prodCatSelect');
+      if (prodCatSelect) {
+        prodCatSelect.innerHTML = categoriesList.map(c => `<option value="${c}">${c}</option>`).join('');
+      }
 
       const bulkCatSelect = document.getElementById('bulkCategorySelect');
       if (bulkCatSelect) {
-        bulkCatSelect.innerHTML = categories.filter(c => c !== 'all').map(c => `<option value="${c}">${c}</option>`).join('');
+        bulkCatSelect.innerHTML = categoriesList.map(c => `<option value="${c}">${c}</option>`).join('');
       }
     }
 
     function selectCategory(cat) {
       selectedCategory = cat;
-      buildCategoryFilterPills();
+      buildCategoryNavPills();
       renderApp();
+    }
+
+    /* Category Management (Admin / Owner) */
+    function renderCategoryManagerTable() {
+      const tbody = document.getElementById('categoriesTableBody');
+      tbody.innerHTML = categoriesList.map((cat, idx) => {
+        const count = products.filter(p => p.category === cat).length;
+        return `
+          <tr>
+            <td><strong>${cat}</strong></td>
+            <td><span class="off-badge" style="background:rgba(245,158,11,0.15); color:var(--primary);">${count} items</span></td>
+            <td>
+              <button class="btn btn-danger btn-sm" onclick="deleteCategory(${idx})"><i class="fa-solid fa-trash"></i> Delete</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function openAddCategoryModal() {
+      document.getElementById('newCatNameInput').value = '';
+      openModal('categoryModal');
+    }
+
+    function saveNewCategory() {
+      const newCat = document.getElementById('newCatNameInput').value.trim();
+      if (!newCat) return alert('Please enter a valid category name.');
+      if (categoriesList.some(c => c.toLowerCase() === newCat.toLowerCase())) {
+        return alert('This category already exists.');
+      }
+      categoriesList.push(newCat);
+      logAudit(`Added new Category: ${newCat}`);
+      syncStorage();
+      buildCategoryNavPills();
+      renderCategoryManagerTable();
+      closeModal('categoryModal');
+      alert(`Category "${newCat}" added successfully!`);
+    }
+
+    function deleteCategory(idx) {
+      const catName = categoriesList[idx];
+      const hasProducts = products.some(p => p.category === catName);
+      if (hasProducts) {
+        return alert(`Cannot delete "${catName}" because it currently has active products assigned to it. Please reassign or delete those products first.`);
+      }
+      if (confirm(`Are you sure you want to delete the category "${catName}"?`)) {
+        categoriesList.splice(idx, 1);
+        logAudit(`Deleted Category: ${catName}`);
+        syncStorage();
+        buildCategoryNavPills();
+        renderCategoryManagerTable();
+      }
     }
 
     function switchTab(tabId) {
@@ -1174,37 +1303,37 @@
 
       document.getElementById('ordersTab').style.display = tabId === 'orders' ? 'block' : 'none';
       document.getElementById('inventoryTab').style.display = tabId === 'inventory' ? 'block' : 'none';
+      document.getElementById('categoriesTab').style.display = tabId === 'categories' ? 'block' : 'none';
       document.getElementById('advancedTab').style.display = tabId === 'advanced' ? 'block' : 'none';
       document.getElementById('usersTab').style.display = tabId === 'users' ? 'block' : 'none';
       document.getElementById('enquiriesTab').style.display = tabId === 'enquiries' ? 'block' : 'none';
       document.getElementById('cmsTab').style.display = tabId === 'cms' ? 'block' : 'none';
       document.getElementById('couponsTab').style.display = tabId === 'coupons' ? 'block' : 'none';
+
+      if (tabId === 'categories') renderCategoryManagerTable();
     }
 
+    /* Rendering App with Structured Categories */
     function renderApp() {
       const search = (document.getElementById('searchInput').value || '').toLowerCase();
-      let filtered = products.filter(p => 
-        (p.name.toLowerCase().includes(search) || p.category.toLowerCase().includes(search) || p.diameter.toLowerCase().includes(search)) &&
-        (selectedCategory === 'all' || p.category === selectedCategory)
-      );
-
       const adminToolbar = document.getElementById('adminActionToolbar');
-      const catPills = document.getElementById('categoryFilterBar');
+      const catPills = document.getElementById('catNavWrapper');
 
       if (currentRole === 'customer') {
         document.getElementById('metricsPanel').style.display = 'none';
         document.getElementById('managementTabs').style.display = 'none';
         if (adminToolbar) adminToolbar.style.display = 'none';
-        if (catPills) catPills.style.display = 'flex';
+        if (catPills) catPills.style.display = 'block';
         document.getElementById('ordersTab').style.display = 'none';
         document.getElementById('inventoryTab').style.display = 'none';
+        document.getElementById('categoriesTab').style.display = 'none';
         document.getElementById('advancedTab').style.display = 'none';
         document.getElementById('usersTab').style.display = 'none';
         document.getElementById('enquiriesTab').style.display = 'none';
         document.getElementById('cmsTab').style.display = 'none';
         document.getElementById('couponsTab').style.display = 'none';
-        document.getElementById('customerStoreView').style.display = 'grid';
-        renderCustomerCatalog(filtered);
+        document.getElementById('customerStoreView').style.display = 'block';
+        renderStructuredCustomerCatalog(search);
       } else {
         document.getElementById('metricsPanel').style.display = 'grid';
         document.getElementById('managementTabs').style.display = 'flex';
@@ -1216,49 +1345,76 @@
 
         renderMetrics();
         renderOrders();
-        renderInventory(filtered);
+        renderInventory();
         renderUsers();
         renderEnquiries();
         renderCoupons();
       }
     }
 
-    function renderCustomerCatalog(items) {
+    /* Render Customer Storefront Grouped Cleanly by Category */
+    function renderStructuredCustomerCatalog(searchQuery) {
       const container = document.getElementById('customerStoreView');
-      if (!items.length) {
-        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 2rem; font-size: 0.85rem;">No products match your search or filter.</p>`;
-        return;
-      }
+      let displayCategories = selectedCategory === 'all' 
+        ? categoriesList 
+        : [selectedCategory];
 
-      container.innerHTML = items.map(p => {
-        const off = Math.round(((p.mrp - p.price) / p.mrp) * 100);
-        return `
-          <div class="product-card">
-            <div>
-              <div class="product-header-row">
-                <span class="cat-tag">${p.category}</span>
-                <span style="font-size:0.7rem; color:var(--text-muted);">${p.diameter}</span>
-              </div>
-              <h3 class="product-title">${p.name}</h3>
-              <p class="product-desc">${p.description}</p>
+      let fullHTML = '';
+      let totalFound = 0;
+
+      displayCategories.forEach(cat => {
+        let catProducts = products.filter(p => 
+          p.category === cat && 
+          (p.name.toLowerCase().includes(searchQuery) || p.diameter.toLowerCase().includes(searchQuery) || p.description.toLowerCase().includes(searchQuery))
+        );
+
+        if (catProducts.length > 0) {
+          totalFound += catProducts.length;
+          fullHTML += `
+            <div class="category-section-title">
+              <h3><i class="fa-solid fa-layer-group" style="color:var(--primary);"></i> ${cat}</h3>
+              <span>${catProducts.length} Items Available</span>
             </div>
-            <div>
-              <div class="price-box">
-                <span class="selling-price">₹${p.price}</span>
-                <span class="mrp-price">₹${p.mrp}</span>
-                <span class="off-badge">${off}% OFF</span>
-              </div>
-              <div style="font-size:0.7rem; margin-bottom:0.4rem; color:${p.stock > 0 ? 'var(--success)' : 'var(--danger)'}">
-                ${p.stock > 0 ? `<i class="fa-solid fa-check"></i> In Stock (${p.stock} ${p.unit})` : '<i class="fa-solid fa-xmark"></i> Out of Stock'}
-              </div>
-              <div class="card-actions">
-                <button class="btn btn-secondary btn-sm" onclick="addToCart('${p.id}')"><i class="fa-solid fa-cart-plus"></i></button>
-                <button class="btn btn-sm" onclick="buyNow('${p.id}')">Buy Now</button>
-              </div>
+            <div class="product-grid">
+              ${catProducts.map(p => {
+                const off = Math.round(((p.mrp - p.price) / p.mrp) * 100);
+                return `
+                  <div class="product-card">
+                    <div>
+                      <div class="product-header-row">
+                        <span class="cat-tag">${p.category}</span>
+                        <span style="font-size:0.7rem; color:var(--text-muted);">${p.diameter}</span>
+                      </div>
+                      <h3 class="product-title">${p.name}</h3>
+                      <p class="product-desc">${p.description}</p>
+                    </div>
+                    <div>
+                      <div class="price-box">
+                        <span class="selling-price">₹${p.price}</span>
+                        <span class="mrp-price">₹${p.mrp}</span>
+                        <span class="off-badge">${off}% OFF</span>
+                      </div>
+                      <div style="font-size:0.7rem; margin-bottom:0.4rem; color:${p.stock > 0 ? 'var(--success)' : 'var(--danger)'}">
+                        ${p.stock > 0 ? `<i class="fa-solid fa-check"></i> In Stock (${p.stock} ${p.unit})` : '<i class="fa-solid fa-xmark"></i> Out of Stock'}
+                      </div>
+                      <div class="card-actions">
+                        <button class="btn btn-secondary btn-sm" onclick="addToCart('${p.id}')"><i class="fa-solid fa-cart-plus"></i></button>
+                        <button class="btn btn-sm" onclick="buyNow('${p.id}')">Buy Now</button>
+                      </div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
             </div>
-          </div>
-        `;
-      }).join('');
+          `;
+        }
+      });
+
+      if (totalFound === 0) {
+        container.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 3rem; font-size: 0.9rem;">No products match your search in this category.</p>`;
+      } else {
+        container.innerHTML = fullHTML;
+      }
     }
 
     function addToCart(id) {
@@ -1560,7 +1716,6 @@
       window.print();
     }
 
-    // ADVANCED SUITE: 14 Tools
     function toggleStoreMaintenance() {
       isStoreMaintenance = !isStoreMaintenance;
       logAudit(`Toggled Store Maintenance: ${isStoreMaintenance ? 'ENABLED' : 'DISABLED'}`);
@@ -1608,7 +1763,7 @@
 
     function downloadJSONBackup() {
       const backupData = {
-        products, orders, users, enquiries, coupons, cmsConfig, auditLogs,
+        products, categoriesList, orders, users, enquiries, coupons, cmsConfig, auditLogs,
         backupDate: new Date().toISOString()
       };
       const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: "application/json" });
@@ -1627,12 +1782,13 @@
           try {
             const data = JSON.parse(e.target.result);
             if (data.products) products = data.products;
+            if (data.categoriesList) categoriesList = data.categoriesList;
             if (data.orders) orders = data.orders;
             if (data.users) users = data.users;
             if (data.coupons) coupons = data.coupons;
             if (data.cmsConfig) cmsConfig = data.cmsConfig;
             syncStorage();
-            buildCategoryFilterPills();
+            buildCategoryNavPills();
             logAudit('Restored Full Database from JSON Backup');
             alert('Database snapshot restored successfully!');
           } catch (err) {
@@ -1775,21 +1931,23 @@
       `).join('');
     }
 
-    function renderInventory(items) {
+    function renderInventory() {
       const tbody = document.getElementById('inventoryTableBody');
-      tbody.innerHTML = items.map(p => `
-        <tr>
-          <td><strong>${p.name}</strong><br><small style="color:var(--text-muted);">${p.diameter}</small></td>
-          <td><span class="cat-tag">${p.category}</span></td>
-          <td><input type="number" class="status-select" style="width: 70px;" value="${p.mrp}" onchange="inlineEditProd('${p.id}', 'mrp', this.value)"></td>
-          <td><input type="number" class="status-select" style="width: 70px;" value="${p.price}" onchange="inlineEditProd('${p.id}', 'price', this.value)"></td>
-          <td><input type="number" class="status-select" style="width: 70px;" value="${p.stock}" onchange="inlineEditProd('${p.id}', 'stock', this.value)"></td>
-          <td>
-            <button class="btn btn-secondary btn-sm" onclick="editProduct('${p.id}')">Edit</button>
-            <button class="btn btn-danger btn-sm" onclick="deleteProduct('${p.id}')">Delete</button>
-          </td>
-        </tr>
-      `).join('');
+      tbody.innerHTML = products.map(p => {
+        return `
+          <tr>
+            <td><strong>${p.name}</strong><br><small style="color:var(--text-muted);">${p.diameter}</small></td>
+            <td><span class="cat-tag">${p.category}</span></td>
+            <td><input type="number" class="status-select" style="width: 70px;" value="${p.mrp}" onchange="inlineEditProd('${p.id}', 'mrp', this.value)"></td>
+            <td><input type="number" class="status-select" style="width: 70px;" value="${p.price}" onchange="inlineEditProd('${p.id}', 'price', this.value)"></td>
+            <td><input type="number" class="status-select" style="width: 70px;" value="${p.stock}" onchange="inlineEditProd('${p.id}', 'stock', this.value)"></td>
+            <td>
+              <button class="btn btn-secondary btn-sm" onclick="editProduct('${p.id}')">Edit</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteProduct('${p.id}')">Delete</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
     }
 
     function inlineEditProd(id, field, val) {
@@ -1994,7 +2152,6 @@
           }));
         }
 
-        logAudit(`User signed in: ${match.name}`);
         setupUserSessionUI();
         closeModal('authModal');
         renderApp();
@@ -2022,7 +2179,6 @@
       };
 
       users.push(newUser);
-      logAudit(`New ${role.toUpperCase()} registered: ${name}`);
       syncStorage();
       closeModal('authModal');
 
@@ -2041,7 +2197,6 @@
       const user = users.find(u => u.email.toLowerCase() === idVal.toLowerCase() || u.phone === idVal);
       if (user) {
         user.pass = newPass;
-        logAudit(`Password reset for ${user.email}`);
         syncStorage();
         alert('Password updated successfully!');
         closeModal('authModal');
@@ -2051,7 +2206,6 @@
     }
 
     function logout() {
-      logAudit(`User logged out: ${activeUser ? activeUser.name : 'Unknown'}`);
       currentRole = 'customer';
       activeUser = null;
       localStorage.removeItem('alfa_auth_session');
@@ -2064,13 +2218,16 @@
     function openProductModal() {
       document.getElementById('prodId').value = '';
       document.getElementById('prodName').value = '';
-      document.getElementById('prodCat').value = '';
       document.getElementById('prodDia').value = '';
       document.getElementById('prodMrp').value = '';
       document.getElementById('prodPrice').value = '';
       document.getElementById('prodStock').value = '';
       document.getElementById('prodDesc').value = '';
       document.getElementById('productModalHeading').innerText = 'Add Product Item';
+
+      const select = document.getElementById('prodCatSelect');
+      select.innerHTML = categoriesList.map(c => `<option value="${c}">${c}</option>`).join('');
+
       openModal('productModal');
     }
 
@@ -2079,7 +2236,6 @@
       if (!p) return;
       document.getElementById('prodId').value = p.id;
       document.getElementById('prodName').value = p.name;
-      document.getElementById('prodCat').value = p.category;
       document.getElementById('prodDia').value = p.diameter;
       document.getElementById('prodMrp').value = p.mrp;
       document.getElementById('prodPrice').value = p.price;
@@ -2087,17 +2243,22 @@
       document.getElementById('prodUnit').value = p.unit;
       document.getElementById('prodDesc').value = p.description;
       document.getElementById('productModalHeading').innerText = 'Edit Product';
+
+      const select = document.getElementById('prodCatSelect');
+      select.innerHTML = categoriesList.map(c => `<option value="${c}" ${c === p.category ? 'selected' : ''}>${c}</option>`).join('');
+
       openModal('productModal');
     }
 
     function saveProduct(e) {
       e.preventDefault();
       const id = document.getElementById('prodId').value;
+      const cat = document.getElementById('prodCatSelect').value;
 
       const item = {
         id: id || 'ALFA-' + Date.now().toString().slice(-4),
         name: document.getElementById('prodName').value,
-        category: document.getElementById('prodCat').value,
+        category: cat,
         diameter: document.getElementById('prodDia').value,
         mrp: parseFloat(document.getElementById('prodMrp').value),
         price: parseFloat(document.getElementById('prodPrice').value),
@@ -2112,18 +2273,16 @@
       } else {
         products.push(item);
       }
-      logAudit(`Saved Product: ${item.name}`);
       syncStorage();
-      buildCategoryFilterPills();
+      buildCategoryNavPills();
       closeModal('productModal');
     }
 
     function deleteProduct(id) {
       if (confirm('Delete this product from inventory?')) {
-        logAudit(`Deleted Product ID: ${id}`);
         products = products.filter(i => i.id !== id);
         syncStorage();
-        buildCategoryFilterPills();
+        buildCategoryNavPills();
       }
     }
 
@@ -2133,13 +2292,11 @@
       const discount = parseInt(document.getElementById('newCouponDiscount').value);
       if (!code || !discount) return alert('Enter valid coupon details.');
       coupons.push({ code, discount });
-      logAudit(`Created Coupon: ${code} (${discount}%)`);
       syncStorage();
       closeModal('couponModal');
     }
 
     function deleteCoupon(idx) {
-      logAudit(`Deleted Coupon: ${coupons[idx].code}`);
       coupons.splice(idx, 1);
       syncStorage();
     }
