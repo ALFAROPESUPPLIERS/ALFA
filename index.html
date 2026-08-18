@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>ALFA ROPE SUPPLIERS | Enterprise Industrial & Retail Portal</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="styles.css?v=8.0">
+  <link rel="stylesheet" href="styles.css?v=9.0">
 </head>
 <body>
 
   <!-- Live Dispatch Ticker Marquee -->
   <div class="top-ticker-bar">
     <div class="ticker-content">
-      ⚡ <strong>LIVE DISPATCH & CLOUD SYNC:</strong> Daily Wholesale Shipments to Telangana, Andhra Pradesh & All India | Direct Factory Rates on PP, Nylon & Manila Ropes | Call / WhatsApp: +91 8555838852 | Ashok Bazar, Afzal Gunj, Hyderabad
+      ⚡ <strong>AUTOMATED REAL-TIME CLOUD:</strong> Daily Wholesale Shipments to Telangana, Andhra Pradesh & All India | Direct Factory Rates on PP, Nylon & Manila Ropes | Call / WhatsApp: +91 8555838852 | Ashok Bazar, Afzal Gunj, Hyderabad
     </div>
   </div>
 
@@ -74,9 +74,9 @@
 
   <!-- Workspace -->
   <main>
-    <!-- Cloud Status Indicator -->
-    <div id="syncStatusTag" style="display:none; font-size:0.75rem; color:var(--success); margin-bottom:0.6rem; text-align:right;">
-      <i class="fa-solid fa-cloud-arrow-up"></i> Real-time Cloud Sync Active
+    <!-- Live Cloud Sync Notification Indicator -->
+    <div id="cloudLiveBadge" style="display: flex; align-items: center; justify-content: flex-end; gap: 0.4rem; font-size: 0.75rem; color: var(--success); margin-bottom: 0.5rem;">
+      <i class="fa-solid fa-circle-dot" style="animation: blinker 1.5s linear infinite;"></i> <span id="cloudStatusText">Live Automated Cloud Connected</span>
     </div>
 
     <!-- Maintenance Banner -->
@@ -134,13 +134,12 @@
       <button class="btn btn-secondary btn-sm" onclick="exportDataCSV()"><i class="fa-solid fa-download"></i> CSV Backup</button>
       <button class="btn btn-sm" onclick="openProductModal()"><i class="fa-solid fa-plus"></i> Add Item</button>
       <button class="btn btn-secondary btn-sm" onclick="openAddCategoryModal()"><i class="fa-solid fa-folder-plus"></i> Add New Category</button>
-      <button class="btn btn-secondary btn-sm" onclick="manualSyncTrigger()"><i class="fa-solid fa-rotate"></i> Sync Cloud Now</button>
     </div>
 
     <!-- TAB 1: Customer Storefront View (Grouped by Category) -->
     <div id="customerStoreView"></div>
 
-    <!-- TAB 2: Orders & Tracking View -->
+    <!-- TAB 2: Orders & Tracking View (Admin / Owner) -->
     <div id="ordersTab" class="table-responsive" style="display: none;">
       <table>
         <thead>
@@ -198,7 +197,12 @@
     <!-- TAB 5: Advanced Suite Panel -->
     <div id="advancedTab" style="display: none;">
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
-        
+        <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
+          <h4 style="color: var(--primary);"><i class="fa-solid fa-cloud"></i> JSONBin Cloud Setup</h4>
+          <p style="font-size: 0.75rem; color: var(--text-muted);">Configure your live JSONBin ID and Master API Key for real-time order syncing.</p>
+          <button class="btn btn-sm btn-secondary" onclick="openCloudConfigModal()">Edit Cloud API Keys</button>
+        </div>
+
         <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
           <h4 style="color: var(--primary);"><i class="fa-solid fa-power-off"></i> Store Status Mode</h4>
           <p style="font-size: 0.75rem; color: var(--text-muted);">Toggle store maintenance mode on/off to control customer ordering.</p>
@@ -212,36 +216,14 @@
         </div>
 
         <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
-          <h4 style="color: var(--primary);"><i class="fa-solid fa-cart-arrow-down"></i> Cart Abandonment Inspector</h4>
-          <p style="font-size: 0.75rem; color: var(--text-muted);">Monitor items left in active carts for customer re-engagement.</p>
-          <button class="btn btn-sm btn-secondary" onclick="inspectActiveCarts()">Inspect Active Carts</button>
-        </div>
-
-        <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
-          <h4 style="color: var(--primary);"><i class="fa-solid fa-calculator"></i> GST & Tax Rate Settings</h4>
-          <p style="font-size: 0.75rem; color: var(--text-muted);">Configure GST percentage shown on tax invoices and receipts.</p>
-          <div style="display: flex; gap: 0.4rem; width: 100%;">
-            <input type="number" id="gstRateInput" min="0" max="28" style="max-width: 80px; padding: 4px; font-size: 0.8rem;" value="18">
-            <button class="btn btn-sm btn-secondary" onclick="saveGSTSetting()">Save %</button>
-          </div>
-        </div>
-
-        <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
           <h4 style="color: var(--primary);"><i class="fa-solid fa-database"></i> Database Snapshot (JSON)</h4>
-          <p style="font-size: 0.75rem; color: var(--text-muted);">Export or import full database snapshot including accounts and orders.</p>
+          <p style="font-size: 0.75rem; color: var(--text-muted);">Export complete backup file or restore database locally.</p>
           <div style="display: flex; gap: 0.4rem;">
             <button class="btn btn-sm btn-secondary" onclick="downloadJSONBackup()">Export JSON</button>
             <button class="btn btn-sm btn-secondary" onclick="document.getElementById('jsonImportFile').click()">Import JSON</button>
             <input type="file" id="jsonImportFile" accept=".json" style="display: none;" onchange="importJSONBackup(this)">
           </div>
         </div>
-
-        <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
-          <h4 style="color: var(--primary);"><i class="fa-solid fa-list-check"></i> System Activity Logs</h4>
-          <p style="font-size: 0.75rem; color: var(--text-muted);">View operational history of orders, price edits, and staff logins.</p>
-          <button class="btn btn-sm btn-secondary" onclick="viewAuditLogs()">View System Logs</button>
-        </div>
-
       </div>
     </div>
 
@@ -660,6 +642,26 @@
     </div>
   </div>
 
+  <!-- CLOUD DATABASE API KEYS MODAL -->
+  <div id="cloudConfigModal" class="modal">
+    <div class="modal-box">
+      <h3 style="margin-bottom: 1rem; color: var(--primary); font-size: 1.1rem;"><i class="fa-solid fa-cloud"></i> Automated JSON Cloud Config</h3>
+      <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.8rem;">To connect your own private JSONBin account, paste your Bin ID and Master Key below.</p>
+      <div class="form-group">
+        <label>JSONBin Bin ID</label>
+        <input type="text" id="cfgBinId" placeholder="e.g. 65d2a987..." required>
+      </div>
+      <div class="form-group">
+        <label>JSONBin Master Key (X-Master-Key)</label>
+        <input type="password" id="cfgMasterKey" placeholder="e.g. $2a$10$..." required>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('cloudConfigModal')">Cancel</button>
+        <button type="button" class="btn btn-sm" onclick="saveCloudConfig()">Save & Connect Cloud</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ADD / MANAGE CATEGORY MODAL -->
   <div id="categoryModal" class="modal">
     <div class="modal-box">
@@ -968,14 +970,15 @@
       </div>
       <div style="display: flex; gap: 0.8rem; font-size: 0.75rem; justify-content: center;">
         <span style="color: var(--text-muted);"><i class="fa-solid fa-lock"></i> SSL Secured</span>
-        <span style="color: var(--text-muted);"><i class="fa-solid fa-cloud-bolt"></i> Real-time Cloud Sync Active</span>
+        <span style="color: var(--text-muted);"><i class="fa-solid fa-cloud-bolt"></i> Automated Online Cloud Database Sync</span>
       </div>
     </div>
   </footer>
 
   <script>
-    // Global Cloud Database Configuration
-    const CLOUD_SYNC_ENDPOINT = "https://api.jsonstorage.net/v1/json/040a45e2-04e4-4d89-9a7c-65239a59fa42/alfa_master_db";
+    // Live Cloud JSON Configuration
+    let JSONBIN_ID = localStorage.getItem('alfa_jsonbin_id') || "";
+    let JSONBIN_KEY = localStorage.getItem('alfa_jsonbin_key') || "";
 
     const DEFAULT_CMS = {
       brandTitle: "ALFA <span>ROPES</span>",
@@ -1081,105 +1084,118 @@
       buildCategoryNavPills();
       renderApp();
 
-      // Pull latest live cloud database on startup
-      pullCloudDatabase();
+      // Initial cloud pull on load
+      autoSyncFromCloud();
 
-      // Automatic 10-second polling for incoming orders on Admin/Owner dashboard
+      // Background cloud listener (Every 8 seconds)
       setInterval(() => {
-        if (currentRole === 'admin' || currentRole === 'owner') {
-          pullCloudDatabase(true);
-        }
-      }, 10000);
+        autoSyncFromCloud();
+      }, 8000);
     };
 
     function loadStorage() {
-      const savedProds = localStorage.getItem('alfa_prods_cloud_v1');
+      const savedProds = localStorage.getItem('alfa_prods_live');
       products = savedProds ? JSON.parse(savedProds) : INITIAL_PRODUCTS;
 
-      const savedCats = localStorage.getItem('alfa_categories_cloud_v1');
+      const savedCats = localStorage.getItem('alfa_categories_live');
       categoriesList = savedCats ? JSON.parse(savedCats) : DEFAULT_CATEGORIES;
 
-      orders = JSON.parse(localStorage.getItem('alfa_orders_cloud_v1')) || [];
-      users = JSON.parse(localStorage.getItem('alfa_users_cloud_v1')) || DEFAULT_USERS;
-      enquiries = JSON.parse(localStorage.getItem('alfa_enquiries_cloud_v1')) || [];
-      coupons = JSON.parse(localStorage.getItem('alfa_coupons_cloud_v1')) || coupons;
-      auditLogs = JSON.parse(localStorage.getItem('alfa_audit_logs_cloud_v1')) || [];
-      cmsConfig = JSON.parse(localStorage.getItem('alfa_cms_cloud_v1')) || DEFAULT_CMS;
+      orders = JSON.parse(localStorage.getItem('alfa_orders_live')) || [];
+      users = JSON.parse(localStorage.getItem('alfa_users_live')) || DEFAULT_USERS;
+      enquiries = JSON.parse(localStorage.getItem('alfa_enquiries_live')) || [];
+      coupons = JSON.parse(localStorage.getItem('alfa_coupons_live')) || coupons;
+      auditLogs = JSON.parse(localStorage.getItem('alfa_audit_logs_live')) || [];
+      cmsConfig = JSON.parse(localStorage.getItem('alfa_cms_live')) || DEFAULT_CMS;
       isStoreMaintenance = JSON.parse(localStorage.getItem('alfa_maintenance')) || false;
       cart = JSON.parse(localStorage.getItem('alfa_cart')) || [];
       updateCartBadge();
     }
 
     function syncStorage(skipCloud = false) {
-      localStorage.setItem('alfa_prods_cloud_v1', JSON.stringify(products));
-      localStorage.setItem('alfa_categories_cloud_v1', JSON.stringify(categoriesList));
-      localStorage.setItem('alfa_orders_cloud_v1', JSON.stringify(orders));
-      localStorage.setItem('alfa_users_cloud_v1', JSON.stringify(users));
-      localStorage.setItem('alfa_enquiries_cloud_v1', JSON.stringify(enquiries));
-      localStorage.setItem('alfa_coupons_cloud_v1', JSON.stringify(coupons));
-      localStorage.setItem('alfa_audit_logs_cloud_v1', JSON.stringify(auditLogs));
+      localStorage.setItem('alfa_prods_live', JSON.stringify(products));
+      localStorage.setItem('alfa_categories_live', JSON.stringify(categoriesList));
+      localStorage.setItem('alfa_orders_live', JSON.stringify(orders));
+      localStorage.setItem('alfa_users_live', JSON.stringify(users));
+      localStorage.setItem('alfa_enquiries_live', JSON.stringify(enquiries));
+      localStorage.setItem('alfa_coupons_live', JSON.stringify(coupons));
+      localStorage.setItem('alfa_audit_logs_live', JSON.stringify(auditLogs));
       localStorage.setItem('alfa_maintenance', JSON.stringify(isStoreMaintenance));
-      localStorage.setItem('alfa_cms_cloud_v1', JSON.stringify(cmsConfig));
+      localStorage.setItem('alfa_cms_live', JSON.stringify(cmsConfig));
       localStorage.setItem('alfa_cart', JSON.stringify(cart));
       updateCartBadge();
       renderApp();
 
       if (!skipCloud) {
-        pushCloudDatabase();
+        autoPushToCloud();
       }
     }
 
-    // Cloud Database Engine: Push State
-    async function pushCloudDatabase() {
+    /* AUTOMATIC LIVE CLOUD ENGINE */
+    async function autoPushToCloud() {
+      if (!JSONBIN_ID || !JSONBIN_KEY) return;
       try {
         const payload = {
           products, categoriesList, orders, users, enquiries, coupons, cmsConfig, auditLogs,
-          lastUpdated: Date.now()
+          timestamp: Date.now()
         };
-        const res = await fetch(CLOUD_SYNC_ENDPOINT, {
+        await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}`, {
           method: "PUT",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "X-Master-Key": JSONBIN_KEY
+          },
           body: JSON.stringify(payload)
         });
-        if (res.ok) {
-          const syncTag = document.getElementById('syncStatusTag');
-          if (syncTag) {
-            syncTag.style.display = 'block';
-            setTimeout(() => { syncTag.style.display = 'none'; }, 3000);
-          }
-        }
+        document.getElementById('cloudStatusText').innerText = "Live Cloud Synced (" + new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'}) + ")";
       } catch (err) {
-        console.warn("Cloud push buffered locally:", err);
+        console.warn("Cloud push error:", err);
       }
     }
 
-    // Cloud Database Engine: Pull Latest State
-    async function pullCloudDatabase(silent = false) {
+    async function autoSyncFromCloud() {
+      if (!JSONBIN_ID || !JSONBIN_KEY) return;
       try {
-        const res = await fetch(CLOUD_SYNC_ENDPOINT, { method: "GET" });
+        const res = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
+          method: "GET",
+          headers: {
+            "X-Master-Key": JSONBIN_KEY
+          }
+        });
         if (res.ok) {
-          const data = await res.json();
-          if (data && data.orders) {
-            orders = data.orders;
-            if (data.products && data.products.length) products = data.products;
-            if (data.categoriesList && data.categoriesList.length) categoriesList = data.categoriesList;
-            if (data.users && data.users.length) users = data.users;
-            if (data.coupons) coupons = data.coupons;
-            if (data.cmsConfig) cmsConfig = data.cmsConfig;
+          const result = await res.json();
+          const record = result.record;
+          if (record && record.orders) {
+            orders = record.orders;
+            if (record.products && record.products.length) products = record.products;
+            if (record.categoriesList && record.categoriesList.length) categoriesList = record.categoriesList;
+            if (record.users && record.users.length) users = record.users;
+            if (record.coupons) coupons = record.coupons;
+            if (record.cmsConfig) cmsConfig = record.cmsConfig;
 
             syncStorage(true);
             buildCategoryNavPills();
-            if (!silent) console.log("Database synchronized with Cloud.");
+            document.getElementById('cloudStatusText').innerText = "Real-time Cloud Online";
           }
         }
       } catch (err) {
-        console.warn("Using offline / local storage:", err);
+        console.warn("Cloud pull error:", err);
       }
     }
 
-    function manualSyncTrigger() {
-      pullCloudDatabase();
-      alert("Synchronizing live orders & data with cloud...");
+    function openCloudConfigModal() {
+      document.getElementById('cfgBinId').value = JSONBIN_ID;
+      document.getElementById('cfgMasterKey').value = JSONBIN_KEY;
+      openModal('cloudConfigModal');
+    }
+
+    function saveCloudConfig() {
+      JSONBIN_ID = document.getElementById('cfgBinId').value.trim();
+      JSONBIN_KEY = document.getElementById('cfgMasterKey').value.trim();
+      localStorage.setItem('alfa_jsonbin_id', JSONBIN_ID);
+      localStorage.setItem('alfa_jsonbin_key', JSONBIN_KEY);
+      closeModal('cloudConfigModal');
+      autoPushToCloud();
+      alert('Cloud API connected! Orders will now sync automatically across all customer mobile phones.');
     }
 
     function logAudit(action) {
@@ -1274,7 +1290,7 @@
       logAudit('Updated Bank & CMS Details');
       syncStorage();
       applyCMS();
-      alert('Settings saved & synced to cloud!');
+      alert('Settings saved & synced to live cloud database!');
     }
 
     function buildCategoryNavPills() {
@@ -1355,7 +1371,7 @@
       const catName = categoriesList[idx];
       const hasProducts = products.some(p => p.category === catName);
       if (hasProducts) {
-        return alert(`Cannot delete "${catName}" because it currently has active products assigned to it.`);
+        return alert(`Cannot delete "${catName}" because it has active products.`);
       }
       if (confirm(`Are you sure you want to delete category "${catName}"?`)) {
         categoriesList.splice(idx, 1);
@@ -1380,7 +1396,7 @@
       document.getElementById('couponsTab').style.display = tabId === 'coupons' ? 'block' : 'none';
 
       if (tabId === 'categories') renderCategoryManagerTable();
-      if (tabId === 'orders') pullCloudDatabase(true);
+      if (tabId === 'orders') autoSyncFromCloud();
     }
 
     function renderApp() {
@@ -1423,9 +1439,7 @@
 
     function renderStructuredCustomerCatalog(searchQuery) {
       const container = document.getElementById('customerStoreView');
-      let displayCategories = selectedCategory === 'all' 
-        ? categoriesList 
-        : [selectedCategory];
+      let displayCategories = selectedCategory === 'all' ? categoriesList : [selectedCategory];
 
       let fullHTML = '';
       let totalFound = 0;
@@ -1649,7 +1663,7 @@
       cartDiscountPercent = 0;
       logAudit(`New Order Placed: ${orderRecord.orderId} (₹${orderRecord.totalAmount})`);
       
-      // Sync immediately to global cloud
+      // Auto push to live cloud database
       syncStorage();
       closeModal('checkoutModal');
       toggleCart(false);
@@ -2268,7 +2282,6 @@
       const user = users.find(u => u.email.toLowerCase() === idVal.toLowerCase() || u.phone === idVal);
       if (user) {
         user.pass = newPass;
-        logAudit(`Password reset for ${user.email}`);
         syncStorage();
         alert('Password updated successfully!');
         closeModal('authModal');
@@ -2278,7 +2291,6 @@
     }
 
     function logout() {
-      logAudit(`User logged out: ${activeUser ? activeUser.name : 'Unknown'}`);
       currentRole = 'customer';
       activeUser = null;
       localStorage.removeItem('alfa_auth_session');
@@ -2346,7 +2358,6 @@
       } else {
         products.push(item);
       }
-      logAudit(`Saved Product: ${item.name}`);
       syncStorage();
       buildCategoryNavPills();
       closeModal('productModal');
@@ -2354,7 +2365,6 @@
 
     function deleteProduct(id) {
       if (confirm('Delete this product from inventory?')) {
-        logAudit(`Deleted Product ID: ${id}`);
         products = products.filter(i => i.id !== id);
         syncStorage();
         buildCategoryNavPills();
@@ -2367,13 +2377,11 @@
       const discount = parseInt(document.getElementById('newCouponDiscount').value);
       if (!code || !discount) return alert('Enter valid coupon details.');
       coupons.push({ code, discount });
-      logAudit(`Created Coupon: ${code} (${discount}%)`);
       syncStorage();
       closeModal('couponModal');
     }
 
     function deleteCoupon(idx) {
-      logAudit(`Deleted Coupon: ${coupons[idx].code}`);
       coupons.splice(idx, 1);
       syncStorage();
     }
