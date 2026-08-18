@@ -5,627 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>ALFA ROPE SUPPLIERS | Enterprise Industrial & Retail Portal</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
-      --primary: #f59e0b;
-      --primary-hover: #d97706;
-      --bg-main: #0a0e17;
-      --bg-panel: #111827;
-      --bg-card: #1f2937;
-      --bg-input: #0d131f;
-      --border-color: #374151;
-      --text-main: #f9fafb;
-      --text-muted: #9ca3af;
-      --success: #10b981;
-      --danger: #ef4444;
-      --info: #0ea5e9;
-      --warning: #f59e0b;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-      background-color: var(--bg-main);
-      color: var(--text-main);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
-    }
-
-    /* Enterprise Navigation - Fully Responsive */
-    header {
-      background-color: var(--bg-panel);
-      border-bottom: 1px solid var(--border-color);
-      padding: 0.6rem 1rem;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    }
-
-    .nav-container {
-      max-width: 1500px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .nav-top-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-    }
-
-    .brand-group {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .brand-logo-icon {
-      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
-      color: #000;
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      flex-shrink: 0;
-    }
-
-    .brand h1 {
-      color: var(--text-main);
-      font-size: 1.1rem;
-      font-weight: 800;
-      letter-spacing: 0.4px;
-      line-height: 1.2;
-    }
-
-    .brand h1 span { color: var(--primary); }
-    .brand p { font-size: 0.68rem; color: var(--text-muted); }
-
-    .nav-search {
-      width: 100%;
-      position: relative;
-    }
-
-    .nav-search input {
-      width: 100%;
-      background: var(--bg-input);
-      border: 1px solid var(--border-color);
-      padding: 0.6rem 1rem 0.6rem 2.4rem;
-      border-radius: 50px;
-      color: #fff;
-      font-size: 0.85rem;
-      outline: none;
-      transition: 0.2s;
-    }
-
-    .nav-search input:focus {
-      border-color: var(--primary);
-    }
-
-    .nav-search i {
-      position: absolute;
-      left: 0.9rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    /* Buttons */
-    .btn {
-      background: var(--primary);
-      color: #000;
-      border: none;
-      padding: 0.55rem 0.85rem;
-      border-radius: 6px;
-      font-weight: 700;
-      font-size: 0.8rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      transition: all 0.2s ease;
-      text-decoration: none;
-      white-space: nowrap;
-    }
-
-    .btn:hover { background: var(--primary-hover); color: #fff; }
-    .btn-secondary { background: var(--bg-card); color: #fff; border: 1px solid var(--border-color); }
-    .btn-secondary:hover { background: #374151; color: var(--primary); }
-    .btn-danger { background: var(--danger); color: #fff; }
-    .btn-danger:hover { background: #dc2626; }
-    .btn-success { background: var(--success); color: #fff; }
-    .btn-sm { padding: 0.35rem 0.6rem; font-size: 0.75rem; }
-
-    .cart-btn {
-      position: relative;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      color: #fff;
-      padding: 0.55rem 0.85rem;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.8rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .cart-badge {
-      position: absolute;
-      top: -6px;
-      right: -6px;
-      background: var(--primary);
-      color: #000;
-      font-size: 0.68rem;
-      font-weight: 900;
-      padding: 2px 6px;
-      border-radius: 50%;
-    }
-
-    /* Hero Opening Section */
-    .hero-banner {
-      background: linear-gradient(180deg, rgba(31, 41, 55, 0.9) 0%, rgba(11, 15, 25, 1) 100%), url('https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
-      padding: 1.5rem 1rem;
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .hero-content h2 { font-size: 1.4rem; font-weight: 900; margin-bottom: 0.3rem; color: #fff; }
-    .hero-content h2 span { color: var(--primary); }
-    .hero-content p { color: var(--text-muted); font-size: 0.82rem; line-height: 1.4; }
-
-    .hero-badges {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      background: rgba(17, 24, 39, 0.85);
-      padding: 0.8rem;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-    }
-
-    .hero-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; }
-    .hero-item i { color: var(--primary); font-size: 0.95rem; }
-
-    /* Workspace */
-    main {
-      max-width: 1500px;
-      margin: 1rem auto;
-      padding: 0 0.8rem;
-      flex-grow: 1;
-      width: 100%;
-    }
-
-    /* Metrics Grid */
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.75rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .metric-card {
-      background: var(--bg-panel);
-      padding: 0.9rem;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .metric-data h4 { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.2rem; }
-    .metric-data .val { font-size: 1.2rem; font-weight: 800; color: #fff; }
-    .metric-icon { font-size: 1.4rem; opacity: 0.3; }
-
-    /* Tab Bar */
-    .tab-bar {
-      display: flex;
-      gap: 0.4rem;
-      border-bottom: 1px solid var(--border-color);
-      margin-bottom: 1.2rem;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .tab-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      padding: 0.6rem 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.8rem;
-    }
-
-    .tab-btn.active {
-      color: var(--primary);
-      border-bottom-color: var(--primary);
-    }
-
-    /* Product Grid */
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1rem;
-    }
-
-    .product-card {
-      background: var(--bg-panel);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .product-card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      background: #1f2937;
-    }
-
-    .product-details {
-      padding: 0.9rem;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .cat-tag {
-      font-size: 0.68rem;
-      font-weight: 700;
-      color: var(--primary);
-      text-transform: uppercase;
-      margin-bottom: 0.2rem;
-    }
-
-    .product-title {
-      font-size: 0.95rem;
-      font-weight: 700;
-      margin-bottom: 0.3rem;
-      color: #fff;
-      line-height: 1.3;
-    }
-
-    .product-desc {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-bottom: 0.8rem;
-      line-height: 1.3;
-    }
-
-    .price-box {
-      display: flex;
-      align-items: baseline;
-      gap: 0.5rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .selling-price { font-size: 1.25rem; font-weight: 900; color: var(--primary); }
-    .mrp-price { font-size: 0.78rem; color: var(--text-muted); text-decoration: line-through; }
-    .off-badge { background: rgba(16, 185, 129, 0.15); color: var(--success); font-size: 0.68rem; font-weight: 800; padding: 2px 6px; border-radius: 4px; }
-
-    .card-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.5rem;
-    }
-
-    /* Tables (Mobile Responsive Horizontal Drag) */
-    .table-responsive {
-      background: var(--bg-panel);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      margin-bottom: 1rem;
-    }
-
-    table {
-      width: 100%;
-      min-width: 620px;
-      border-collapse: collapse;
-      text-align: left;
-    }
-
-    table th, table td {
-      padding: 0.75rem;
-      border-bottom: 1px solid var(--border-color);
-      font-size: 0.8rem;
-    }
-
-    table th {
-      background: #172033;
-      color: var(--text-muted);
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 0.72rem;
-    }
-
-    .status-select {
-      background: var(--bg-input);
-      border: 1px solid var(--border-color);
-      color: #fff;
-      padding: 0.35rem 0.5rem;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      outline: none;
-      max-width: 130px;
-    }
-
-    .table-img {
-      width: 40px;
-      height: 40px;
-      border-radius: 6px;
-      object-fit: cover;
-    }
-
-    /* Cart Drawer (Mobile Touch Panel) */
-    .cart-drawer {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 100%;
-      max-width: 380px;
-      height: 100vh;
-      background: var(--bg-panel);
-      border-left: 1px solid var(--border-color);
-      z-index: 1000;
-      transition: 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      box-shadow: -10px 0 30px rgba(0,0,0,0.7);
-    }
-
-    .cart-drawer.open { right: 0; }
-
-    .cart-header {
-      padding: 1rem;
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .cart-items-box {
-      flex: 1;
-      overflow-y: auto;
-      padding: 0.8rem;
-    }
-
-    .cart-item {
-      display: flex;
-      gap: 0.6rem;
-      margin-bottom: 0.8rem;
-      background: var(--bg-card);
-      padding: 0.6rem;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-    }
-
-    .cart-item img { width: 50px; height: 50px; border-radius: 6px; object-fit: cover; }
-    .cart-footer { padding: 1rem; border-top: 1px solid var(--border-color); }
-
-    /* Modals - Mobile Viewport Adapters */
-    .modal {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.85);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-      padding: 0.5rem;
-    }
-
-    .modal-box {
-      background: var(--bg-panel);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      width: 100%;
-      max-width: 540px;
-      padding: 1.2rem;
-      max-height: 92vh;
-      overflow-y: auto;
-    }
-
-    .form-group { margin-bottom: 0.9rem; }
-    .form-group label { display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem; }
-    .form-group input, .form-group textarea, .form-group select {
-      width: 100%;
-      background: var(--bg-input);
-      border: 1px solid var(--border-color);
-      color: #fff;
-      padding: 0.6rem;
-      border-radius: 6px;
-      outline: none;
-      font-size: 0.85rem;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.75rem;
-    }
-
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 0.6rem;
-      margin-top: 1.2rem;
-      flex-wrap: wrap;
-    }
-
-    /* Auth Clean Switcher Tabs */
-    .auth-nav {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.3rem;
-      margin-bottom: 1rem;
-    }
-
-    .auth-nav button {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      padding: 0.5rem 0.2rem;
-      font-size: 0.72rem;
-      font-weight: 700;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .auth-nav button.active {
-      background: var(--primary);
-      color: #000;
-      border-color: var(--primary);
-    }
-
-    /* Bank Details */
-    .bank-info-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 0.8rem;
-      margin-bottom: 0.8rem;
-    }
-
-    .bank-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.35rem 0;
-      border-bottom: 1px dashed rgba(255,255,255,0.08);
-      font-size: 0.78rem;
-    }
-
-    .copy-chip {
-      background: var(--bg-input);
-      border: 1px solid var(--border-color);
-      color: var(--primary);
-      padding: 2px 6px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.7rem;
-      font-weight: 700;
-    }
-
-    /* Printable Tax Invoice */
-    .invoice-card {
-      background: #ffffff;
-      color: #111827;
-      padding: 1.2rem;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-    }
-
-    .invoice-header {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      border-bottom: 2px solid #e5e7eb;
-      padding-bottom: 0.8rem;
-      margin-bottom: 1rem;
-    }
-
-    .invoice-table {
-      width: 100%;
-      min-width: 100%;
-      margin: 1rem 0;
-      border-collapse: collapse;
-    }
-
-    .invoice-table th, .invoice-table td {
-      padding: 0.4rem;
-      border: 1px solid #e5e7eb;
-      font-size: 0.75rem;
-    }
-
-    .invoice-footer {
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-      margin-top: 1rem;
-      border-top: 2px solid #e5e7eb;
-      padding-top: 0.8rem;
-    }
-
-    /* Footer */
-    footer {
-      background-color: var(--bg-panel);
-      border-top: 1px solid var(--border-color);
-      padding: 1.5rem 1rem;
-      margin-top: auto;
-    }
-
-    .footer-content {
-      max-width: 1500px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      text-align: center;
-    }
-
-    .footer-copy { font-size: 0.75rem; color: var(--text-muted); }
-    .footer-copy strong { color: #fff; }
-
-    /* Desktop View Adjustments */
-    @media (min-width: 768px) {
-      header { padding: 0.75rem 2rem; }
-      .nav-container { flex-direction: row; justify-content: space-between; align-items: center; }
-      .nav-top-row { width: auto; }
-      .nav-search { max-width: 460px; }
-      .hero-banner { padding: 2.5rem 2rem; flex-direction: row; align-items: center; }
-      .hero-badges { flex-direction: row; }
-      .metrics-grid { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
-      .form-row { grid-template-columns: 1fr 1fr; }
-      .invoice-header { flex-direction: row; justify-content: space-between; }
-      .invoice-footer { flex-direction: row; justify-content: space-between; align-items: flex-end; }
-      .footer-content { flex-direction: row; justify-content: space-between; text-align: left; }
-    }
-  </style>
+  <!-- Cache-busting link directly loading responsive styles -->
+  <link rel="stylesheet" href="styles.css?v=2.0">
 </head>
 <body>
 
-  <!-- Navigation Bar (Optimized for Mobile) -->
+  <!-- Navigation Bar -->
   <header>
     <div class="nav-container">
       <div class="nav-top-row">
@@ -717,7 +102,7 @@
       <button class="tab-btn" onclick="switchTab('coupons')"><i class="fa-solid fa-tag"></i> Coupons</button>
     </div>
 
-    <!-- Admin / Owner Quick Action Controls on Mobile -->
+    <!-- Quick Action Controls -->
     <div id="adminActionToolbar" style="display: none; gap: 0.4rem; margin-bottom: 1rem; overflow-x: auto;">
       <button class="btn btn-sm btn-success" onclick="openManualOrderModal()"><i class="fa-solid fa-plus-circle"></i> Direct Manual Order</button>
       <button class="btn btn-secondary btn-sm" onclick="exportDataCSV()"><i class="fa-solid fa-download"></i> CSV Backup</button>
@@ -873,7 +258,7 @@
     </div>
   </main>
 
-  <!-- CART DRAWER (Responsive for mobile touch) -->
+  <!-- CART DRAWER -->
   <div id="cartDrawer" class="cart-drawer">
     <div class="cart-header">
       <h3 style="font-size: 1rem;"><i class="fa-solid fa-bag-shopping"></i> Shopping Cart</h3>
@@ -898,7 +283,6 @@
         <button id="tabAuthForgot" onclick="switchAuthTab('forgot')">Forgot</button>
       </div>
 
-      <!-- Sign In Form -->
       <form id="authFormLogin" onsubmit="handleLoginSubmit(event)">
         <div class="form-group">
           <label>Email Address OR Mobile Number</label>
@@ -919,7 +303,6 @@
         </div>
       </form>
 
-      <!-- Registration Form -->
       <form id="authFormReg" style="display: none;" onsubmit="handleRegisterSubmit(event)">
         <div class="form-group">
           <label>Account Type</label>
@@ -955,7 +338,6 @@
         </div>
       </form>
 
-      <!-- Forgot Password Form -->
       <form id="authFormForgot" style="display: none;" onsubmit="handleForgotSubmit(event)">
         <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.8rem;">Enter your registered email or phone and your requested new password.</p>
         <div class="form-group">
@@ -1029,7 +411,6 @@
         <textarea id="orderCustAddress" rows="2" required></textarea>
       </div>
       
-      <!-- Coupon Application -->
       <div class="form-group">
         <label>Discount Voucher</label>
         <div style="display: flex; gap: 0.4rem;">
@@ -1039,7 +420,6 @@
         <small id="couponMessage" style="font-size: 0.75rem; margin-top: 4px; display: block;"></small>
       </div>
 
-      <!-- Payment Method -->
       <div class="form-group">
         <label>Payment Method</label>
         <select id="paymentMethod" onchange="togglePaymentSection(this.value)">
@@ -1049,17 +429,15 @@
         </select>
       </div>
 
-      <!-- UPI Payment Details -->
       <div id="upiPaymentBox" class="bank-info-card">
         <div class="bank-row">
           <span>Official UPI ID:</span>
           <span style="font-weight: 700; color: var(--primary);" id="checkoutUpiId">alfaropesuppliers@ybl</span>
           <span class="copy-chip" onclick="copyText('checkoutUpiId')">Copy UPI</span>
         </div>
-        <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">Transfer from Google Pay, PhonePe, or Paytm and enter the 12-digit UTR/Reference below:</p>
+        <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">Transfer from Google Pay, PhonePe, or Paytm and enter the 12-digit UTR below:</p>
       </div>
 
-      <!-- Bank Details -->
       <div id="bankPaymentBox" class="bank-info-card" style="display: none;">
         <div class="bank-row">
           <span>Account Holder:</span>
@@ -1556,9 +934,9 @@
     };
 
     function loadStorage() {
-      const savedProds = localStorage.getItem('alfa_prods_v7');
+      const savedProds = localStorage.getItem('alfa_prods_v8');
       products = savedProds ? JSON.parse(savedProds) : INITIAL_PRODUCTS;
-      if (!savedProds) localStorage.setItem('alfa_prods_v7', JSON.stringify(INITIAL_PRODUCTS));
+      if (!savedProds) localStorage.setItem('alfa_prods_v8', JSON.stringify(INITIAL_PRODUCTS));
 
       orders = JSON.parse(localStorage.getItem('alfa_orders')) || [];
       users = JSON.parse(localStorage.getItem('alfa_users')) || DEFAULT_USERS;
@@ -1570,7 +948,7 @@
     }
 
     function syncStorage() {
-      localStorage.setItem('alfa_prods_v7', JSON.stringify(products));
+      localStorage.setItem('alfa_prods_v8', JSON.stringify(products));
       localStorage.setItem('alfa_orders', JSON.stringify(orders));
       localStorage.setItem('alfa_users', JSON.stringify(users));
       localStorage.setItem('alfa_enquiries', JSON.stringify(enquiries));
@@ -1581,7 +959,7 @@
       renderApp();
     }
 
-    // 12-Hour Session Validation
+    // 12-Hour Session Persistence
     function validateClientSession12Hours() {
       const tokenStr = localStorage.getItem('alfa_auth_session');
       if (tokenStr) {
@@ -1625,14 +1003,12 @@
       document.getElementById('dynHeroSub').innerText = cmsConfig.heroSub;
       document.getElementById('dynFooterCopy').innerText = cmsConfig.copyright;
       
-      // Update Payment Hub
       document.getElementById('checkoutUpiId').innerText = cmsConfig.upiId;
       document.getElementById('chkBankHolder').innerText = cmsConfig.bankHolder;
       document.getElementById('chkBankName').innerText = cmsConfig.bankName;
       document.getElementById('chkBankAcc').innerText = cmsConfig.bankAcc;
       document.getElementById('chkBankIfsc').innerText = cmsConfig.bankIfsc;
 
-      // Populate CMS Form
       document.getElementById('cmsBrandTitle').value = cmsConfig.brandTitle;
       document.getElementById('cmsBrandSubtitle').value = cmsConfig.brandSubtitle;
       document.getElementById('cmsHeroHeading').value = cmsConfig.heroHeading;
@@ -1661,7 +1037,7 @@
       };
       syncStorage();
       applyCMS();
-      alert('Bank details and website settings published successfully!');
+      alert('Settings saved!');
     }
 
     function switchTab(tabId) {
@@ -1679,7 +1055,6 @@
     function renderApp() {
       const search = (document.getElementById('searchInput').value || '').toLowerCase();
       const filtered = products.filter(p => p.name.toLowerCase().includes(search) || p.category.toLowerCase().includes(search) || p.diameter.toLowerCase().includes(search));
-
       const adminToolbar = document.getElementById('adminActionToolbar');
 
       if (currentRole === 'customer') {
@@ -1828,12 +1203,11 @@
       renderCartDrawer();
     }
 
-    // MANDATORY CUSTOMER LOGIN CHECKOUT
     function handleCheckoutEntry() {
       if (!cart.length) return alert('Your shopping cart is empty.');
       
       if (!activeUser || activeUser.role !== 'customer') {
-        alert('Please log in to your Customer Profile to continue with checkout and delivery address.');
+        alert('Please log in to your Customer Profile to continue with checkout.');
         openAuthModal();
         return;
       }
@@ -1863,7 +1237,7 @@
       } else {
         cartDiscountPercent = 0;
         msg.style.color = 'var(--danger)';
-        msg.innerText = 'Invalid coupon voucher code.';
+        msg.innerText = 'Invalid coupon code.';
       }
     }
 
@@ -1874,8 +1248,8 @@
       const pMethod = document.getElementById('paymentMethod').value;
       const utr = document.getElementById('upiTxnId').value.trim();
 
-      if (!name || !phone || !address) return alert('Please provide complete shipping name, phone, and delivery address.');
-      if (pMethod !== 'cod' && !utr) return alert('Please enter the payment Transaction / UTR reference number.');
+      if (!name || !phone || !address) return alert('Please enter complete delivery details.');
+      if (pMethod !== 'cod' && !utr) return alert('Please enter the payment UTR reference number.');
 
       let total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
       let discountVal = 0;
@@ -1899,7 +1273,6 @@
 
       orders.unshift(orderRecord);
 
-      // Decrement stock
       cart.forEach(cItem => {
         const prod = products.find(p => p.id === cItem.id);
         if (prod) prod.stock = Math.max(0, prod.stock - cItem.qty);
@@ -1911,22 +1284,17 @@
       closeModal('checkoutModal');
       toggleCart(false);
 
-      // Automatic WhatsApp Confirmation Trigger to Customer
       sendWhatsAppOrderConfirmation(orderRecord);
-
-      // Show auto-generated confirmation receipt
       openInvoiceModal(orderRecord);
     }
 
     function sendWhatsAppOrderConfirmation(order) {
       const itemsList = order.items.map(i => `• ${i.name} (Qty: ${i.qty})`).join('%0A');
-      const waMsg = `*ALFA ROPE SUPPLIERS - Order Confirmed*%0A%0A*Order ID:* ${order.orderId}%0A*Date:* ${order.date} ${order.time}%0A*Customer:* ${order.customer.name}%0A*Delivery Address:* ${order.customer.address}%0A%0A*Items Ordered:*%0A${itemsList}%0A%0A*Total Amount:* ₹${order.totalAmount}%0A*Payment Mode:* ${order.payment.method} (Ref: ${order.payment.utr})%0A*Status:* ${order.status}%0A%0A_Thank you for choosing Alfa Rope Suppliers!_`;
-      
+      const waMsg = `*ALFA ROPE SUPPLIERS - Order Confirmed*%0A%0A*Order ID:* ${order.orderId}%0A*Date:* ${order.date} ${order.time}%0A*Customer:* ${order.customer.name}%0A*Address:* ${order.customer.address}%0A%0A*Items:*%0A${itemsList}%0A%0A*Total Amount:* ₹${order.totalAmount}%0A*Payment:* ${order.payment.method} (Ref: ${order.payment.utr})%0A*Status:* ${order.status}`;
       const cleanPhone = order.customer.phone.replace(/[^0-9]/g, '');
       window.open(`https://wa.me/91${cleanPhone}?text=${waMsg}`, '_blank');
     }
 
-    // CUSTOMER PROFILE & PAST ORDERS
     function openCustomerProfileModal() {
       if (!activeUser || activeUser.role !== 'customer') return;
       document.getElementById('profFullName').value = activeUser.name;
@@ -1980,10 +1348,9 @@
       syncStorage();
       closeModal('customerProfileModal');
       document.getElementById('userProfileBtn').innerHTML = `<i class="fa-solid fa-user-circle"></i> ${activeUser.name.split(' ')[0]}`;
-      alert('Your profile and delivery address have been updated!');
+      alert('Profile updated!');
     }
 
-    // DUAL-KEY ORDER TRACKING
     function openTrackOrderModal() {
       document.getElementById('trackResultBox').style.display = 'none';
       document.getElementById('trackInputOrderId').value = '';
@@ -2008,7 +1375,7 @@
         document.getElementById('trackResAddr').innerText = `${match.customer.name} - ${match.customer.address}`;
         document.getElementById('trackResultBox').style.display = 'block';
       } else {
-        alert('No matching order found. Please verify the exact Order ID and Customer Name.');
+        alert('No matching order found.');
       }
     }
 
@@ -2019,7 +1386,6 @@
       }
     }
 
-    // AUTO-GENERATED INVOICE / RECEIPT
     function openInvoiceModal(order) {
       currentViewingOrder = order;
       document.getElementById('invOrderId').innerText = order.orderId;
@@ -2050,7 +1416,6 @@
       window.print();
     }
 
-    // ADMIN DIRECT MANUAL ORDER BOOKING
     function openManualOrderModal() {
       const prodSelect = document.getElementById('manSelectProduct');
       prodSelect.innerHTML = products.map(p => `<option value="${p.id}" data-price="${p.price}" data-unit="${p.unit}">${p.name} - ₹${p.price}/${p.unit}</option>`).join('');
@@ -2097,12 +1462,11 @@
 
       syncStorage();
       closeModal('manualOrderModal');
-      alert(`Manual order ${manualOrder.orderId} booked successfully!`);
+      alert(`Manual order ${manualOrder.orderId} booked!`);
       sendWhatsAppOrderConfirmation(manualOrder);
       openInvoiceModal(manualOrder);
     }
 
-    // ADMIN EDIT ORDER
     function openEditOrderModal(idx) {
       const o = orders[idx];
       document.getElementById('editOrderIndex').value = idx;
@@ -2135,7 +1499,7 @@
 
     function sendTrackingWhatsApp(idx) {
       const o = orders[idx];
-      const waMsg = `*ALFA ROPE SUPPLIERS - Shipment Update*%0A%0A*Order ID:* ${o.orderId}%0A*Status:* ${o.status}%0A*Tracking / Transport LR No:* ${o.trackingNo || 'Dispatched'}%0A*Total Amount:* ₹${o.totalAmount}%0A%0A_For full tax invoice or support, please visit our official website portal._`;
+      const waMsg = `*ALFA ROPE SUPPLIERS - Shipment Update*%0A%0A*Order ID:* ${o.orderId}%0A*Status:* ${o.status}%0A*Tracking / Transport LR No:* ${o.trackingNo || 'Dispatched'}%0A*Total Amount:* ₹${o.totalAmount}`;
       const cleanPhone = o.customer.phone.replace(/[^0-9]/g, '');
       window.open(`https://wa.me/91${cleanPhone}?text=${waMsg}`, '_blank');
     }
@@ -2183,9 +1547,9 @@
           <td><img src="${p.image}" class="table-img" onerror="this.src='https://via.placeholder.com/48?text=Item'"></td>
           <td><strong>${p.name}</strong><br><small style="color:var(--text-muted);">${p.diameter}</small></td>
           <td><span class="cat-tag">${p.category}</span></td>
-          <td><input type="number" class="status-select" style="width: 75px;" value="${p.mrp}" onchange="inlineEditProd('${p.id}', 'mrp', this.value)"></td>
-          <td><input type="number" class="status-select" style="width: 75px;" value="${p.price}" onchange="inlineEditProd('${p.id}', 'price', this.value)"></td>
-          <td><input type="number" class="status-select" style="width: 75px;" value="${p.stock}" onchange="inlineEditProd('${p.id}', 'stock', this.value)"></td>
+          <td><input type="number" class="status-select" style="width: 70px;" value="${p.mrp}" onchange="inlineEditProd('${p.id}', 'mrp', this.value)"></td>
+          <td><input type="number" class="status-select" style="width: 70px;" value="${p.price}" onchange="inlineEditProd('${p.id}', 'price', this.value)"></td>
+          <td><input type="number" class="status-select" style="width: 70px;" value="${p.stock}" onchange="inlineEditProd('${p.id}', 'stock', this.value)"></td>
           <td>
             <button class="btn btn-secondary btn-sm" onclick="editProduct('${p.id}')">Edit</button>
             <button class="btn btn-danger btn-sm" onclick="deleteProduct('${p.id}')">Delete</button>
@@ -2202,7 +1566,6 @@
       }
     }
 
-    // ADMIN CUSTOMER MASTER
     function renderUsers() {
       const tbody = document.getElementById('usersTableBody');
       tbody.innerHTML = users.map((u, idx) => `
@@ -2215,7 +1578,7 @@
           <td>
             <div style="display: flex; gap: 0.3rem; flex-wrap: wrap;">
               <button class="btn btn-secondary btn-sm" onclick="openAdminEditCustModal(${idx})"><i class="fa-solid fa-user-pen"></i> Edit</button>
-              ${currentRole === 'admin' && u.status === 'Pending Approval' ? `<button class="btn btn-success btn-sm" onclick="approveUserRole(${idx})">Approve Owner</button>` : ''}
+              ${currentRole === 'admin' && u.status === 'Pending Approval' ? `<button class="btn btn-success btn-sm" onclick="approveUserRole(${idx})">Approve</button>` : ''}
               ${currentRole === 'admin' && u.role !== 'admin' ? `<button class="btn btn-danger btn-sm" onclick="deleteUserRecord(${idx})"><i class="fa-solid fa-trash"></i></button>` : ''}
             </div>
           </td>
@@ -2249,17 +1612,17 @@
 
       syncStorage();
       closeModal('adminEditCustModal');
-      alert(`User profile for ${u.name} updated successfully!`);
+      alert('User updated!');
     }
 
     function approveUserRole(idx) {
       users[idx].status = 'Active';
       syncStorage();
-      alert(`User ${users[idx].name} approved as Active Owner!`);
+      alert('User approved!');
     }
 
     function deleteUserRecord(idx) {
-      if (confirm(`Are you sure you want to remove user record ${users[idx].name}?`)) {
+      if (confirm(`Remove user record ${users[idx].name}?`)) {
         users.splice(idx, 1);
         syncStorage();
       }
@@ -2283,7 +1646,7 @@
       syncStorage();
       closeModal('enquiryModal');
       document.getElementById('enqMsg').value = '';
-      alert('Thank you! Your feedback has been forwarded to Alfa Management.');
+      alert('Thank you! Feedback received.');
     }
 
     function renderEnquiries() {
@@ -2397,7 +1760,7 @@
         closeModal('authModal');
         renderApp();
       } else {
-        errMsg.innerText = "Invalid login credentials. Please verify your details.";
+        errMsg.innerText = "Invalid login credentials.";
         errMsg.style.display = 'block';
       }
     }
@@ -2412,7 +1775,7 @@
       const pass = document.getElementById('regPass').value.trim();
 
       const exists = users.find(u => u.email.toLowerCase() === email.toLowerCase() || u.phone === phone);
-      if (exists) return alert('An account with this email or mobile number already exists.');
+      if (exists) return alert('Account already exists.');
 
       const newUser = {
         name, email, phone, address, pass, role,
@@ -2424,9 +1787,9 @@
       closeModal('authModal');
 
       if (role === 'owner') {
-        alert('Owner registration submitted! Please wait for Admin approval.');
+        alert('Owner registration submitted for approval.');
       } else {
-        alert('Registration successful! You can now log in with your email or mobile.');
+        alert('Registration successful! You can now log in.');
       }
     }
 
@@ -2439,10 +1802,10 @@
       if (user) {
         user.pass = newPass;
         syncStorage();
-        alert('Password updated successfully! You can now sign in.');
+        alert('Password updated successfully!');
         closeModal('authModal');
       } else {
-        alert('No account found with that email or mobile number.');
+        alert('Account not found.');
       }
     }
 
@@ -2537,7 +1900,7 @@
     function saveNewCoupon() {
       const code = document.getElementById('newCouponCode').value.trim().toUpperCase();
       const discount = parseInt(document.getElementById('newCouponDiscount').value);
-      if (!code || !discount) return alert('Enter valid coupon code and discount.');
+      if (!code || !discount) return alert('Enter valid coupon details.');
       coupons.push({ code, discount });
       syncStorage();
       closeModal('couponModal');
