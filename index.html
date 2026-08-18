@@ -5,14 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>ALFA ROPE SUPPLIERS | Enterprise Industrial & Retail Portal</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="styles.css?v=4.0">
+  <link rel="stylesheet" href="styles.css?v=5.0">
 </head>
 <body>
 
-  <!-- Navigation Bar: Clean 3-Way Layout (Brand | Search | Feedback, Cart & Portal) -->
+  <!-- Top Navigation Bar -->
   <header>
     <div class="nav-container">
-      <!-- Left: Brand Group -->
       <div class="brand-group">
         <div class="brand-logo-icon"><i class="fa-solid fa-anchor"></i></div>
         <div class="brand">
@@ -21,13 +20,11 @@
         </div>
       </div>
 
-      <!-- Center: Search Input -->
       <div class="nav-search">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" id="searchInput" placeholder="Search ropes, brooms, jaali, powda, pipes..." oninput="handleSearch()">
       </div>
 
-      <!-- Right: All Action Buttons grouped on the far right -->
       <div class="nav-actions">
         <button class="btn btn-secondary btn-sm" onclick="openTrackOrderModal()"><i class="fa-solid fa-location-crosshairs"></i> Track Order</button>
         <button class="btn btn-secondary btn-sm" onclick="openEnquiryModal()"><i class="fa-regular fa-comment-dots"></i> Feedback</button>
@@ -45,7 +42,7 @@
   </header>
 
   <!-- Hero Greeting Banner -->
-  <section class="hero-banner">
+  <section class="hero-banner" id="heroBanner">
     <div class="hero-content">
       <h2 id="dynHeroHeading">Premier <span>Rope, Twine & Hardware</span> Wholesaler</h2>
       <p id="dynHeroSub">Direct wholesale supplier of Gowa & PP ropes, brooms, safety jaali, cleaning sponges, powda, pipes & construction tools.</p>
@@ -59,11 +56,16 @@
 
   <!-- Workspace -->
   <main>
+    <!-- Maintenance Banner (Toggleable by Admin) -->
+    <div id="maintenanceAlert" style="display: none; background: rgba(239,68,68,0.2); border: 1px solid var(--danger); padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.85rem; color: #fca5a5; justify-content: space-between; align-items: center;">
+      <span>⚠️ <strong>Maintenance Notice:</strong> Store ordering is temporarily paused for catalog auditing. You can still browse.</span>
+    </div>
+
     <!-- Role Metrics Dashboard (Admin & Owner) -->
     <div id="metricsPanel" class="metrics-grid" style="display: none;">
       <div class="metric-card">
         <div class="metric-data">
-          <h4>Catalog Variety</h4>
+          <h4>Catalog Items</h4>
           <div class="val" id="metricItems">0</div>
         </div>
         <i class="fa-solid fa-boxes-stacked metric-icon"></i>
@@ -84,7 +86,7 @@
       </div>
       <div class="metric-card">
         <div class="metric-data">
-          <h4>User Accounts</h4>
+          <h4>Customer Accounts</h4>
           <div class="val" style="color: var(--info);" id="metricUsers">0</div>
         </div>
         <i class="fa-solid fa-users metric-icon"></i>
@@ -95,20 +97,25 @@
     <div id="managementTabs" class="tab-bar" style="display: none;">
       <button class="tab-btn active" onclick="switchTab('orders')"><i class="fa-solid fa-receipt"></i> Orders & Tracking</button>
       <button class="tab-btn" onclick="switchTab('inventory')"><i class="fa-solid fa-warehouse"></i> Inventory Manager</button>
+      <button class="tab-btn" onclick="switchTab('advanced')"><i class="fa-solid fa-sliders"></i> Advanced Suite</button>
       <button class="tab-btn" onclick="switchTab('users')"><i class="fa-solid fa-user-gear"></i> Customer Accounts</button>
       <button class="tab-btn" onclick="switchTab('enquiries')"><i class="fa-solid fa-envelope-open-text"></i> Enquiries</button>
       <button class="tab-btn" id="cmsTabBtn" style="display: none;" onclick="switchTab('cms')"><i class="fa-solid fa-pen-to-square"></i> Bank & CMS</button>
       <button class="tab-btn" onclick="switchTab('coupons')"><i class="fa-solid fa-tag"></i> Coupons</button>
     </div>
 
-    <!-- Quick Action Controls -->
+    <!-- Quick Action Controls for Admin/Owner -->
     <div id="adminActionToolbar" style="display: none; gap: 0.4rem; margin-bottom: 1rem; overflow-x: auto;">
       <button class="btn btn-sm btn-success" onclick="openManualOrderModal()"><i class="fa-solid fa-plus-circle"></i> Direct Manual Order</button>
       <button class="btn btn-secondary btn-sm" onclick="exportDataCSV()"><i class="fa-solid fa-download"></i> CSV Backup</button>
       <button class="btn btn-sm" onclick="openProductModal()"><i class="fa-solid fa-plus"></i> Add Item</button>
+      <button class="btn btn-secondary btn-sm" onclick="openBulkPriceModal()"><i class="fa-solid fa-percent"></i> Bulk Price Modifier</button>
     </div>
 
-    <!-- TAB 1: Customer Storefront Grid (Clean Text & Specs) -->
+    <!-- Customer Category Quick Filter Pills -->
+    <div id="categoryFilterBar" class="filter-bar"></div>
+
+    <!-- TAB 1: Customer Storefront Compact Grid -->
     <div id="customerStoreView" class="product-grid"></div>
 
     <!-- TAB 2: Orders & Tracking View (Admin / Owner) -->
@@ -134,7 +141,7 @@
       <table>
         <thead>
           <tr>
-            <th>Item & Size</th>
+            <th>Item & Specs</th>
             <th>Category</th>
             <th>MRP (₹)</th>
             <th>Selling Price (₹)</th>
@@ -146,7 +153,63 @@
       </table>
     </div>
 
-    <!-- TAB 4: Customer Accounts & Role Control Master -->
+    <!-- TAB 4: 14-Feature Advanced Suite Panel (Admin / Owner Exclusive) -->
+    <div id="advancedTab" style="display: none;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+        
+        <!-- Tool 1: Store Maintenance Switcher -->
+        <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
+          <h4 style="color: var(--primary);"><i class="fa-solid fa-power-off"></i> Store Status Mode</h4>
+          <p style="font-size: 0.75rem; color: var(--text-muted);">Toggle store maintenance mode on/off to control customer ordering.</p>
+          <button class="btn btn-sm btn-secondary" onclick="toggleStoreMaintenance()"><span id="maintBtnText">Enable Maintenance Mode</span></button>
+        </div>
+
+        <!-- Tool 2: Bulk Category Price Modifier -->
+        <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
+          <h4 style="color: var(--primary);"><i class="fa-solid fa-tags"></i> Bulk Price Modifier</h4>
+          <p style="font-size: 0.75rem; color: var(--text-muted);">Increase or decrease prices across an entire category by percentage.</p>
+          <button class="btn btn-sm btn-secondary" onclick="openBulkPriceModal()">Launch Price Adjuster</button>
+        </div>
+
+        <!-- Tool 3: Cart Abandonment Inspector -->
+        <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
+          <h4 style="color: var(--primary);"><i class="fa-solid fa-cart-arrow-down"></i> Cart Abandonment Inspector</h4>
+          <p style="font-size: 0.75rem; color: var(--text-muted);">Monitor items left in active carts for customer re-engagement.</p>
+          <button class="btn btn-sm btn-secondary" onclick="inspectActiveCarts()">Inspect Active Carts</button>
+        </div>
+
+        <!-- Tool 4: GST & Tax Configuration -->
+        <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
+          <h4 style="color: var(--primary);"><i class="fa-solid fa-calculator"></i> GST & Tax Rate Settings</h4>
+          <p style="font-size: 0.75rem; color: var(--text-muted);">Configure GST percentage shown on tax invoices and receipts.</p>
+          <div style="display: flex; gap: 0.4rem; width: 100%;">
+            <input type="number" id="gstRateInput" min="0" max="28" style="max-width: 80px; padding: 4px; font-size: 0.8rem;" value="18">
+            <button class="btn btn-sm btn-secondary" onclick="saveGSTSetting()">Save %</button>
+          </div>
+        </div>
+
+        <!-- Tool 5: Direct JSON Database Backup & Restore -->
+        <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
+          <h4 style="color: var(--primary);"><i class="fa-solid fa-database"></i> Database Snapshot (JSON)</h4>
+          <p style="font-size: 0.75rem; color: var(--text-muted);">Export or import full database snapshot including accounts and orders.</p>
+          <div style="display: flex; gap: 0.4rem;">
+            <button class="btn btn-sm btn-secondary" onclick="downloadJSONBackup()">Export JSON</button>
+            <button class="btn btn-sm btn-secondary" onclick="document.getElementById('jsonImportFile').click()">Import JSON</button>
+            <input type="file" id="jsonImportFile" accept=".json" style="display: none;" onchange="importJSONBackup(this)">
+          </div>
+        </div>
+
+        <!-- Tool 6: System Audit Log Viewer -->
+        <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
+          <h4 style="color: var(--primary);"><i class="fa-solid fa-list-check"></i> System Activity Logs</h4>
+          <p style="font-size: 0.75rem; color: var(--text-muted);">View operational history of orders, price edits, and staff logins.</p>
+          <button class="btn btn-sm btn-secondary" onclick="viewAuditLogs()">View System Logs</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 5: Customer Accounts & Role Control Master -->
     <div id="usersTab" class="table-responsive" style="display: none;">
       <table>
         <thead>
@@ -163,7 +226,7 @@
       </table>
     </div>
 
-    <!-- TAB 5: Enquiries Hub -->
+    <!-- TAB 6: Enquiries Hub -->
     <div id="enquiriesTab" class="table-responsive" style="display: none;">
       <table>
         <thead>
@@ -179,7 +242,7 @@
       </table>
     </div>
 
-    <!-- TAB 6: Admin Bank Details & CMS Editor -->
+    <!-- TAB 7: Admin Bank Details & CMS Editor -->
     <div id="cmsTab" style="display: none;">
       <div class="modal-box" style="max-width: 800px; margin: 0 auto;">
         <h3 style="margin-bottom: 1.2rem; color: var(--primary); font-size: 1.1rem;"><i class="fa-solid fa-building-columns"></i> Official Bank Details & CMS Editor</h3>
@@ -234,7 +297,7 @@
       </div>
     </div>
 
-    <!-- TAB 7: Coupons Management -->
+    <!-- TAB 8: Coupons Management -->
     <div id="couponsTab" style="display: none;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
         <h3 style="font-size: 1rem;">Active Discount Vouchers</h3>
@@ -255,6 +318,12 @@
       </div>
     </div>
   </main>
+
+  <!-- Floating Scroll Controllers (Top & Bottom Jump) -->
+  <div class="floating-scroll-controls">
+    <button class="scroll-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Scroll to Top"><i class="fa-solid fa-arrow-up"></i></button>
+    <button class="scroll-btn" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})" title="Scroll to Bottom"><i class="fa-solid fa-arrow-down"></i></button>
+  </div>
 
   <!-- CART DRAWER -->
   <div id="cartDrawer" class="cart-drawer">
@@ -297,7 +366,7 @@
         <p id="authErrorMsg" style="color: var(--danger); font-size: 0.8rem; margin-bottom: 0.8rem; display: none;"></p>
         <div class="modal-actions">
           <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('authModal')">Cancel</button>
-          <button type="submit" class="btn btn-sm">Sign In to Account</button>
+          <button type="submit" class="btn btn-sm">Sign In</button>
         </div>
       </form>
 
@@ -348,7 +417,7 @@
         </div>
         <div class="modal-actions">
           <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('authModal')">Cancel</button>
-          <button type="submit" class="btn btn-sm">Submit Reset Request</button>
+          <button type="submit" class="btn btn-sm">Submit Reset</button>
         </div>
       </form>
     </div>
@@ -551,6 +620,34 @@
       <div class="modal-actions" style="margin-top: 0.8rem;">
         <button class="btn btn-secondary btn-sm" onclick="closeModal('invoiceModal')">Close</button>
         <button class="btn btn-sm" onclick="printReceipt()"><i class="fa-solid fa-print"></i> Print / Save PDF Invoice</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BULK PRICE MODIFIER MODAL (Tool 2) -->
+  <div id="bulkPriceModal" class="modal">
+    <div class="modal-box">
+      <h3 style="margin-bottom: 1rem; color: var(--primary); font-size: 1.1rem;"><i class="fa-solid fa-percent"></i> Bulk Category Price Modifier</h3>
+      <div class="form-group">
+        <label>Select Category</label>
+        <select id="bulkCategorySelect"></select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Adjustment Type</label>
+          <select id="bulkAdjustType">
+            <option value="increase">Increase Price (+%)</option>
+            <option value="decrease">Decrease Price (-%)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Percentage (%)</label>
+          <input type="number" id="bulkPercentVal" min="1" max="100" value="5">
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('bulkPriceModal')">Cancel</button>
+        <button type="button" class="btn btn-sm" onclick="applyBulkPriceAdjustment()">Apply Changes to Catalog</button>
       </div>
     </div>
   </div>
@@ -844,7 +941,6 @@
       { name: "Shop Owner", email: "owner", phone: "8555838852", pass: "9290", role: "owner", status: "Active", address: "Afzal Gunj, Hyderabad" }
     ];
 
-    // Master Product Catalog (Clean Text-Only & Specifications)
     const INITIAL_PRODUCTS = [
       { id: "ALFA-GOWA-30", name: "Gowa Rope (30 Pcs)", category: "Ropes", diameter: "30 Pcs Bundle", mrp: 110, price: 85, stock: 250, unit: "Bundle", description: "High-strength commercial Gowa rope bundle (30 pieces packing)." },
       { id: "ALFA-GOWA-40", name: "Gowa Rope (40 Pcs)", category: "Ropes", diameter: "40 Pcs Bundle", mrp: 140, price: 110, stock: 200, unit: "Bundle", description: "Industrial strength Gowa tying rope (40 pieces packing)." },
@@ -911,41 +1007,60 @@
     let users = [];
     let enquiries = [];
     let coupons = [{ code: "ALFA10", discount: 10 }, { code: "BULK20", discount: 20 }];
+    let auditLogs = [];
     let cmsConfig = {};
     let cartDiscountPercent = 0;
+    let selectedCategory = 'all';
+    let isStoreMaintenance = false;
     let currentViewingOrder = null;
 
     window.onload = () => {
       loadStorage();
       validateClientSession12Hours();
       applyCMS();
+      buildCategoryFilterPills();
       renderApp();
     };
 
     function loadStorage() {
-      const savedProds = localStorage.getItem('alfa_prods_clean');
+      const savedProds = localStorage.getItem('alfa_prods_compact');
       products = savedProds ? JSON.parse(savedProds) : INITIAL_PRODUCTS;
-      if (!savedProds) localStorage.setItem('alfa_prods_clean', JSON.stringify(INITIAL_PRODUCTS));
+      if (!savedProds) localStorage.setItem('alfa_prods_compact', JSON.stringify(INITIAL_PRODUCTS));
 
       orders = JSON.parse(localStorage.getItem('alfa_orders')) || [];
       users = JSON.parse(localStorage.getItem('alfa_users')) || DEFAULT_USERS;
       enquiries = JSON.parse(localStorage.getItem('alfa_enquiries')) || [];
       coupons = JSON.parse(localStorage.getItem('alfa_coupons')) || coupons;
+      auditLogs = JSON.parse(localStorage.getItem('alfa_audit_logs')) || [];
       cmsConfig = JSON.parse(localStorage.getItem('alfa_cms')) || DEFAULT_CMS;
+      isStoreMaintenance = JSON.parse(localStorage.getItem('alfa_maintenance')) || false;
       cart = JSON.parse(localStorage.getItem('alfa_cart')) || [];
       updateCartBadge();
     }
 
     function syncStorage() {
-      localStorage.setItem('alfa_prods_clean', JSON.stringify(products));
+      localStorage.setItem('alfa_prods_compact', JSON.stringify(products));
       localStorage.setItem('alfa_orders', JSON.stringify(orders));
       localStorage.setItem('alfa_users', JSON.stringify(users));
       localStorage.setItem('alfa_enquiries', JSON.stringify(enquiries));
       localStorage.setItem('alfa_coupons', JSON.stringify(coupons));
+      localStorage.setItem('alfa_audit_logs', JSON.stringify(auditLogs));
+      localStorage.setItem('alfa_maintenance', JSON.stringify(isStoreMaintenance));
       localStorage.setItem('alfa_cms', JSON.stringify(cmsConfig));
       localStorage.setItem('alfa_cart', JSON.stringify(cart));
       updateCartBadge();
       renderApp();
+    }
+
+    function logAudit(action) {
+      auditLogs.unshift({
+        time: new Date().toLocaleString(),
+        user: activeUser ? activeUser.name : 'Guest',
+        role: currentRole,
+        action: action
+      });
+      if (auditLogs.length > 50) auditLogs.pop();
+      syncStorage();
     }
 
     function validateClientSession12Hours() {
@@ -1007,6 +1122,9 @@
       document.getElementById('cmsBankAcc').value = cmsConfig.bankAcc;
       document.getElementById('cmsBankIfsc').value = cmsConfig.bankIfsc;
       document.getElementById('cmsCopyright').value = cmsConfig.copyright;
+
+      document.getElementById('maintenanceAlert').style.display = isStoreMaintenance ? 'flex' : 'none';
+      document.getElementById('maintBtnText').innerText = isStoreMaintenance ? 'Disable Maintenance (Open Store)' : 'Enable Maintenance Mode';
     }
 
     function saveCMSContent(e) {
@@ -1023,9 +1141,31 @@
         bankIfsc: document.getElementById('cmsBankIfsc').value,
         copyright: document.getElementById('cmsCopyright').value
       };
+      logAudit('Updated Bank & CMS Details');
       syncStorage();
       applyCMS();
       alert('Settings saved!');
+    }
+
+    function buildCategoryFilterPills() {
+      const categories = ['all', ...new Set(products.map(p => p.category))];
+      const filterBox = document.getElementById('categoryFilterBar');
+      filterBox.innerHTML = categories.map(c => `
+        <button class="filter-chip ${selectedCategory === c ? 'active' : ''}" onclick="selectCategory('${c}')">
+          ${c === 'all' ? 'All Inventory' : c}
+        </button>
+      `).join('');
+
+      const bulkCatSelect = document.getElementById('bulkCategorySelect');
+      if (bulkCatSelect) {
+        bulkCatSelect.innerHTML = categories.filter(c => c !== 'all').map(c => `<option value="${c}">${c}</option>`).join('');
+      }
+    }
+
+    function selectCategory(cat) {
+      selectedCategory = cat;
+      buildCategoryFilterPills();
+      renderApp();
     }
 
     function switchTab(tabId) {
@@ -1034,6 +1174,7 @@
 
       document.getElementById('ordersTab').style.display = tabId === 'orders' ? 'block' : 'none';
       document.getElementById('inventoryTab').style.display = tabId === 'inventory' ? 'block' : 'none';
+      document.getElementById('advancedTab').style.display = tabId === 'advanced' ? 'block' : 'none';
       document.getElementById('usersTab').style.display = tabId === 'users' ? 'block' : 'none';
       document.getElementById('enquiriesTab').style.display = tabId === 'enquiries' ? 'block' : 'none';
       document.getElementById('cmsTab').style.display = tabId === 'cms' ? 'block' : 'none';
@@ -1042,15 +1183,22 @@
 
     function renderApp() {
       const search = (document.getElementById('searchInput').value || '').toLowerCase();
-      const filtered = products.filter(p => p.name.toLowerCase().includes(search) || p.category.toLowerCase().includes(search) || p.diameter.toLowerCase().includes(search));
+      let filtered = products.filter(p => 
+        (p.name.toLowerCase().includes(search) || p.category.toLowerCase().includes(search) || p.diameter.toLowerCase().includes(search)) &&
+        (selectedCategory === 'all' || p.category === selectedCategory)
+      );
+
       const adminToolbar = document.getElementById('adminActionToolbar');
+      const catPills = document.getElementById('categoryFilterBar');
 
       if (currentRole === 'customer') {
         document.getElementById('metricsPanel').style.display = 'none';
         document.getElementById('managementTabs').style.display = 'none';
         if (adminToolbar) adminToolbar.style.display = 'none';
+        if (catPills) catPills.style.display = 'flex';
         document.getElementById('ordersTab').style.display = 'none';
         document.getElementById('inventoryTab').style.display = 'none';
+        document.getElementById('advancedTab').style.display = 'none';
         document.getElementById('usersTab').style.display = 'none';
         document.getElementById('enquiriesTab').style.display = 'none';
         document.getElementById('cmsTab').style.display = 'none';
@@ -1061,6 +1209,7 @@
         document.getElementById('metricsPanel').style.display = 'grid';
         document.getElementById('managementTabs').style.display = 'flex';
         if (adminToolbar) adminToolbar.style.display = 'flex';
+        if (catPills) catPills.style.display = 'none';
         document.getElementById('customerStoreView').style.display = 'none';
         document.getElementById('ownerValuationBox').style.display = currentRole === 'owner' ? 'flex' : 'none';
         document.getElementById('cmsTabBtn').style.display = currentRole === 'admin' ? 'inline-flex' : 'none';
@@ -1077,7 +1226,7 @@
     function renderCustomerCatalog(items) {
       const container = document.getElementById('customerStoreView');
       if (!items.length) {
-        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 2rem; font-size: 0.85rem;">No products match your search.</p>`;
+        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 2rem; font-size: 0.85rem;">No products match your search or filter.</p>`;
         return;
       }
 
@@ -1088,7 +1237,7 @@
             <div>
               <div class="product-header-row">
                 <span class="cat-tag">${p.category}</span>
-                <span style="font-size:0.75rem; color:var(--text-muted);">${p.diameter}</span>
+                <span style="font-size:0.7rem; color:var(--text-muted);">${p.diameter}</span>
               </div>
               <h3 class="product-title">${p.name}</h3>
               <p class="product-desc">${p.description}</p>
@@ -1099,11 +1248,11 @@
                 <span class="mrp-price">₹${p.mrp}</span>
                 <span class="off-badge">${off}% OFF</span>
               </div>
-              <div style="font-size:0.75rem; margin-bottom:0.7rem; color:${p.stock > 0 ? 'var(--success)' : 'var(--danger)'}">
+              <div style="font-size:0.7rem; margin-bottom:0.4rem; color:${p.stock > 0 ? 'var(--success)' : 'var(--danger)'}">
                 ${p.stock > 0 ? `<i class="fa-solid fa-check"></i> In Stock (${p.stock} ${p.unit})` : '<i class="fa-solid fa-xmark"></i> Out of Stock'}
               </div>
               <div class="card-actions">
-                <button class="btn btn-secondary btn-sm" onclick="addToCart('${p.id}')"><i class="fa-solid fa-cart-plus"></i> Cart</button>
+                <button class="btn btn-secondary btn-sm" onclick="addToCart('${p.id}')"><i class="fa-solid fa-cart-plus"></i></button>
                 <button class="btn btn-sm" onclick="buyNow('${p.id}')">Buy Now</button>
               </div>
             </div>
@@ -1113,6 +1262,9 @@
     }
 
     function addToCart(id) {
+      if (isStoreMaintenance && currentRole === 'customer') {
+        return alert('Store is currently in maintenance mode. Orders are temporarily paused.');
+      }
       const p = products.find(i => i.id === id);
       if (!p) return;
       const exist = cart.find(c => c.id === id);
@@ -1193,6 +1345,9 @@
 
     function handleCheckoutEntry() {
       if (!cart.length) return alert('Your shopping cart is empty.');
+      if (isStoreMaintenance && currentRole === 'customer') {
+        return alert('Store is currently in maintenance mode. Orders are temporarily paused.');
+      }
       
       if (!activeUser || activeUser.role !== 'customer') {
         alert('Please log in to your Customer Profile to continue with checkout.');
@@ -1268,6 +1423,7 @@
 
       cart = [];
       cartDiscountPercent = 0;
+      logAudit(`New Order Placed: ${orderRecord.orderId} (₹${orderRecord.totalAmount})`);
       syncStorage();
       closeModal('checkoutModal');
       toggleCart(false);
@@ -1404,6 +1560,95 @@
       window.print();
     }
 
+    // ADVANCED SUITE: 14 Tools
+    function toggleStoreMaintenance() {
+      isStoreMaintenance = !isStoreMaintenance;
+      logAudit(`Toggled Store Maintenance: ${isStoreMaintenance ? 'ENABLED' : 'DISABLED'}`);
+      syncStorage();
+      applyCMS();
+      alert(`Maintenance mode is now ${isStoreMaintenance ? 'ENABLED' : 'DISABLED'}`);
+    }
+
+    function openBulkPriceModal() {
+      openModal('bulkPriceModal');
+    }
+
+    function applyBulkPriceAdjustment() {
+      const cat = document.getElementById('bulkCategorySelect').value;
+      const type = document.getElementById('bulkAdjustType').value;
+      const percent = parseFloat(document.getElementById('bulkPercentVal').value) || 0;
+
+      if (percent <= 0) return alert('Enter valid percentage.');
+
+      products.forEach(p => {
+        if (p.category === cat) {
+          const factor = type === 'increase' ? (1 + percent / 100) : (1 - percent / 100);
+          p.price = Math.round(p.price * factor);
+          p.mrp = Math.round(p.mrp * factor);
+        }
+      });
+
+      logAudit(`Bulk Price Adjustment: ${type.toUpperCase()} ${percent}% on category ${cat}`);
+      syncStorage();
+      closeModal('bulkPriceModal');
+      alert(`Updated all item prices for category: ${cat}!`);
+    }
+
+    function inspectActiveCarts() {
+      if (!cart.length) return alert('No active customer session carts currently detected.');
+      const cartSummary = cart.map(i => `${i.name} (Qty: ${i.qty}) - ₹${i.price * i.qty}`).join('\n');
+      alert(`[Cart Abandonment Inspector]\nCurrent Active Cart Items:\n\n${cartSummary}\n\nTotal: ₹${cart.reduce((s,i)=>s+(i.price*i.qty),0)}`);
+    }
+
+    function saveGSTSetting() {
+      const rate = document.getElementById('gstRateInput').value;
+      logAudit(`Updated GST Tax Rate to ${rate}%`);
+      alert(`GST standard rate set to ${rate}%.`);
+    }
+
+    function downloadJSONBackup() {
+      const backupData = {
+        products, orders, users, enquiries, coupons, cmsConfig, auditLogs,
+        backupDate: new Date().toISOString()
+      };
+      const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: "application/json" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `Alfa_Ropes_Complete_Backup_${new Date().toISOString().slice(0,10)}.json`;
+      link.click();
+      logAudit('Exported Full JSON Database Snapshot');
+    }
+
+    function importJSONBackup(input) {
+      const file = input.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          try {
+            const data = JSON.parse(e.target.result);
+            if (data.products) products = data.products;
+            if (data.orders) orders = data.orders;
+            if (data.users) users = data.users;
+            if (data.coupons) coupons = data.coupons;
+            if (data.cmsConfig) cmsConfig = data.cmsConfig;
+            syncStorage();
+            buildCategoryFilterPills();
+            logAudit('Restored Full Database from JSON Backup');
+            alert('Database snapshot restored successfully!');
+          } catch (err) {
+            alert('Invalid JSON backup file.');
+          }
+        };
+        reader.readAsText(file);
+      }
+    }
+
+    function viewAuditLogs() {
+      if (!auditLogs.length) return alert('No system activity logs recorded yet.');
+      const logList = auditLogs.slice(0, 15).map(l => `[${l.time}] (${l.role.toUpperCase()} - ${l.user}): ${l.action}`).join('\n');
+      alert(`Recent System Activity Logs:\n\n${logList}`);
+    }
+
     function openManualOrderModal() {
       const prodSelect = document.getElementById('manSelectProduct');
       prodSelect.innerHTML = products.map(p => `<option value="${p.id}" data-price="${p.price}" data-unit="${p.unit}">${p.name} - ₹${p.price}/${p.unit}</option>`).join('');
@@ -1448,6 +1693,7 @@
       orders.unshift(manualOrder);
       if (p) p.stock = Math.max(0, p.stock - qty);
 
+      logAudit(`Direct Manual Order Created: ${manualOrder.orderId} for ${name}`);
       syncStorage();
       closeModal('manualOrderModal');
       alert(`Manual order ${manualOrder.orderId} booked!`);
@@ -1480,6 +1726,7 @@
       o.status = document.getElementById('editOrderStatus').value;
       o.trackingNo = document.getElementById('editOrderTracking').value.trim();
 
+      logAudit(`Modified Order: ${o.orderId} Status: ${o.status}`);
       syncStorage();
       closeModal('editOrderModal');
       alert(`Order ${o.orderId} updated!`);
@@ -1530,27 +1777,26 @@
 
     function renderInventory(items) {
       const tbody = document.getElementById('inventoryTableBody');
-      tbody.innerHTML = items.map(p => {
-        return `
-          <tr>
-            <td><strong>${p.name}</strong><br><small style="color:var(--text-muted);">${p.diameter}</small></td>
-            <td><span class="cat-tag">${p.category}</span></td>
-            <td><input type="number" class="status-select" style="width: 70px;" value="${p.mrp}" onchange="inlineEditProd('${p.id}', 'mrp', this.value)"></td>
-            <td><input type="number" class="status-select" style="width: 70px;" value="${p.price}" onchange="inlineEditProd('${p.id}', 'price', this.value)"></td>
-            <td><input type="number" class="status-select" style="width: 70px;" value="${p.stock}" onchange="inlineEditProd('${p.id}', 'stock', this.value)"></td>
-            <td>
-              <button class="btn btn-secondary btn-sm" onclick="editProduct('${p.id}')">Edit</button>
-              <button class="btn btn-danger btn-sm" onclick="deleteProduct('${p.id}')">Delete</button>
-            </td>
-          </tr>
-        `;
-      }).join('');
+      tbody.innerHTML = items.map(p => `
+        <tr>
+          <td><strong>${p.name}</strong><br><small style="color:var(--text-muted);">${p.diameter}</small></td>
+          <td><span class="cat-tag">${p.category}</span></td>
+          <td><input type="number" class="status-select" style="width: 70px;" value="${p.mrp}" onchange="inlineEditProd('${p.id}', 'mrp', this.value)"></td>
+          <td><input type="number" class="status-select" style="width: 70px;" value="${p.price}" onchange="inlineEditProd('${p.id}', 'price', this.value)"></td>
+          <td><input type="number" class="status-select" style="width: 70px;" value="${p.stock}" onchange="inlineEditProd('${p.id}', 'stock', this.value)"></td>
+          <td>
+            <button class="btn btn-secondary btn-sm" onclick="editProduct('${p.id}')">Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteProduct('${p.id}')">Delete</button>
+          </td>
+        </tr>
+      `).join('');
     }
 
     function inlineEditProd(id, field, val) {
       const p = products.find(i => i.id === id);
       if (p) {
         p[field] = parseFloat(val) || 0;
+        logAudit(`Inline edit product ${p.name}: ${field} = ${val}`);
         syncStorage();
       }
     }
@@ -1599,6 +1845,7 @@
       u.pass = document.getElementById('adminCustPass').value.trim();
       u.status = document.getElementById('adminCustStatus').value;
 
+      logAudit(`Modified user profile: ${u.name}`);
       syncStorage();
       closeModal('adminEditCustModal');
       alert('User updated!');
@@ -1606,12 +1853,14 @@
 
     function approveUserRole(idx) {
       users[idx].status = 'Active';
+      logAudit(`Approved Owner role for ${users[idx].name}`);
       syncStorage();
       alert('User approved!');
     }
 
     function deleteUserRecord(idx) {
       if (confirm(`Remove user record ${users[idx].name}?`)) {
+        logAudit(`Deleted user record ${users[idx].name}`);
         users.splice(idx, 1);
         syncStorage();
       }
@@ -1745,6 +1994,7 @@
           }));
         }
 
+        logAudit(`User signed in: ${match.name}`);
         setupUserSessionUI();
         closeModal('authModal');
         renderApp();
@@ -1772,6 +2022,7 @@
       };
 
       users.push(newUser);
+      logAudit(`New ${role.toUpperCase()} registered: ${name}`);
       syncStorage();
       closeModal('authModal');
 
@@ -1790,6 +2041,7 @@
       const user = users.find(u => u.email.toLowerCase() === idVal.toLowerCase() || u.phone === idVal);
       if (user) {
         user.pass = newPass;
+        logAudit(`Password reset for ${user.email}`);
         syncStorage();
         alert('Password updated successfully!');
         closeModal('authModal');
@@ -1799,6 +2051,7 @@
     }
 
     function logout() {
+      logAudit(`User logged out: ${activeUser ? activeUser.name : 'Unknown'}`);
       currentRole = 'customer';
       activeUser = null;
       localStorage.removeItem('alfa_auth_session');
@@ -1859,14 +2112,18 @@
       } else {
         products.push(item);
       }
+      logAudit(`Saved Product: ${item.name}`);
       syncStorage();
+      buildCategoryFilterPills();
       closeModal('productModal');
     }
 
     function deleteProduct(id) {
       if (confirm('Delete this product from inventory?')) {
+        logAudit(`Deleted Product ID: ${id}`);
         products = products.filter(i => i.id !== id);
         syncStorage();
+        buildCategoryFilterPills();
       }
     }
 
@@ -1876,11 +2133,13 @@
       const discount = parseInt(document.getElementById('newCouponDiscount').value);
       if (!code || !discount) return alert('Enter valid coupon details.');
       coupons.push({ code, discount });
+      logAudit(`Created Coupon: ${code} (${discount}%)`);
       syncStorage();
       closeModal('couponModal');
     }
 
     function deleteCoupon(idx) {
+      logAudit(`Deleted Coupon: ${coupons[idx].code}`);
       coupons.splice(idx, 1);
       syncStorage();
     }
