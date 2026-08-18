@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ALFA ROPE SUPPLIERS | Enterprise Industrial Portal</title>
+  <title>ALFA ROPE SUPPLIERS | Wholesale & Industrial Portal</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -38,7 +38,7 @@
       flex-direction: column;
     }
 
-    /* Enterprise Navigation */
+    /* Enterprise Navigation Header */
     header {
       background-color: var(--bg-panel);
       border-bottom: 1px solid var(--border-color);
@@ -123,7 +123,7 @@
       gap: 0.8rem;
     }
 
-    /* Modern Buttons */
+    /* Buttons */
     .btn {
       background: var(--primary);
       color: #000;
@@ -171,7 +171,7 @@
       border-radius: 50%;
     }
 
-    /* Opening Hero Greeting */
+    /* Hero Opening Section */
     .hero-banner {
       background: linear-gradient(180deg, rgba(31, 41, 55, 0.85) 0%, rgba(11, 15, 25, 1) 100%), url('https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
       padding: 2.8rem 2rem;
@@ -536,7 +536,7 @@
           <i class="fa-solid fa-cart-shopping"></i> Cart
           <span class="cart-badge" id="cartCount">0</span>
         </button>
-        <div id="roleBadge" class="btn btn-secondary btn-sm"><i class="fa-solid fa-user"></i> Customer</div>
+        <div id="roleBadge" class="btn btn-secondary btn-sm" style="display: none;"></div>
         <button class="btn btn-secondary" onclick="openAuthModal()" id="loginBtn">Portal Login</button>
         <button class="btn btn-danger btn-sm" id="logoutBtn" style="display: none;" onclick="logout()">Logout</button>
       </div>
@@ -1727,9 +1727,9 @@
     };
 
     function loadStorage() {
-      const savedProds = localStorage.getItem('alfa_prods_v3');
+      const savedProds = localStorage.getItem('alfa_prods_v4');
       products = savedProds ? JSON.parse(savedProds) : INITIAL_PRODUCTS;
-      if (!savedProds) localStorage.setItem('alfa_prods_v3', JSON.stringify(INITIAL_PRODUCTS));
+      if (!savedProds) localStorage.setItem('alfa_prods_v4', JSON.stringify(INITIAL_PRODUCTS));
 
       orders = JSON.parse(localStorage.getItem('alfa_orders')) || [];
       users = JSON.parse(localStorage.getItem('alfa_users')) || DEFAULT_USERS;
@@ -1741,7 +1741,7 @@
     }
 
     function syncStorage() {
-      localStorage.setItem('alfa_prods_v3', JSON.stringify(products));
+      localStorage.setItem('alfa_prods_v4', JSON.stringify(products));
       localStorage.setItem('alfa_orders', JSON.stringify(orders));
       localStorage.setItem('alfa_users', JSON.stringify(users));
       localStorage.setItem('alfa_enquiries', JSON.stringify(enquiries));
@@ -2244,7 +2244,20 @@
 
         activeUser = match;
         currentRole = match.role;
-        document.getElementById('roleBadge').innerHTML = `<i class="fa-solid fa-user-shield"></i> ${match.name} (${match.role.toUpperCase()})`;
+        
+        // Show role indicator only when logged in
+        const rBadge = document.getElementById('roleBadge');
+        if (match.role === 'admin') {
+          rBadge.innerHTML = `<i class="fa-solid fa-user-shield"></i> Admin`;
+          rBadge.style.display = 'inline-flex';
+        } else if (match.role === 'owner') {
+          rBadge.innerHTML = `<i class="fa-solid fa-crown"></i> Owner`;
+          rBadge.style.display = 'inline-flex';
+        } else {
+          rBadge.innerHTML = `<i class="fa-solid fa-user"></i> ${match.name}`;
+          rBadge.style.display = 'inline-flex';
+        }
+
         document.getElementById('logoutBtn').style.display = 'inline-flex';
         document.getElementById('loginBtn').style.display = 'none';
         closeModal('authModal');
@@ -2301,7 +2314,7 @@
     function logout() {
       currentRole = 'customer';
       activeUser = null;
-      document.getElementById('roleBadge').innerHTML = '<i class="fa-solid fa-user"></i> Customer';
+      document.getElementById('roleBadge').style.display = 'none';
       document.getElementById('logoutBtn').style.display = 'none';
       document.getElementById('loginBtn').style.display = 'inline-flex';
       renderApp();
