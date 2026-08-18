@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ALFA ROPE SUPPLIERS | Enterprise Wholesale & Retail Portal</title>
+  <title>ALFA ROPE SUPPLIERS | Enterprise Industrial & Retail Portal</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -20,7 +20,6 @@
       --danger: #ef4444;
       --info: #0ea5e9;
       --warning: #f59e0b;
-      --upi-purple: #5f259f;
     }
 
     * {
@@ -38,7 +37,7 @@
       flex-direction: column;
     }
 
-    /* Enterprise Navigation Header */
+    /* Enterprise Navigation */
     header {
       background-color: var(--bg-panel);
       border-bottom: 1px solid var(--border-color);
@@ -123,7 +122,7 @@
       gap: 0.8rem;
     }
 
-    /* Buttons */
+    /* Modern Buttons */
     .btn {
       background: var(--primary);
       color: #000;
@@ -171,7 +170,7 @@
       border-radius: 50%;
     }
 
-    /* Hero Opening Section */
+    /* Hero Banner */
     .hero-banner {
       background: linear-gradient(180deg, rgba(31, 41, 55, 0.85) 0%, rgba(11, 15, 25, 1) 100%), url('https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
       padding: 2.5rem 2rem;
@@ -490,7 +489,36 @@
       border-color: var(--primary);
     }
 
-    /* Official Printable Invoice Sheet */
+    /* Bank Details & UPI Presentation */
+    .bank-info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .bank-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.4rem 0;
+      border-bottom: 1px dashed rgba(255,255,255,0.08);
+      font-size: 0.85rem;
+    }
+
+    .copy-chip {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--primary);
+      padding: 2px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    /* Printable Tax Invoice */
     .invoice-card {
       background: #ffffff;
       color: #111827;
@@ -587,7 +615,7 @@
           <span class="cart-badge" id="cartCount">0</span>
         </button>
 
-        <!-- Dynamic User Profile / Dashboard Button -->
+        <!-- User Profile Access -->
         <button id="userProfileBtn" class="btn btn-secondary btn-sm" style="display: none;" onclick="openCustomerProfileModal()"></button>
         
         <button class="btn btn-secondary" onclick="openAuthModal()" id="loginBtn">Portal Login</button>
@@ -596,7 +624,7 @@
     </div>
   </header>
 
-  <!-- Hero Greeting -->
+  <!-- Hero Greeting Banner -->
   <section class="hero-banner">
     <div class="hero-content">
       <h2 id="dynHeroHeading">Premier <span>Rope, Twine & Hardware</span> Wholesaler</h2>
@@ -609,7 +637,7 @@
     </div>
   </section>
 
-  <!-- Main Workspace -->
+  <!-- Workspace -->
   <main>
     <!-- Role Metrics Dashboard (Admin & Owner) -->
     <div id="metricsPanel" class="metrics-grid" style="display: none;">
@@ -636,10 +664,10 @@
       </div>
       <div class="metric-card">
         <div class="metric-data">
-          <h4>Customer Enquiries</h4>
-          <div class="val" style="color: var(--info);" id="metricEnquiries">0</div>
+          <h4>Registered Accounts</h4>
+          <div class="val" style="color: var(--info);" id="metricUsers">0</div>
         </div>
-        <i class="fa-regular fa-comments metric-icon"></i>
+        <i class="fa-solid fa-users metric-icon"></i>
       </div>
     </div>
 
@@ -647,9 +675,9 @@
     <div id="managementTabs" class="tab-bar" style="display: none;">
       <button class="tab-btn active" onclick="switchTab('orders')"><i class="fa-solid fa-receipt"></i> Orders & Tracking</button>
       <button class="tab-btn" onclick="switchTab('inventory')"><i class="fa-solid fa-warehouse"></i> Inventory Manager</button>
-      <button class="tab-btn" onclick="switchTab('enquiries')"><i class="fa-solid fa-envelope-open-text"></i> Enquiries & Suggestions</button>
-      <button class="tab-btn" onclick="switchTab('users')"><i class="fa-solid fa-user-shield"></i> User Accounts & Roles</button>
-      <button class="tab-btn" id="cmsTabBtn" style="display: none;" onclick="switchTab('cms')"><i class="fa-solid fa-pen-to-square"></i> Edit Website CMS</button>
+      <button class="tab-btn" onclick="switchTab('users')"><i class="fa-solid fa-user-gear"></i> Customer & Role Master</button>
+      <button class="tab-btn" onclick="switchTab('enquiries')"><i class="fa-solid fa-envelope-open-text"></i> Enquiries & Feedback</button>
+      <button class="tab-btn" id="cmsTabBtn" style="display: none;" onclick="switchTab('cms')"><i class="fa-solid fa-pen-to-square"></i> Bank Details & CMS</button>
       <button class="tab-btn" onclick="switchTab('coupons')"><i class="fa-solid fa-tag"></i> Coupons</button>
       
       <div style="margin-left: auto; display: flex; gap: 0.5rem; flex-wrap: wrap;">
@@ -668,7 +696,7 @@
         <thead>
           <tr>
             <th>Order ID & Date</th>
-            <th>Customer & Address</th>
+            <th>Customer & Contact</th>
             <th>Items & Total</th>
             <th>Payment</th>
             <th>Status</th>
@@ -698,13 +726,30 @@
       </table>
     </div>
 
-    <!-- TAB 4: Enquiries & Suggestions Hub -->
+    <!-- TAB 4: Customer Accounts & Role Control Master -->
+    <div id="usersTab" class="table-responsive" style="display: none;">
+      <table>
+        <thead>
+          <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Admin Advanced Options</th>
+          </tr>
+        </thead>
+        <tbody id="usersTableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- TAB 5: Enquiries Hub -->
     <div id="enquiriesTab" class="table-responsive" style="display: none;">
       <table>
         <thead>
           <tr>
             <th>Date</th>
-            <th>Name & Contact</th>
+            <th>Name & Phone</th>
             <th>Type</th>
             <th>Message</th>
             <th>Actions</th>
@@ -714,53 +759,57 @@
       </table>
     </div>
 
-    <!-- TAB 5: User Profiles, Roles & Security Access Control -->
-    <div id="usersTab" class="table-responsive" style="display: none;">
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email / Username</th>
-            <th>Role</th>
-            <th>Password</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="usersTableBody"></tbody>
-      </table>
-    </div>
-
-    <!-- TAB 6: Admin CMS Editor -->
+    <!-- TAB 6: Admin Bank Details & CMS Editor -->
     <div id="cmsTab" style="display: none;">
       <div class="modal-box" style="max-width: 800px; margin: 0 auto;">
-        <h3 style="margin-bottom: 1.2rem; color: var(--primary);"><i class="fa-solid fa-pen-to-square"></i> Live Website Text & Content Editor</h3>
+        <h3 style="margin-bottom: 1.2rem; color: var(--primary);"><i class="fa-solid fa-building-columns"></i> Official Bank Details & CMS Editor</h3>
         <form onsubmit="saveCMSContent(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Official UPI ID (GPay / PhonePe / Paytm)</label>
+              <input type="text" id="cmsUpiId" required>
+            </div>
+            <div class="form-group">
+              <label>Bank Account Holder Name</label>
+              <input type="text" id="cmsBankHolder" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Bank Name & Branch</label>
+              <input type="text" id="cmsBankName" required>
+            </div>
+            <div class="form-group">
+              <label>Bank Account Number</label>
+              <input type="text" id="cmsBankAcc" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Bank IFSC Code</label>
+            <input type="text" id="cmsBankIfsc" required>
+          </div>
+          <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 1.2rem 0;">
           <div class="form-group">
             <label>Shop Main Title</label>
             <input type="text" id="cmsBrandTitle" required>
           </div>
           <div class="form-group">
-            <label>Shop Subtitle / Location Header</label>
+            <label>Shop Location & Header Info</label>
             <input type="text" id="cmsBrandSubtitle" required>
           </div>
           <div class="form-group">
-            <label>Hero Opening Greeting Heading</label>
+            <label>Hero Heading</label>
             <input type="text" id="cmsHeroHeading" required>
           </div>
           <div class="form-group">
-            <label>Hero Opening Greeting Subtitle</label>
+            <label>Hero Subtitle</label>
             <textarea id="cmsHeroSub" rows="2" required></textarea>
           </div>
           <div class="form-group">
-            <label>UPI ID (GPay / PhonePe / Paytm Merchant VPA)</label>
-            <input type="text" id="cmsUpiId" placeholder="e.g. 8555838852@ybl" required>
-          </div>
-          <div class="form-group">
-            <label>Footer Copyright Statement</label>
+            <label>Footer Copyright</label>
             <input type="text" id="cmsCopyright" required>
           </div>
-          <button type="submit" class="btn" style="width: 100%; justify-content: center;">Save & Publish Changes</button>
+          <button type="submit" class="btn" style="width: 100%; justify-content: center;">Save All Bank & Website Settings</button>
         </form>
       </div>
     </div>
@@ -803,7 +852,7 @@
     </div>
   </div>
 
-  <!-- AUTHENTICATION MODAL -->
+  <!-- AUTHENTICATION MODAL (Email OR Mobile Login with 12h Session Remember) -->
   <div id="authModal" class="modal">
     <div class="modal-box">
       <div class="auth-nav">
@@ -815,17 +864,21 @@
       <!-- Sign In Form -->
       <form id="authFormLogin" onsubmit="handleLoginSubmit(event)">
         <div class="form-group">
-          <label>Username / Email Address</label>
-          <input type="text" id="loginUsername" placeholder="Enter username or email" required>
+          <label>Email Address OR Mobile Number</label>
+          <input type="text" id="loginIdentifier" placeholder="Enter email or 10-digit mobile" required>
         </div>
         <div class="form-group">
           <label>Password / Security PIN</label>
           <input type="password" id="loginPassword" placeholder="Enter password" required>
         </div>
+        <div style="margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted);">
+          <input type="checkbox" id="remember12Hours" style="width: 16px; height: 16px; cursor: pointer;">
+          <label for="remember12Hours" style="margin-bottom: 0; cursor: pointer;">Keep me logged in for 12 Hours on this device</label>
+        </div>
         <p id="authErrorMsg" style="color: var(--danger); font-size: 0.85rem; margin-bottom: 1rem; display: none;"></p>
         <div class="modal-actions">
           <button type="button" class="btn btn-secondary" onclick="closeModal('authModal')">Cancel</button>
-          <button type="submit" class="btn">Sign In</button>
+          <button type="submit" class="btn">Sign In to Account</button>
         </div>
       </form>
 
@@ -848,7 +901,7 @@
           <input type="email" id="regEmail" required>
         </div>
         <div class="form-group">
-          <label>Phone / WhatsApp Number</label>
+          <label>Mobile / WhatsApp Number</label>
           <input type="text" id="regPhone" required>
         </div>
         <div class="form-group">
@@ -856,7 +909,7 @@
           <textarea id="regAddress" rows="2" placeholder="Street, landmark, city, pincode" required></textarea>
         </div>
         <div class="form-group">
-          <label>Password</label>
+          <label>Create Password</label>
           <input type="password" id="regPass" required>
         </div>
         <div class="modal-actions">
@@ -867,10 +920,10 @@
 
       <!-- Forgot Password Form -->
       <form id="authFormForgot" style="display: none;" onsubmit="handleForgotSubmit(event)">
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Enter your registered email and your requested new password. Admin will review and approve the request.</p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Enter your registered email or phone and your requested new password. Admin will review and approve the request.</p>
         <div class="form-group">
-          <label>Registered Email Address</label>
-          <input type="email" id="forgotEmail" required>
+          <label>Registered Email or Phone</label>
+          <input type="text" id="forgotIdentifier" required>
         </div>
         <div class="form-group">
           <label>New Desired Password</label>
@@ -878,42 +931,51 @@
         </div>
         <div class="modal-actions">
           <button type="button" class="btn btn-secondary" onclick="closeModal('authModal')">Cancel</button>
-          <button type="submit" class="btn">Submit Request</button>
+          <button type="submit" class="btn">Submit Reset Request</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- CUSTOMER PROFILE & ADDRESS MANAGER MODAL -->
+  <!-- CUSTOMER PROFILE & ORDER HISTORY MODAL -->
   <div id="customerProfileModal" class="modal">
-    <div class="modal-box">
-      <h3 style="margin-bottom: 1.2rem;"><i class="fa-solid fa-id-card"></i> My Customer Profile & Address</h3>
-      <form onsubmit="saveCustomerProfile(event)">
-        <div class="form-group">
-          <label>Full Name</label>
-          <input type="text" id="profFullName" required>
+    <div class="modal-box" style="max-width: 680px;">
+      <h3 style="margin-bottom: 1.2rem;"><i class="fa-solid fa-id-card"></i> Customer Profile & Past Orders</h3>
+      
+      <form onsubmit="saveCustomerProfile(event)" style="margin-bottom: 1.5rem; background: var(--bg-card); padding: 1.2rem; border-radius: 8px; border: 1px solid var(--border-color);">
+        <h4 style="color: var(--primary); font-size: 0.95rem; margin-bottom: 0.8rem;">Profile & Delivery Address</h4>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="profFullName" required>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="profEmail" readonly style="opacity: 0.7;">
+          </div>
         </div>
         <div class="form-group">
-          <label>Email Address</label>
-          <input type="email" id="profEmail" readonly style="opacity: 0.7;">
-        </div>
-        <div class="form-group">
-          <label>Phone / WhatsApp Number</label>
+          <label>Mobile Number</label>
           <input type="text" id="profPhone" required>
         </div>
         <div class="form-group">
           <label>Delivery / Shipping Address</label>
-          <textarea id="profAddress" rows="3" required></textarea>
+          <textarea id="profAddress" rows="2" required></textarea>
         </div>
-        <div class="modal-actions">
-          <button type="button" class="btn btn-secondary" onclick="closeModal('customerProfileModal')">Close</button>
-          <button type="submit" class="btn">Update Address & Profile</button>
-        </div>
+        <button type="submit" class="btn btn-sm">Update Profile Details</button>
       </form>
+
+      <!-- Customer's Past Orders List -->
+      <h4 style="color: #fff; font-size: 0.95rem; margin-bottom: 0.8rem;"><i class="fa-solid fa-clock-rotate-left"></i> My Order History</h4>
+      <div id="custPastOrdersList" class="table-responsive" style="max-height: 240px; overflow-y: auto;"></div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('customerProfileModal')">Close</button>
+      </div>
     </div>
   </div>
 
-  <!-- CHECKOUT & UPI PAYMENT MODAL (Mandatory Logged-In Details) -->
+  <!-- CHECKOUT MODAL (With UPI & Bank Details Option) -->
   <div id="checkoutModal" class="modal">
     <div class="modal-box">
       <h3 style="margin-bottom: 1.2rem;"><i class="fa-solid fa-credit-card"></i> Complete Order & Payment</h3>
@@ -923,11 +985,11 @@
         <input type="text" id="orderCustName" required>
       </div>
       <div class="form-group">
-        <label>Phone / WhatsApp Number</label>
+        <label>Mobile / WhatsApp Number</label>
         <input type="text" id="orderCustPhone" required>
       </div>
       <div class="form-group">
-        <label>Delivery / Dispatch Address (<a href="javascript:void(0)" onclick="openCustomerProfileModal()" style="color:var(--primary);">Modify in Profile</a>)</label>
+        <label>Delivery / Dispatch Address</label>
         <textarea id="orderCustAddress" rows="2" required></textarea>
       </div>
       
@@ -941,36 +1003,61 @@
         <small id="couponMessage" style="font-size: 0.8rem; margin-top: 4px; display: block;"></small>
       </div>
 
-      <!-- Payment Method Selection -->
+      <!-- Payment Method -->
       <div class="form-group">
         <label>Payment Method</label>
         <select id="paymentMethod" onchange="togglePaymentSection(this.value)">
-          <option value="upi">Pay via UPI (GPay / PhonePe / Paytm / QR)</option>
+          <option value="upi">Direct UPI Transfer (GPay / PhonePe / Paytm / BHIM)</option>
+          <option value="bank">Bank Account IMPS / NEFT / RTGS Transfer</option>
           <option value="cod">Cash on Delivery / Wholesale Terms</option>
         </select>
       </div>
 
-      <!-- UPI QR Box -->
-      <div id="upiPaymentBox" style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); text-align: center; margin-bottom: 1rem;">
-        <p style="font-size: 0.85rem; margin-bottom: 0.5rem;">Scan & Pay to Alfa Rope Suppliers Official VPA:</p>
-        <div id="qrPlaceholder" style="background: #fff; padding: 10px; display: inline-block; border-radius: 8px;">
-          <img id="upiQrCodeImg" src="" style="width: 150px; height: 150px;" alt="UPI QR">
+      <!-- UPI Payment Details -->
+      <div id="upiPaymentBox" class="bank-info-card">
+        <div class="bank-row">
+          <span>Official UPI ID:</span>
+          <span style="font-weight: 700; color: var(--primary);" id="checkoutUpiId">alfaropesuppliers@ybl</span>
+          <span class="copy-chip" onclick="copyText('checkoutUpiId')">Copy UPI</span>
         </div>
-        <p style="font-size: 0.8rem; color: var(--primary); margin-top: 0.5rem; font-weight: 700;" id="upiIdDisplay">UPI: alfaropesuppliers@upi</p>
-        <div class="form-group" style="text-align: left; margin-top: 0.8rem;">
-          <label>UPI Reference / UTR Number (12 Digits)</label>
-          <input type="text" id="upiTxnId" placeholder="Enter UTR after payment">
+        <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Transfer from Google Pay, PhonePe, or Paytm and enter the 12-digit UTR/Reference below:</p>
+      </div>
+
+      <!-- Bank Details -->
+      <div id="bankPaymentBox" class="bank-info-card" style="display: none;">
+        <div class="bank-row">
+          <span>Account Holder:</span>
+          <strong id="chkBankHolder">ALFA ROPE SUPPLIERS</strong>
         </div>
+        <div class="bank-row">
+          <span>Bank Name:</span>
+          <strong id="chkBankName">State Bank of India</strong>
+        </div>
+        <div class="bank-row">
+          <span>Account Number:</span>
+          <strong id="chkBankAcc" style="color: var(--primary);">39485720194</strong>
+          <span class="copy-chip" onclick="copyText('chkBankAcc')">Copy</span>
+        </div>
+        <div class="bank-row">
+          <span>IFSC Code:</span>
+          <strong id="chkBankIfsc" style="color: var(--primary);">SBIN0001234</strong>
+          <span class="copy-chip" onclick="copyText('chkBankIfsc')">Copy</span>
+        </div>
+      </div>
+
+      <div class="form-group" id="txnRefGroup">
+        <label>Payment Transaction ID / UTR Number (12 Digits)</label>
+        <input type="text" id="upiTxnId" placeholder="Enter UTR / Ref No. from bank or UPI app">
       </div>
 
       <div class="modal-actions">
         <button class="btn btn-secondary" onclick="closeModal('checkoutModal')">Back</button>
-        <button class="btn btn-success" onclick="placeOrderFinal()">Place & Confirm Order</button>
+        <button class="btn btn-success" onclick="placeOrderFinal()">Confirm & Place Order</button>
       </div>
     </div>
   </div>
 
-  <!-- ORDER TRACKING & INVOICE LOOKUP MODAL (Dual-Key Verification) -->
+  <!-- ORDER TRACKING MODAL (Dual-Key Security Verification) -->
   <div id="trackOrderModal" class="modal">
     <div class="modal-box">
       <h3 style="margin-bottom: 1.2rem;"><i class="fa-solid fa-truck-ramp-box"></i> Track Order & View Receipt</h3>
@@ -994,7 +1081,7 @@
         <p style="font-size: 0.85rem; margin-bottom: 0.4rem;"><strong>Order Total:</strong> <span id="trackResTotal" style="color: var(--primary); font-weight:700;"></span></p>
         <p style="font-size: 0.85rem; margin-bottom: 0.8rem;"><strong>Delivery Address:</strong> <span id="trackResAddr" style="color: var(--text-muted);"></span></p>
         
-        <button class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center;" onclick="generateReceiptFromTracking()"><i class="fa-solid fa-receipt"></i> Download / Print Invoice Receipt</button>
+        <button class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center;" onclick="generateReceiptFromTracking()"><i class="fa-solid fa-receipt"></i> Download / Print Tax Invoice</button>
       </div>
 
       <div class="modal-actions">
@@ -1003,7 +1090,7 @@
     </div>
   </div>
 
-  <!-- OFFICIAL INVOICE / RECEIPT MODAL -->
+  <!-- TAX INVOICE MODAL -->
   <div id="invoiceModal" class="modal">
     <div class="modal-box" style="max-width: 650px; background: transparent; border: none; padding: 0;">
       <div class="invoice-card" id="printableReceiptCard">
@@ -1028,7 +1115,7 @@
             <div id="invCustAddress" style="color: #4b5563;"></div>
           </div>
           <div style="text-align: right;">
-            <strong style="color: #374151;">Order Logistics Details:</strong>
+            <strong style="color: #374151;">Order Logistics:</strong>
             <div>Status: <span id="invStatus" style="font-weight: 700; color: #059669;"></span></div>
             <div>Payment: <span id="invPaymentMode"></span></div>
             <div>Tracking / LR: <span id="invTrackingNo"></span></div>
@@ -1049,7 +1136,7 @@
 
         <div class="invoice-footer">
           <div style="font-size: 0.75rem; color: #6b7280; max-width: 320px;">
-            * Computer generated sales invoice issued by Alfa Rope Suppliers. Wholesale goods once sold are covered under industrial warranty.
+            * Computer generated sales invoice issued by Alfa Rope Suppliers. Wholesale goods once dispatched are certified under industrial warranty.
           </div>
           <div style="text-align: right;">
             <div style="font-size: 0.9rem; color: #4b5563;">Discount Applied: <span id="invDiscountVal">₹0</span></div>
@@ -1065,7 +1152,7 @@
     </div>
   </div>
 
-  <!-- ADMIN / OWNER DIRECT MANUAL ORDER BOOKING MODAL -->
+  <!-- ADMIN / OWNER DIRECT MANUAL ORDER MODAL -->
   <div id="manualOrderModal" class="modal">
     <div class="modal-box">
       <h3 style="margin-bottom: 1.2rem; color: var(--primary);"><i class="fa-solid fa-file-invoice-dollar"></i> Direct Manual Order Booking (Phone / Walk-In)</h3>
@@ -1100,7 +1187,8 @@
           <div class="form-group">
             <label>Payment Method</label>
             <select id="manPaymentMethod">
-              <option value="UPI">Paid via UPI / GPay</option>
+              <option value="UPI">Paid via UPI</option>
+              <option value="BANK">Bank Transfer</option>
               <option value="CASH">Cash on Delivery / Direct</option>
               <option value="CREDIT">Wholesale Credit</option>
             </select>
@@ -1114,10 +1202,54 @@
     </div>
   </div>
 
+  <!-- ADMIN / OWNER EDIT CUSTOMER MODAL -->
+  <div id="adminEditCustModal" class="modal">
+    <div class="modal-box">
+      <h3 style="margin-bottom: 1.2rem; color: var(--primary);"><i class="fa-solid fa-user-pen"></i> Edit Customer Account & Permissions</h3>
+      <form onsubmit="saveAdminEditedCustomer(event)">
+        <input type="hidden" id="adminEditCustIndex">
+        <div class="form-group">
+          <label>Customer Full Name</label>
+          <input type="text" id="adminCustName" required>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="adminCustEmail" required>
+        </div>
+        <div class="form-group">
+          <label>Mobile Number</label>
+          <input type="text" id="adminCustPhone" required>
+        </div>
+        <div class="form-group">
+          <label>Delivery Address</label>
+          <textarea id="adminCustAddress" rows="2"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Account Password</label>
+            <input type="text" id="adminCustPass" required>
+          </div>
+          <div class="form-group">
+            <label>Status</label>
+            <select id="adminCustStatus">
+              <option value="Active">Active</option>
+              <option value="Pending Approval">Pending Approval</option>
+              <option value="Suspended">Suspended</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('adminEditCustModal')">Cancel</button>
+          <button type="submit" class="btn">Save Customer Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- ADMIN / OWNER EDIT ORDER MODAL -->
   <div id="editOrderModal" class="modal">
     <div class="modal-box">
-      <h3 style="margin-bottom: 1.2rem; color: var(--primary);"><i class="fa-solid fa-pen-to-square"></i> Modify Order Details</h3>
+      <h3 style="margin-bottom: 1.2rem; color: var(--primary);"><i class="fa-solid fa-pen-to-square"></i> Modify Order & Shipping Details</h3>
       <form onsubmit="saveEditedOrder(event)">
         <input type="hidden" id="editOrderIndex">
         <div class="form-group">
@@ -1129,7 +1261,7 @@
           <input type="text" id="editCustName" required>
         </div>
         <div class="form-group">
-          <label>Customer Phone</label>
+          <label>Customer Mobile</label>
           <input type="text" id="editCustPhone" required>
         </div>
         <div class="form-group">
@@ -1165,7 +1297,7 @@
     </div>
   </div>
 
-  <!-- ENQUIRY & FEEDBACK MODAL -->
+  <!-- ENQUIRY MODAL -->
   <div id="enquiryModal" class="modal">
     <div class="modal-box">
       <h3 style="margin-bottom: 1.2rem;"><i class="fa-regular fa-envelope"></i> Send Enquiry / Suggestion</h3>
@@ -1291,31 +1423,34 @@
       </div>
       <div style="display: flex; gap: 1rem; font-size: 0.85rem;">
         <span style="color: var(--text-muted);"><i class="fa-solid fa-lock"></i> SSL Secured</span>
-        <span style="color: var(--text-muted);"><i class="fa-brands fa-google-pay"></i> GPay / PhonePe Accepted</span>
+        <span style="color: var(--text-muted);"><i class="fa-solid fa-building-columns"></i> UPI & Bank Transfer Accepted</span>
       </div>
     </div>
   </footer>
 
   <script>
-    // CMS Initial Configuration
+    // CMS Initial Configuration (Including Official Bank Transfer Details)
     const DEFAULT_CMS = {
       brandTitle: "ALFA <span>ROPES</span>",
       brandSubtitle: "Ashok Bazar, Afzal Gunj, Hyderabad | +91 8555838852",
       heroHeading: "Premier <span>Rope, Twine & Hardware</span> Wholesaler",
       heroSub: "Direct wholesale supplier of Gowa & PP ropes, brooms, safety jaali, cleaning sponges, powda, pipes & construction tools.",
       upiId: "8555838852@ybl",
+      bankHolder: "ALFA ROPE SUPPLIERS",
+      bankName: "State Bank of India (Afzal Gunj Branch)",
+      bankAcc: "39485720194",
+      bankIfsc: "SBIN0001234",
       copyright: "© 2026 Alfa Rope Suppliers. All Rights Reserved."
     };
 
-    // Default System Users
+    // Default Master System Users
     const DEFAULT_USERS = [
-      { name: "Master Administrator", email: "Admin", pass: "9290", role: "admin", status: "Active" },
-      { name: "Shop Owner", email: "owner", pass: "9290", role: "owner", status: "Active" }
+      { name: "Master Administrator", email: "Admin", phone: "8555838852", pass: "9290", role: "admin", status: "Active", address: "Afzal Gunj, Hyderabad" },
+      { name: "Shop Owner", email: "owner", phone: "8555838852", pass: "9290", role: "owner", status: "Active", address: "Afzal Gunj, Hyderabad" }
     ];
 
-    // Master Initial Products with Item-Specific Images
+    // Master Product Catalog
     const INITIAL_PRODUCTS = [
-      // --- Ropes & Twines ---
       { id: "ALFA-GOWA-30", name: "Gowa Rope (30 Pcs)", category: "Ropes", diameter: "30 Pcs Bundle", mrp: 110, price: 85, stock: 250, unit: "Bundle", description: "High-strength commercial Gowa rope bundle (30 pieces packing).", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-GOWA-40", name: "Gowa Rope (40 Pcs)", category: "Ropes", diameter: "40 Pcs Bundle", mrp: 140, price: 110, stock: 200, unit: "Bundle", description: "Industrial strength Gowa tying rope (40 pieces packing).", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-GOWA-50", name: "Gowa Rope (50 Pcs)", category: "Ropes", diameter: "50 Pcs Bundle", mrp: 190, price: 150, stock: 180, unit: "Bundle", description: "Heavy-duty bundling Gowa rope (50 pieces packing).", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" },
@@ -1330,8 +1465,6 @@
       { id: "ALFA-SUTLI-ZEN", name: "1st Zen Virgin Plastic Sutli", category: "Twine & Sutli", diameter: "Premium Grade", mrp: 155, price: 120, stock: 300, unit: "Kg", description: "Top-tier 1st Zen virgin quality high strength plastic sutli roll.", image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-DORI-COTTON", name: "Cotton Lining Dori (4 Wala)", category: "Twine & Sutli", diameter: "4 Wala", mrp: 48, price: 34, stock: 400, unit: "Packet", description: "Construction marking and packaging 4-ply cotton lining dori.", image: "https://images.unsplash.com/photo-1508873535684-277a3cbcc4e8?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-DORI-NYLON", name: "Nylon Lining Dori (4 Wala)", category: "Twine & Sutli", diameter: "4 Wala", mrp: 35, price: 24, stock: 450, unit: "Packet", description: "High durability nylon line dori for masonry alignment and tie-downs.", image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80" },
-
-      // --- Brooms ---
       { id: "ALFA-BRM-GUNGUROO", name: "Small Broom - Gunguroo", category: "Brooms", diameter: "50 Pc Packing", mrp: 32, price: 23, stock: 500, unit: "Pc", description: "Compact domestic Gunguroo broom. Packed in 50 pieces bundle.", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-BRM-SPLPIPE", name: "Small Broom - Special Pipe Handle", category: "Brooms", diameter: "50 Pc Packing", mrp: 48, price: 36, stock: 400, unit: "Pc", description: "Reinforced pipe handle small broom (50 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-BRM-MECCAI", name: "Small Broom - Meccai", category: "Brooms", diameter: "50 Pc Packing", mrp: 25, price: 17, stock: 600, unit: "Pc", description: "Budget economy Meccai broom (50 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
@@ -1343,21 +1476,15 @@
       { id: "ALFA-COCO-28", name: "Coco Broom (Medium 28/-)", category: "Brooms", diameter: "50 Pc Packing", mrp: 38, price: 28, stock: 400, unit: "Pc", description: "Durable coconut stick broom for wet & outdoor areas (50 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-COCO-36", name: "Coco Broom (Heavy 36/-)", category: "Brooms", diameter: "50 Pc Packing", mrp: 48, price: 36, stock: 350, unit: "Pc", description: "Dense coconut stick broom for municipal & road cleaning (50 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-COCO-45", name: "Coco Broom (Super Extra Heavy 45/-)", category: "Brooms", diameter: "50 Pc Packing", mrp: 60, price: 45, stock: 300, unit: "Pc", description: "Top-grade extra heavy coconut broom for heavy duty outdoor cleaning (50 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
-
-      // --- Wire Netting / Kabootar Jaali ---
       { id: "ALFA-JAALI-25-40", name: "Kabootar Jaali 2.5ft (40 No)", category: "Wire Netting", diameter: "2.5 Feet / 40 No", mrp: 130, price: 95, stock: 120, unit: "Roll", description: "2.5 feet anti-bird pigeon safety mesh netting roll (40 No gauge).", image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-JAALI-25-80", name: "Kabootar Jaali 2.5ft (80 No)", category: "Wire Netting", diameter: "2.5 Feet / 80 No", mrp: 210, price: 160, stock: 100, unit: "Roll", description: "Heavy 2.5 feet anti-pigeon balcony wire jaali roll (80 No heavy gauge).", image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-JAALI-3-20", name: "Kabootar Jaali 3ft (20 No)", category: "Wire Netting", diameter: "3 Feet / 20 No", mrp: 180, price: 140, stock: 90, unit: "Roll", description: "3 feet width pigeon safety wire jaali roll (20 No gauge).", image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-JAALI-3-30", name: "Kabootar Jaali 3ft (30 No)", category: "Wire Netting", diameter: "3 Feet / 30 No", mrp: 280, price: 220, stock: 80, unit: "Roll", description: "3 feet medium heavy anti-bird protection wire mesh (30 No gauge).", image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-JAALI-3-40", name: "Kabootar Jaali 3ft (40 No)", category: "Wire Netting", diameter: "3 Feet / 40 No", mrp: 350, price: 280, stock: 75, unit: "Roll", description: "3 feet heavy-duty pigeon and bird protection safety mesh roll (40 No gauge).", image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" },
-
-      // --- Cleaning Sponges ---
       { id: "ALFA-SPG-FANTASY23", name: "Fantasy Foam Sponge (23 Density)", category: "Sponges", diameter: "23 Density / 14 Dozen Bag", mrp: 95, price: 70, stock: 220, unit: "Dozen", description: "Soft vehicle washing & polishing foam sponge (14 Dozen packing).", image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-SPG-FANTASTIC28", name: "Fantastic Foam Sponge (28 Density)", category: "Sponges", diameter: "28 Density / 14 Dozen Bag", mrp: 110, price: 84, stock: 200, unit: "Dozen", description: "Medium-density high absorption cleaning sponge (14 Dozen packing).", image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-SPG-MAXTAR32", name: "Maxtar Sponge (32 Density)", category: "Sponges", diameter: "32 Density / 14 Dozen Bag", mrp: 145, price: 110, stock: 180, unit: "Dozen", description: "High-density durable commercial cleaning sponge (14 Dozen packing).", image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-SPG-PLATINUM40", name: "Platinum Sponge (40 Density)", category: "Sponges", diameter: "40 Density / 14 Dozen Bag", mrp: 180, price: 140, stock: 150, unit: "Dozen", description: "Extra heavy 40-density durable sponge for commercial car wash & tile work (14 Dozen packing).", image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" },
-
-      // --- Construction & Tools (Gampa, Powda & Handles) ---
       { id: "ALFA-GMP-ULTRA-15", name: "Gampa - Ultra Brand 15 Inch", category: "Construction & Tools", diameter: '15" (60 Pc Bag)', mrp: 75, price: 55, stock: 240, unit: "Pc", description: '15" heavy-duty plastic mortar pan/gampa by Ultra (60 pieces bag).', image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-GMP-ULTRA-17", name: "Gampa - Ultra Brand 17 Inch", category: "Construction & Tools", diameter: '17" (60 Pc Bag)', mrp: 85, price: 65, stock: 240, unit: "Pc", description: '17" large capacity construction pan by Ultra (60 pieces bag).', image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-GMP-CHETAK-15", name: "Gampa - Chetak Brand 15 Inch", category: "Construction & Tools", diameter: '15" (60 Pc Bag)', mrp: 85, price: 65, stock: 200, unit: "Pc", description: '15" unbreakable heavy mortar pan by Chetak (60 pieces bag).', image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" },
@@ -1367,8 +1494,6 @@
       { id: "ALFA-POWDA-RED", name: "Powda / Spade (Red Premium)", category: "Construction & Tools", diameter: "20 Pc Bundle", mrp: 2900, price: 2450, stock: 30, unit: "Bundle", description: "Extra heavy forged steel red powda (Set of 20 pieces).", image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-HDL-PLASTIC", name: "Powda Handle - Plastic", category: "Construction & Tools", diameter: "50 Pc Bag", mrp: 55, price: 40, stock: 250, unit: "Pc", description: "Heavy plastic handle grip for agricultural powda/spades (50 pieces bag).", image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-HDL-WOOD", name: "Powda Handle - Wooden", category: "Construction & Tools", diameter: "50 Pc Bag", mrp: 35, price: 24, stock: 300, unit: "Pc", description: "Solid hardwood handle for powda/spade tools (50 pieces bag).", image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" },
-
-      // --- Safety Equipment ---
       { id: "ALFA-GLV-PRIMA", name: "Safety Hand Gloves - Prima", category: "Safety Equipment", diameter: "12 Pair Packet", mrp: 45, price: 30, stock: 300, unit: "Pair", description: "Durable protective industrial safety hand gloves (12 pairs packet).", image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-GLV-GOLD", name: "Safety Hand Gloves - Gold Touch", category: "Safety Equipment", diameter: "12 Pair Packet", mrp: 52, price: 38, stock: 250, unit: "Pair", description: "Gold Touch grip-coated work safety gloves (12 pairs packet).", image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-GLV-SENSTOUCH", name: "Safety Hand Gloves - Senstouch", category: "Safety Equipment", diameter: "12 Pair Packet", mrp: 55, price: 40, stock: 250, unit: "Pair", description: "Senstouch high-dexterity safety work gloves (12 pairs packet).", image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" },
@@ -1378,8 +1503,6 @@
       { id: "ALFA-WELD-SUNNY", name: "Welding Glasses - Sunny", category: "Safety Equipment", diameter: "12 Pc Box", mrp: 35, price: 22, stock: 150, unit: "Pc", description: "Protective eye-shield welding glasses (12 pieces box).", image: "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-WELD-DEFENDER", name: "Welding Glasses - S Defender", category: "Safety Equipment", diameter: "12 Pc Box", mrp: 60, price: 40, stock: 120, unit: "Pc", description: "S Defender anti-glare welding safety glasses (12 pieces box).", image: "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-WELD-PLATINUM", name: "Welding Glasses - Platinum", category: "Safety Equipment", diameter: "12 Pc Box", mrp: 60, price: 40, stock: 120, unit: "Pc", description: "Platinum protective welding and grinding safety goggles (12 pieces box).", image: "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=600&q=80" },
-
-      // --- Pipes & Hoses ---
       { id: "ALFA-PIPE-FOAM", name: 'Water Pipe 3/4" - Foam Pipe', category: "Pipes & Hoses", diameter: '3/4" (20m / 30m Length)', mrp: 130, price: 104, stock: 350, unit: "Kg", description: '3/4" flexible foam water garden and industrial hose (Available in 20m & 30m).', image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-PIPE-BRAIDED", name: 'Water Pipe 3/4" - Braided Pipe', category: "Pipes & Hoses", diameter: '3/4" (20m / 30m Length)', mrp: 145, price: 114, stock: 300, unit: "Kg", description: '3/4" reinforced high-pressure braided garden water hose (Available in 20m & 30m).', image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" },
       { id: "ALFA-PIPE-PETRO", name: 'Water Pipe 3/4" - Petroleum Pipe', category: "Pipes & Hoses", diameter: '3/4" (20m / 30m Length)', mrp: 185, price: 146, stock: 250, unit: "Kg", description: '3/4" heavy-duty oil and chemical resistant petroleum delivery pipe (Available in 20m & 30m).', image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" }
@@ -1400,14 +1523,15 @@
 
     window.onload = () => {
       loadStorage();
+      validateClientSession12Hours();
       applyCMS();
       renderApp();
     };
 
     function loadStorage() {
-      const savedProds = localStorage.getItem('alfa_prods_v5');
+      const savedProds = localStorage.getItem('alfa_prods_v6');
       products = savedProds ? JSON.parse(savedProds) : INITIAL_PRODUCTS;
-      if (!savedProds) localStorage.setItem('alfa_prods_v5', JSON.stringify(INITIAL_PRODUCTS));
+      if (!savedProds) localStorage.setItem('alfa_prods_v6', JSON.stringify(INITIAL_PRODUCTS));
 
       orders = JSON.parse(localStorage.getItem('alfa_orders')) || [];
       users = JSON.parse(localStorage.getItem('alfa_users')) || DEFAULT_USERS;
@@ -1419,7 +1543,7 @@
     }
 
     function syncStorage() {
-      localStorage.setItem('alfa_prods_v5', JSON.stringify(products));
+      localStorage.setItem('alfa_prods_v6', JSON.stringify(products));
       localStorage.setItem('alfa_orders', JSON.stringify(orders));
       localStorage.setItem('alfa_users', JSON.stringify(users));
       localStorage.setItem('alfa_enquiries', JSON.stringify(enquiries));
@@ -1430,19 +1554,67 @@
       renderApp();
     }
 
+    // 12-Hour Session Validation
+    function validateClientSession12Hours() {
+      const tokenStr = localStorage.getItem('alfa_auth_session');
+      if (tokenStr) {
+        try {
+          const session = JSON.parse(tokenStr);
+          const now = Date.now();
+          const twelveHoursMs = 12 * 60 * 60 * 1000;
+          if (now - session.timestamp < twelveHoursMs) {
+            const match = users.find(u => u.email.toLowerCase() === session.identifier.toLowerCase() || u.phone === session.identifier);
+            if (match && match.status === 'Active') {
+              activeUser = match;
+              currentRole = match.role;
+              setupUserSessionUI();
+            }
+          } else {
+            localStorage.removeItem('alfa_auth_session');
+          }
+        } catch (e) {
+          localStorage.removeItem('alfa_auth_session');
+        }
+      }
+    }
+
+    function setupUserSessionUI() {
+      const profBtn = document.getElementById('userProfileBtn');
+      if (activeUser.role === 'customer') {
+        profBtn.innerHTML = `<i class="fa-solid fa-user-circle"></i> ${activeUser.name}`;
+        profBtn.style.display = 'inline-flex';
+      } else {
+        profBtn.innerHTML = `<i class="fa-solid fa-user-shield"></i> ${activeUser.name} (${activeUser.role.toUpperCase()})`;
+        profBtn.style.display = 'inline-flex';
+      }
+      document.getElementById('logoutBtn').style.display = 'inline-flex';
+      document.getElementById('loginBtn').style.display = 'none';
+    }
+
     function applyCMS() {
       document.getElementById('dynBrandTitle').innerHTML = cmsConfig.brandTitle;
       document.getElementById('dynBrandSubtitle').innerText = cmsConfig.brandSubtitle;
       document.getElementById('dynHeroHeading').innerHTML = cmsConfig.heroHeading;
       document.getElementById('dynHeroSub').innerText = cmsConfig.heroSub;
       document.getElementById('dynFooterCopy').innerText = cmsConfig.copyright;
-      document.getElementById('upiIdDisplay').innerText = `UPI: ${cmsConfig.upiId}`;
+      
+      // Update Payment Hub
+      document.getElementById('checkoutUpiId').innerText = cmsConfig.upiId;
+      document.getElementById('chkBankHolder').innerText = cmsConfig.bankHolder;
+      document.getElementById('chkBankName').innerText = cmsConfig.bankName;
+      document.getElementById('chkBankAcc').innerText = cmsConfig.bankAcc;
+      document.getElementById('chkBankIfsc').innerText = cmsConfig.bankIfsc;
 
+      // Populate CMS Form
       document.getElementById('cmsBrandTitle').value = cmsConfig.brandTitle;
       document.getElementById('cmsBrandSubtitle').value = cmsConfig.brandSubtitle;
       document.getElementById('cmsHeroHeading').value = cmsConfig.heroHeading;
       document.getElementById('cmsHeroSub').value = cmsConfig.heroSub;
       document.getElementById('cmsUpiId').value = cmsConfig.upiId;
+      document.getElementById('cmsBankHolder').value = cmsConfig.bankHolder;
+      document.getElementById('cmsBankName').value = cmsConfig.bankName;
+      document.getElementById('cmsBankAcc').value = cmsConfig.bankAcc;
+      document.getElementById('cmsBankIfsc').value = cmsConfig.bankIfsc;
       document.getElementById('cmsCopyright').value = cmsConfig.copyright;
     }
 
@@ -1454,11 +1626,15 @@
         heroHeading: document.getElementById('cmsHeroHeading').value,
         heroSub: document.getElementById('cmsHeroSub').value,
         upiId: document.getElementById('cmsUpiId').value,
+        bankHolder: document.getElementById('cmsBankHolder').value,
+        bankName: document.getElementById('cmsBankName').value,
+        bankAcc: document.getElementById('cmsBankAcc').value,
+        bankIfsc: document.getElementById('cmsBankIfsc').value,
         copyright: document.getElementById('cmsCopyright').value
       };
       syncStorage();
       applyCMS();
-      alert('Website text & settings updated successfully!');
+      alert('Bank details and website settings published successfully!');
     }
 
     function switchTab(tabId) {
@@ -1467,8 +1643,8 @@
 
       document.getElementById('ordersTab').style.display = tabId === 'orders' ? 'block' : 'none';
       document.getElementById('inventoryTab').style.display = tabId === 'inventory' ? 'block' : 'none';
-      document.getElementById('enquiriesTab').style.display = tabId === 'enquiries' ? 'block' : 'none';
       document.getElementById('usersTab').style.display = tabId === 'users' ? 'block' : 'none';
+      document.getElementById('enquiriesTab').style.display = tabId === 'enquiries' ? 'block' : 'none';
       document.getElementById('cmsTab').style.display = tabId === 'cms' ? 'block' : 'none';
       document.getElementById('couponsTab').style.display = tabId === 'coupons' ? 'block' : 'none';
     }
@@ -1482,8 +1658,8 @@
         document.getElementById('managementTabs').style.display = 'none';
         document.getElementById('ordersTab').style.display = 'none';
         document.getElementById('inventoryTab').style.display = 'none';
-        document.getElementById('enquiriesTab').style.display = 'none';
         document.getElementById('usersTab').style.display = 'none';
+        document.getElementById('enquiriesTab').style.display = 'none';
         document.getElementById('cmsTab').style.display = 'none';
         document.getElementById('couponsTab').style.display = 'none';
         document.getElementById('customerStoreView').style.display = 'grid';
@@ -1498,8 +1674,8 @@
         renderMetrics();
         renderOrders();
         renderInventory(filtered);
-        renderEnquiries();
         renderUsers();
+        renderEnquiries();
         renderCoupons();
       }
     }
@@ -1625,27 +1801,24 @@
     function handleCheckoutEntry() {
       if (!cart.length) return alert('Your shopping cart is empty.');
       
-      // Enforce login requirement
       if (!activeUser || activeUser.role !== 'customer') {
         alert('Please log in to your Customer Profile to continue with checkout and delivery address.');
         openAuthModal();
         return;
       }
 
-      // Populate checkout modal from active logged-in profile
       document.getElementById('orderCustName').value = activeUser.name || '';
       document.getElementById('orderCustPhone').value = activeUser.phone || '';
       document.getElementById('orderCustAddress').value = activeUser.address || '';
-
-      const totalAmount = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
-      const upiUrl = `upi://pay?pa=${encodeURIComponent(cmsConfig.upiId)}&pn=${encodeURIComponent('Alfa Rope Suppliers')}&am=${totalAmount}&cu=INR`;
-      document.getElementById('upiQrCodeImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
       
+      togglePaymentSection(document.getElementById('paymentMethod').value);
       openModal('checkoutModal');
     }
 
     function togglePaymentSection(val) {
       document.getElementById('upiPaymentBox').style.display = val === 'upi' ? 'block' : 'none';
+      document.getElementById('bankPaymentBox').style.display = val === 'bank' ? 'block' : 'none';
+      document.getElementById('txnRefGroup').style.display = val === 'cod' ? 'none' : 'block';
     }
 
     function applyCartCoupon() {
@@ -1671,7 +1844,7 @@
       const utr = document.getElementById('upiTxnId').value.trim();
 
       if (!name || !phone || !address) return alert('Please provide complete shipping name, phone, and delivery address.');
-      if (pMethod === 'upi' && !utr) return alert('Please enter the 12-digit UPI reference / UTR number from your payment app.');
+      if (pMethod !== 'cod' && !utr) return alert('Please enter the payment Transaction / UTR reference number.');
 
       let total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
       let discountVal = 0;
@@ -1707,17 +1880,61 @@
       closeModal('checkoutModal');
       toggleCart(false);
 
+      // Automatic WhatsApp Confirmation Trigger to Customer
+      sendWhatsAppOrderConfirmation(orderRecord);
+
       // Show auto-generated confirmation receipt
       openInvoiceModal(orderRecord);
     }
 
-    // CUSTOMER PROFILE MANAGEMENT
+    function sendWhatsAppOrderConfirmation(order) {
+      const itemsList = order.items.map(i => `• ${i.name} (Qty: ${i.qty})`).join('%0A');
+      const waMsg = `*ALFA ROPE SUPPLIERS - Order Confirmed*%0A%0A*Order ID:* ${order.orderId}%0A*Date:* ${order.date} ${order.time}%0A*Customer:* ${order.customer.name}%0A*Delivery Address:* ${order.customer.address}%0A%0A*Items Ordered:*%0A${itemsList}%0A%0A*Total Amount:* ₹${order.totalAmount}%0A*Payment Mode:* ${order.payment.method} (Ref: ${order.payment.utr})%0A*Status:* ${order.status}%0A%0A_Thank you for choosing Alfa Rope Suppliers! We are preparing your order for dispatch._`;
+      
+      const cleanPhone = order.customer.phone.replace(/[^0-9]/g, '');
+      window.open(`https://wa.me/91${cleanPhone}?text=${waMsg}`, '_blank');
+    }
+
+    // CUSTOMER PROFILE & ORDER HISTORY HUB
     function openCustomerProfileModal() {
       if (!activeUser || activeUser.role !== 'customer') return;
       document.getElementById('profFullName').value = activeUser.name;
       document.getElementById('profEmail').value = activeUser.email;
       document.getElementById('profPhone').value = activeUser.phone;
       document.getElementById('profAddress').value = activeUser.address || '';
+
+      // Render customer's personal past orders
+      const myOrders = orders.filter(o => o.customer.email.toLowerCase() === activeUser.email.toLowerCase() || o.customer.phone === activeUser.phone);
+      const pastBox = document.getElementById('custPastOrdersList');
+      if (!myOrders.length) {
+        pastBox.innerHTML = `<p style="color: var(--text-muted); font-size: 0.85rem; padding: 1rem; text-align: center;">No orders placed yet.</p>`;
+      } else {
+        pastBox.innerHTML = `
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${myOrders.map(o => `
+                <tr>
+                  <td><strong>${o.orderId}</strong></td>
+                  <td>${o.date}</td>
+                  <td>₹${o.totalAmount}</td>
+                  <td><span class="off-badge">${o.status}</span></td>
+                  <td><button class="btn btn-secondary btn-sm" onclick="openInvoiceModal(orders.find(item=>item.orderId==='${o.orderId}'))"><i class="fa-solid fa-receipt"></i> Invoice</button></td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      }
+
       openModal('customerProfileModal');
     }
 
@@ -1733,7 +1950,7 @@
       syncStorage();
       closeModal('customerProfileModal');
       document.getElementById('userProfileBtn').innerHTML = `<i class="fa-solid fa-user-circle"></i> ${activeUser.name}`;
-      alert('Your customer profile & delivery address have been updated!');
+      alert('Your profile and delivery address have been updated!');
     }
 
     // DUAL-KEY ORDER TRACKING
@@ -1840,9 +2057,9 @@
         items: [{ id: p.id, name: p.name, price: p.price, unit: p.unit, qty: qty }],
         discount: 0,
         totalAmount: totalAmount,
-        payment: { method: pMethod, utr: 'Direct Shop Sale' },
+        payment: { method: pMethod, utr: 'Direct Store Sale' },
         status: "Accepted",
-        trackingNo: "Handed over / Direct"
+        trackingNo: "Handed Over / Direct Transport"
       };
 
       orders.unshift(manualOrder);
@@ -1851,10 +2068,11 @@
       syncStorage();
       closeModal('manualOrderModal');
       alert(`Manual order ${manualOrder.orderId} booked successfully!`);
+      sendWhatsAppOrderConfirmation(manualOrder);
       openInvoiceModal(manualOrder);
     }
 
-    // ADMIN / OWNER ORDER EDITING
+    // ADMIN / OWNER ORDER EDITING & TRACKING UPDATES
     function openEditOrderModal(idx) {
       const o = orders[idx];
       document.getElementById('editOrderIndex').value = idx;
@@ -1885,6 +2103,13 @@
       alert(`Order ${o.orderId} updated!`);
     }
 
+    function sendTrackingWhatsApp(idx) {
+      const o = orders[idx];
+      const waMsg = `*ALFA ROPE SUPPLIERS - Shipment Update*%0A%0A*Order ID:* ${o.orderId}%0A*Status:* ${o.status}%0A*Tracking / Transport LR No:* ${o.trackingNo || 'Dispatched'}%0A*Total Amount:* ₹${o.totalAmount}%0A%0A_For full tax invoice or support, please visit our official website portal._`;
+      const cleanPhone = o.customer.phone.replace(/[^0-9]/g, '');
+      window.open(`https://wa.me/91${cleanPhone}?text=${waMsg}`, '_blank');
+    }
+
     function renderOrders() {
       const tbody = document.getElementById('ordersTableBody');
       if (!orders.length) {
@@ -1911,8 +2136,9 @@
             <small>${o.trackingNo || 'Pending'}</small>
           </td>
           <td>
-            <div style="display: flex; gap: 0.3rem;">
+            <div style="display: flex; gap: 0.3rem; flex-wrap: wrap;">
               <button class="btn btn-secondary btn-sm" onclick="openInvoiceModal(orders[${idx}])"><i class="fa-solid fa-receipt"></i> Invoice</button>
+              <button class="btn btn-secondary btn-sm" onclick="sendTrackingWhatsApp(${idx})"><i class="fa-brands fa-whatsapp"></i> Dispatch</button>
               <button class="btn btn-secondary btn-sm" onclick="openEditOrderModal(${idx})"><i class="fa-solid fa-pen"></i> Edit</button>
             </div>
           </td>
@@ -1946,6 +2172,69 @@
       }
     }
 
+    // ADMIN / OWNER CUSTOMER MASTER CONTROL
+    function renderUsers() {
+      const tbody = document.getElementById('usersTableBody');
+      tbody.innerHTML = users.map((u, idx) => `
+        <tr>
+          <td><strong>${u.name}</strong></td>
+          <td>${u.email}</td>
+          <td>${u.phone}</td>
+          <td><span class="cat-tag" style="color: ${u.role === 'admin' ? 'var(--danger)' : (u.role === 'owner' ? 'var(--primary)' : 'var(--info}')};">${u.role.toUpperCase()}</span></td>
+          <td><span style="color: ${u.status === 'Active' ? 'var(--success)' : 'var(--warning)'}; font-weight:700;">${u.status}</span></td>
+          <td>
+            <div style="display: flex; gap: 0.3rem; flex-wrap: wrap;">
+              <button class="btn btn-secondary btn-sm" onclick="openAdminEditCustModal(${idx})"><i class="fa-solid fa-user-pen"></i> Edit Profile</button>
+              ${currentRole === 'admin' && u.status === 'Pending Approval' ? `<button class="btn btn-success btn-sm" onclick="approveUserRole(${idx})">Approve Owner</button>` : ''}
+              ${currentRole === 'admin' && u.role !== 'admin' ? `<button class="btn btn-danger btn-sm" onclick="deleteUserRecord(${idx})"><i class="fa-solid fa-trash"></i></button>` : ''}
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openAdminEditCustModal(idx) {
+      const u = users[idx];
+      document.getElementById('adminEditCustIndex').value = idx;
+      document.getElementById('adminCustName').value = u.name;
+      document.getElementById('adminCustEmail').value = u.email;
+      document.getElementById('adminCustPhone').value = u.phone;
+      document.getElementById('adminCustAddress').value = u.address || '';
+      document.getElementById('adminCustPass').value = u.pass;
+      document.getElementById('adminCustStatus').value = u.status;
+      openModal('adminEditCustModal');
+    }
+
+    function saveAdminEditedCustomer(e) {
+      e.preventDefault();
+      const idx = document.getElementById('adminEditCustIndex').value;
+      const u = users[idx];
+
+      u.name = document.getElementById('adminCustName').value.trim();
+      u.email = document.getElementById('adminCustEmail').value.trim();
+      u.phone = document.getElementById('adminCustPhone').value.trim();
+      u.address = document.getElementById('adminCustAddress').value.trim();
+      u.pass = document.getElementById('adminCustPass').value.trim();
+      u.status = document.getElementById('adminCustStatus').value;
+
+      syncStorage();
+      closeModal('adminEditCustModal');
+      alert(`User profile for ${u.name} updated successfully!`);
+    }
+
+    function approveUserRole(idx) {
+      users[idx].status = 'Active';
+      syncStorage();
+      alert(`User ${users[idx].name} approved as Active Owner!`);
+    }
+
+    function deleteUserRecord(idx) {
+      if (confirm(`Are you sure you want to remove user record ${users[idx].name}?`)) {
+        users.splice(idx, 1);
+        syncStorage();
+      }
+    }
+
     function openEnquiryModal() { openModal('enquiryModal'); }
 
     function handleEnquirySubmit(e) {
@@ -1964,13 +2253,13 @@
       syncStorage();
       closeModal('enquiryModal');
       document.getElementById('enqMsg').value = '';
-      alert('Thank you! Your enquiry/suggestion has been sent to Alfa Rope Suppliers.');
+      alert('Thank you! Your feedback has been forwarded to Alfa Management.');
     }
 
     function renderEnquiries() {
       const tbody = document.getElementById('enquiriesTableBody');
       if (!enquiries.length) {
-        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No enquiries received yet.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No feedback received yet.</td></tr>`;
         return;
       }
 
@@ -1999,38 +2288,6 @@
       syncStorage();
     }
 
-    function renderUsers() {
-      const tbody = document.getElementById('usersTableBody');
-      tbody.innerHTML = users.map((u, idx) => `
-        <tr>
-          <td><strong>${u.name}</strong></td>
-          <td>${u.email}</td>
-          <td><span class="cat-tag" style="color: ${u.role === 'admin' ? 'var(--danger)' : (u.role === 'owner' ? 'var(--primary)' : 'var(--info}')};">${u.role.toUpperCase()}</span></td>
-          <td><code>${u.pass}</code></td>
-          <td><span style="color: ${u.status === 'Active' ? 'var(--success)' : 'var(--warning)'}; font-weight:700;">${u.status}</span></td>
-          <td>
-            ${currentRole === 'admin' ? `
-              ${u.status === 'Pending Approval' ? `<button class="btn btn-success btn-sm" onclick="approveUserRole(${idx})">Approve Owner</button>` : ''}
-              ${u.role !== 'admin' ? `<button class="btn btn-danger btn-sm" onclick="deleteUserRecord(${idx})">Revoke</button>` : '<small>Master Admin</small>'}
-            ` : '<small>Read-Only</small>'}
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    function approveUserRole(idx) {
-      users[idx].status = 'Active';
-      syncStorage();
-      alert(`User ${users[idx].name} has been approved as Active Owner!`);
-    }
-
-    function deleteUserRecord(idx) {
-      if (confirm(`Are you sure you want to remove ${users[idx].name}?`)) {
-        users.splice(idx, 1);
-        syncStorage();
-      }
-    }
-
     function renderCoupons() {
       document.getElementById('couponTableBody').innerHTML = coupons.map((c, i) => `
         <tr>
@@ -2045,7 +2302,7 @@
     function renderMetrics() {
       document.getElementById('metricItems').innerText = products.length;
       document.getElementById('metricOrders').innerText = orders.filter(o => o.status === 'Pending Approval').length;
-      document.getElementById('metricEnquiries').innerText = enquiries.length;
+      document.getElementById('metricUsers').innerText = users.length;
       const totalVal = products.reduce((sum, p) => sum + (Number(p.stock) * Number(p.price)), 0);
       document.getElementById('metricValue').innerText = '₹' + totalVal.toLocaleString();
     }
@@ -2053,6 +2310,12 @@
     function openModal(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
     function handleSearch() { renderApp(); }
+
+    function copyText(elemId) {
+      const text = document.getElementById(elemId).innerText;
+      navigator.clipboard.writeText(text);
+      alert(`Copied: ${text}`);
+    }
 
     function openAuthModal() {
       document.getElementById('authErrorMsg').style.display = 'none';
@@ -2074,13 +2337,15 @@
       document.getElementById('ownerNotice').style.display = role === 'owner' ? 'block' : 'none';
     }
 
+    // EMAIL OR MOBILE LOGIN HANDLER WITH 12-HOUR PERSISTENCE
     function handleLoginSubmit(e) {
       e.preventDefault();
-      const userVal = document.getElementById('loginUsername').value.trim();
+      const identifier = document.getElementById('loginIdentifier').value.trim();
       const passVal = document.getElementById('loginPassword').value.trim();
+      const remember = document.getElementById('remember12Hours').checked;
       const errMsg = document.getElementById('authErrorMsg');
 
-      const match = users.find(u => (u.email.toLowerCase() === userVal.toLowerCase() || u.name.toLowerCase() === userVal.toLowerCase()) && u.pass === passVal);
+      const match = users.find(u => (u.email.toLowerCase() === identifier.toLowerCase() || u.phone === identifier || u.name.toLowerCase() === identifier.toLowerCase()) && u.pass === passVal);
 
       if (match) {
         if (match.status !== 'Active') {
@@ -2092,21 +2357,19 @@
         activeUser = match;
         currentRole = match.role;
         
-        const profBtn = document.getElementById('userProfileBtn');
-        if (match.role === 'customer') {
-          profBtn.innerHTML = `<i class="fa-solid fa-user-circle"></i> ${match.name}`;
-          profBtn.style.display = 'inline-flex';
-        } else {
-          profBtn.innerHTML = `<i class="fa-solid fa-user-shield"></i> ${match.name} (${match.role.toUpperCase()})`;
-          profBtn.style.display = 'inline-flex';
+        // Setup 12-Hour Session if requested
+        if (remember) {
+          localStorage.setItem('alfa_auth_session', JSON.stringify({
+            identifier: match.email,
+            timestamp: Date.now()
+          }));
         }
 
-        document.getElementById('logoutBtn').style.display = 'inline-flex';
-        document.getElementById('loginBtn').style.display = 'none';
+        setupUserSessionUI();
         closeModal('authModal');
         renderApp();
       } else {
-        errMsg.innerText = "Invalid login credentials. Please verify your details.";
+        errMsg.innerText = "Invalid login credentials. Please verify your email/mobile and password.";
         errMsg.style.display = 'block';
       }
     }
@@ -2120,8 +2383,8 @@
       const address = document.getElementById('regAddress').value.trim();
       const pass = document.getElementById('regPass').value.trim();
 
-      const exists = users.find(u => u.email.toLowerCase() === email.toLowerCase());
-      if (exists) return alert('An account with this email already exists.');
+      const exists = users.find(u => u.email.toLowerCase() === email.toLowerCase() || u.phone === phone);
+      if (exists) return alert('An account with this email or mobile number already exists.');
 
       const newUser = {
         name, email, phone, address, pass, role,
@@ -2135,29 +2398,30 @@
       if (role === 'owner') {
         alert('Owner registration submitted! Please wait for Admin approval.');
       } else {
-        alert('Customer registration successful! You can now log in to proceed.');
+        alert('Registration successful! You can now log in with your email or mobile.');
       }
     }
 
     function handleForgotSubmit(e) {
       e.preventDefault();
-      const email = document.getElementById('forgotEmail').value.trim();
+      const idVal = document.getElementById('forgotIdentifier').value.trim();
       const newPass = document.getElementById('forgotNewPass').value.trim();
 
-      const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+      const user = users.find(u => u.email.toLowerCase() === idVal.toLowerCase() || u.phone === idVal);
       if (user) {
         user.pass = newPass;
         syncStorage();
-        alert('Password updated successfully! You can now log in.');
+        alert('Password updated successfully! You can now sign in.');
         closeModal('authModal');
       } else {
-        alert('Email address not found in our records.');
+        alert('No account found with that email or mobile number.');
       }
     }
 
     function logout() {
       currentRole = 'customer';
       activeUser = null;
+      localStorage.removeItem('alfa_auth_session');
       document.getElementById('userProfileBtn').style.display = 'none';
       document.getElementById('logoutBtn').style.display = 'none';
       document.getElementById('loginBtn').style.display = 'inline-flex';
@@ -2264,8 +2528,8 @@
       csv += "\r\n=== ORDERS ===\r\nOrderID,Date,Customer,Phone,Total,PaymentMethod,Status,Tracking\r\n";
       orders.forEach(o => { csv += `"${o.orderId}","${o.date}","${o.customer.name}","${o.customer.phone}",${o.totalAmount},"${o.payment.method}","${o.status}","${o.trackingNo}"\r\n`; });
 
-      csv += "\r\n=== USERS ===\r\nName,Email,Role,Status\r\n";
-      users.forEach(u => { csv += `"${u.name}","${u.email}","${u.role}","${u.status}"\r\n`; });
+      csv += "\r\n=== USERS ===\r\nName,Email,Phone,Role,Status\r\n";
+      users.forEach(u => { csv += `"${u.name}","${u.email}","${u.phone}","${u.role}","${u.status}"\r\n`; });
 
       const link = document.createElement("a");
       link.setAttribute("href", encodeURI(csv));
