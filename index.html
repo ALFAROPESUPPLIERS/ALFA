@@ -3,18 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ALFA ROPE SUPPLIERS - Official Portal</title>
+  <title>ALFA ROPE SUPPLIERS | Enterprise Portal</title>
   <style>
     :root {
-      --primary: #d97706;
-      --primary-dark: #b45309;
-      --dark-bg: #0f172a;
-      --card-bg: #1e293b;
-      --border: #334155;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
+      --primary: #f59e0b;
+      --primary-dark: #d97706;
+      --dark-bg: #090d16;
+      --panel-bg: #111827;
+      --card-bg: #1f2937;
+      --border: #374151;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
       --success: #10b981;
       --danger: #ef4444;
+      --info: #3b82f6;
     }
 
     * {
@@ -28,20 +30,22 @@
       background-color: var(--dark-bg);
       color: var(--text-main);
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* Header & Navigation */
+    /* Top Navigation Bar */
     header {
-      background-color: var(--card-bg);
+      background-color: var(--panel-bg);
       border-bottom: 1px solid var(--border);
-      padding: 1rem 2rem;
+      padding: 0.8rem 1.5rem;
       position: sticky;
       top: 0;
       z-index: 100;
     }
 
     .nav-container {
-      max-width: 1400px;
+      max-width: 1440px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
@@ -50,76 +54,143 @@
       gap: 1rem;
     }
 
-    .brand-info h1 {
+    .brand h1 {
       color: var(--primary);
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       font-weight: 800;
       letter-spacing: 0.5px;
     }
 
-    .brand-info p {
-      font-size: 0.82rem;
+    .brand p {
+      font-size: 0.75rem;
       color: var(--text-muted);
-      margin-top: 2px;
     }
 
-    .role-switcher {
+    .nav-actions {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
-      background: var(--dark-bg);
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      border: 1px solid var(--border);
+      gap: 0.8rem;
+      flex-wrap: wrap;
     }
 
-    .role-switcher select {
-      background: transparent;
-      color: var(--primary);
-      border: none;
-      font-weight: 700;
-      font-size: 0.95rem;
-      cursor: pointer;
-      outline: none;
-    }
-
-    /* Main Container */
-    main {
-      max-width: 1400px;
-      margin: 2rem auto;
-      padding: 0 1.5rem;
-    }
-
-    /* Dashboard Metrics */
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .metric-card {
+    .role-badge {
       background: var(--card-bg);
-      padding: 1.25rem;
-      border-radius: 10px;
       border: 1px solid var(--border);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary);
     }
 
-    .metric-card h4 {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
+    /* Hero Opening Greeting Section */
+    .greeting-hero {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(17, 24, 39, 0.85) 100%), var(--panel-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+    }
+
+    .greeting-hero h2 {
+      font-size: 2rem;
+      color: #fff;
       margin-bottom: 0.5rem;
     }
 
-    .metric-card .value {
-      font-size: 1.75rem;
-      font-weight: bold;
+    .greeting-hero p {
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto 1.5rem auto;
+      font-size: 0.95rem;
+    }
+
+    .hero-contacts {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
       color: var(--text-main);
     }
 
-    /* Action Toolbar */
-    .action-toolbar {
+    /* Main Content Wrapper */
+    main {
+      max-width: 1440px;
+      margin: 1.5rem auto;
+      padding: 0 1.5rem;
+      flex-grow: 1;
+      width: 100%;
+    }
+
+    /* Global Alert Banner */
+    .alert-banner {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid var(--danger);
+      color: #fca5a5;
+      padding: 0.8rem 1.2rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.9rem;
+    }
+
+    /* Metrics Grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .metric-card {
+      background: var(--panel-bg);
+      padding: 1.2rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      position: relative;
+    }
+
+    .metric-card h4 {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .metric-card .val {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* Control Tabs & Toolbar */
+    .tab-bar {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.6rem 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .toolbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -128,59 +199,45 @@
       margin-bottom: 1.5rem;
     }
 
-    .search-box {
-      background: var(--card-bg);
+    .search-input {
+      background: var(--panel-bg);
       border: 1px solid var(--border);
-      color: var(--text-main);
-      padding: 0.65rem 1rem;
+      color: #fff;
+      padding: 0.6rem 1rem;
       border-radius: 6px;
-      width: 340px;
-      font-size: 0.9rem;
+      width: 320px;
       outline: none;
     }
 
-    .search-box:focus {
+    .search-input:focus {
       border-color: var(--primary);
     }
 
+    /* Standard Button Styles */
     .btn {
       background: var(--primary);
-      color: #fff;
+      color: #111827;
       border: none;
-      padding: 0.65rem 1.2rem;
+      padding: 0.6rem 1.1rem;
       border-radius: 6px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       transition: 0.2s ease;
-      text-decoration: none;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
+      gap: 0.4rem;
+      font-size: 0.85rem;
     }
 
-    .btn:hover {
-      background: var(--primary-dark);
-    }
+    .btn:hover { background: var(--primary-dark); color: #fff; }
+    .btn-secondary { background: var(--card-bg); color: var(--text-main); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: #374151; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-danger:hover { background: #dc2626; }
+    .btn-success { background: var(--success); color: #fff; }
+    .btn-sm { padding: 0.35rem 0.6rem; font-size: 0.8rem; }
 
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-main);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .btn-danger {
-      background: var(--danger);
-    }
-
-    .btn-danger:hover {
-      background: #dc2626;
-    }
-
-    /* Product Grid for Customer */
+    /* Customer View: Cards */
     .product-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -188,7 +245,7 @@
     }
 
     .product-card {
-      background: var(--card-bg);
+      background: var(--panel-bg);
       border: 1px solid var(--border);
       border-radius: 10px;
       overflow: hidden;
@@ -200,10 +257,10 @@
       width: 100%;
       height: 190px;
       object-fit: cover;
-      background: #334155;
+      background: #1f2937;
     }
 
-    .product-body {
+    .product-card-body {
       padding: 1.2rem;
       flex-grow: 1;
       display: flex;
@@ -213,27 +270,42 @@
 
     .badge {
       display: inline-block;
-      font-size: 0.75rem;
-      padding: 0.2rem 0.6rem;
+      font-size: 0.72rem;
+      padding: 0.2rem 0.5rem;
       border-radius: 4px;
-      background: rgba(217, 119, 6, 0.15);
+      background: rgba(245, 158, 11, 0.15);
       color: var(--primary);
-      margin-bottom: 0.5rem;
       font-weight: 600;
+      margin-bottom: 0.4rem;
     }
 
-    .stock-tag {
-      font-size: 0.8rem;
-      font-weight: 600;
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin: 0.6rem 0;
     }
-    .in-stock { color: var(--success); }
-    .low-stock { color: var(--danger); }
 
-    /* Admin / Owner Table View */
+    .mrp {
+      text-decoration: line-through;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .discount-pill {
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--success);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+    }
+
+    /* Tables for Admin / Owner */
     .table-container {
-      background: var(--card-bg);
+      background: var(--panel-bg);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 8px;
       overflow-x: auto;
     }
 
@@ -244,22 +316,21 @@
     }
 
     table th, table td {
-      padding: 1rem;
+      padding: 0.9rem;
       border-bottom: 1px solid var(--border);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
     table th {
-      background: rgba(15, 23, 42, 0.6);
+      background: #172033;
       color: var(--text-muted);
-      font-weight: 600;
       text-transform: uppercase;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
     }
 
     .table-img {
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
       border-radius: 6px;
       object-fit: cover;
     }
@@ -267,17 +338,17 @@
     .table-input {
       background: var(--dark-bg);
       border: 1px solid var(--border);
-      color: var(--text-main);
+      color: #fff;
       padding: 0.35rem 0.5rem;
       border-radius: 4px;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
-    /* Modal Form */
-    .modal-overlay {
+    /* Modal Styling */
+    .modal {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.75);
+      background: rgba(0, 0, 0, 0.8);
       display: none;
       align-items: center;
       justify-content: center;
@@ -285,13 +356,15 @@
       padding: 1rem;
     }
 
-    .modal-content {
-      background: var(--card-bg);
+    .modal-box {
+      background: var(--panel-bg);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 10px;
       width: 100%;
       max-width: 540px;
-      padding: 1.75rem;
+      padding: 1.5rem;
+      max-height: 90vh;
+      overflow-y: auto;
     }
 
     .form-group {
@@ -300,416 +373,843 @@
 
     .form-group label {
       display: block;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.3rem;
     }
 
-    .form-group input, .form-group textarea {
+    .form-group input, .form-group textarea, .form-group select {
       width: 100%;
       background: var(--dark-bg);
       border: 1px solid var(--border);
-      color: var(--text-main);
-      padding: 0.65rem;
+      color: #fff;
+      padding: 0.6rem;
       border-radius: 6px;
       outline: none;
-      font-size: 0.9rem;
     }
 
     .form-group input:focus, .form-group textarea:focus {
       border-color: var(--primary);
     }
 
-    .form-actions {
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .modal-actions {
       display: flex;
       justify-content: flex-end;
       gap: 0.8rem;
-      margin-top: 1.5rem;
+      margin-top: 1.2rem;
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- Navigation Bar -->
   <header>
     <div class="nav-container">
-      <div class="brand-info">
-        <h1 id="companyName">ALFA ROPE SUPPLIERS</h1>
-        <p id="companyDetails">Ashok Bazar, Afzal Gunj, Hyderabad - 500012 | Contact: +91 8555838852</p>
+      <div class="brand">
+        <h1>ALFA ROPE SUPPLIERS</h1>
+        <p>Ashok Bazar, Afzal Gunj, Hyderabad - 500012 | Call: +91 8555838852</p>
       </div>
       
-      <div class="role-switcher">
-        <label for="roleSelector">Role Profile:</label>
-        <select id="roleSelector" onchange="switchRole(this.value)">
-          <option value="customer">Customer Storefront</option>
-          <option value="admin">Admin Dashboard</option>
-          <option value="owner">Owner Analytics & Master</option>
-        </select>
+      <div class="nav-actions">
+        <div class="role-badge" id="currentProfileLabel">Customer View</div>
+        <button class="btn btn-secondary" onclick="openAuthModal()">Switch Profile / Login</button>
+        <button class="btn btn-danger btn-sm" id="logoutBtn" style="display: none;" onclick="logout()">Logout</button>
       </div>
     </div>
   </header>
 
-  <!-- Main View -->
-  <main>
-    <!-- Role Metrics (Admin / Owner) -->
-    <section id="metricsSection" class="metrics-grid" style="display: none;"></section>
+  <!-- Opening Greeting Section -->
+  <section class="greeting-hero">
+    <h2>Welcome to Alfa Rope Suppliers</h2>
+    <p>Direct Wholesale & Bulk Distributors of Virgin PP, High-Tensile Nylon, Manila Ropes, Scaffolding & Industrial Packaging Twines.</p>
+    <div class="hero-contacts">
+      <span><strong>Location:</strong> Ashok Bazar, Afzal Gunj, Hyd-12</span>
+      <span><strong>Phone/WhatsApp:</strong> +91 8555838852</span>
+      <span><strong>Email:</strong> alfaropesuppliers03@gmail.com</span>
+      <span><strong>Instagram:</strong> @alfaropesuppliers</span>
+    </div>
+  </section>
 
-    <!-- Toolbar -->
-    <div class="action-toolbar">
-      <input type="text" id="searchInput" class="search-box" placeholder="Search ropes, categories, diameter..." oninput="handleSearch()">
-      <button id="addItemBtn" class="btn" onclick="openProductModal()" style="display: none;">+ Add New Product</button>
+  <!-- Main Workspace -->
+  <main>
+    <!-- Inventory Low-Stock Alert -->
+    <div id="lowStockAlert" class="alert-banner">
+      <span id="alertMsg">⚠️ Alert: One or more rope items are running below minimum safety threshold (50 Units/Kg).</span>
+      <button class="btn btn-sm btn-secondary" onclick="this.parentElement.style.display='none'">Dismiss</button>
     </div>
 
-    <!-- Product Grid for Customers -->
-    <div id="customerView" class="product-grid"></div>
+    <!-- Admin / Owner Professional Metrics Panel -->
+    <div id="metricsPanel" class="metrics-grid" style="display: none;">
+      <div class="metric-card">
+        <h4>Catalog Variety</h4>
+        <div class="val" id="metricItems">0</div>
+      </div>
+      <div class="metric-card">
+        <h4>Total Stock (Kg / Units)</h4>
+        <div class="val" id="metricStock">0</div>
+      </div>
+      <div class="metric-card" id="valuationCard" style="display: none;">
+        <h4>Inventory Valuation</h4>
+        <div class="val" style="color: var(--primary);" id="metricValue">₹0</div>
+      </div>
+      <div class="metric-card">
+        <h4>Pending Password Resets</h4>
+        <div class="val" style="color: var(--danger);" id="metricResets">0</div>
+      </div>
+    </div>
 
-    <!-- Inventory Table for Admin & Owner -->
-    <div id="adminView" class="table-container" style="display: none;">
+    <!-- Role-Based Navigation Tabs -->
+    <div id="dashboardTabs" class="tab-bar" style="display: none;">
+      <button class="tab-btn active" onclick="switchDashboardTab('inventory')">Inventory Control</button>
+      <button class="tab-btn" onclick="switchDashboardTab('coupons')">Coupon System</button>
+      <button class="tab-btn" onclick="switchDashboardTab('customers')">Customer Directory</button>
+      <button class="tab-btn" onclick="switchDashboardTab('resets')">Password Reset Requests</button>
+    </div>
+
+    <!-- Primary Action Toolbar -->
+    <div class="toolbar">
+      <input type="text" id="searchInput" class="search-input" placeholder="Search ropes, categories, size..." oninput="handleSearch()">
+      
+      <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+        <!-- Download Data Controls -->
+        <button id="exportBtn" class="btn btn-secondary" onclick="exportDataToCSV()" style="display: none;">💾 Download Dashboard Data</button>
+        <button id="addItemBtn" class="btn" onclick="openProductModal()" style="display: none;">+ Add Rope Item</button>
+      </div>
+    </div>
+
+    <!-- TAB 1: Customer View (Storefront) -->
+    <div id="customerStoreView" class="product-grid"></div>
+
+    <!-- TAB 2: Admin/Owner Inventory Table -->
+    <div id="adminInventoryView" class="table-container" style="display: none;">
       <table>
         <thead>
           <tr>
             <th>Photo</th>
-            <th>Item Name & Specs</th>
+            <th>Item & Diameter</th>
             <th>Category</th>
-            <th>Stock Quantity</th>
-            <th>Price (₹)</th>
+            <th>MRP (₹)</th>
+            <th>Selling Price (₹)</th>
+            <th>Stock Available</th>
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody id="adminTableBody"></tbody>
+        <tbody id="inventoryTableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- TAB 3: Coupon Management -->
+    <div id="couponView" style="display: none;">
+      <div class="toolbar">
+        <h3>Active Discount Coupons</h3>
+        <button class="btn" onclick="openCouponModal()">+ Create Coupon</button>
+      </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Coupon Code</th>
+              <th>Discount Percentage (%)</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="couponTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 4: Customer Directory View -->
+    <div id="customerListView" class="table-container" style="display: none;">
+      <table>
+        <thead>
+          <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Contact Number</th>
+            <th>Registered Date</th>
+          </tr>
+        </thead>
+        <tbody id="customerTableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- TAB 5: Password Reset Pipeline -->
+    <div id="resetRequestsView" class="table-container" style="display: none;">
+      <table>
+        <thead>
+          <tr>
+            <th>User Email</th>
+            <th>Requested New Password</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="resetTableBody"></tbody>
       </table>
     </div>
   </main>
 
-  <!-- Add/Edit Product Modal -->
-  <div id="productModal" class="modal-overlay">
-    <div class="modal-content">
-      <h3 id="modalTitle" style="margin-bottom: 1.2rem; color: var(--text-main);">Add New Rope Item</h3>
-      <form id="productForm" onsubmit="saveProduct(event)">
-        <input type="hidden" id="productId">
-        <input type="hidden" id="productImageBase64">
-        
+  <!-- MODAL: Authentication & Role Selection -->
+  <div id="authModal" class="modal">
+    <div class="modal-box">
+      <h3 style="margin-bottom: 1rem;">Select Profile Role & Login</h3>
+      
+      <div class="form-group">
+        <label>Select Profile</label>
+        <select id="authRoleSelect" onchange="toggleAuthFields(this.value)">
+          <option value="customer_login">Customer Login</option>
+          <option value="customer_register">Customer Register (New Profile)</option>
+          <option value="admin">Admin Profile</option>
+          <option value="owner">Owner Profile</option>
+          <option value="forgot_password">Forgot / Reset Password</option>
+        </select>
+      </div>
+
+      <!-- Customer Register Fields -->
+      <div id="registerFields" style="display: none;">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="regName">
+        </div>
+        <div class="form-group">
+          <label>Contact Phone Number</label>
+          <input type="text" id="regPhone">
+        </div>
+      </div>
+
+      <!-- Shared Email / Credentials -->
+      <div id="emailField">
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="authEmail">
+        </div>
+      </div>
+
+      <!-- Password / PIN Field -->
+      <div id="passwordField">
+        <div class="form-group">
+          <label id="passwordLabel">Customer Password</label>
+          <input type="password" id="authPassword">
+        </div>
+      </div>
+
+      <!-- Forgot Password New Value -->
+      <div id="forgotFields" style="display: none;">
+        <div class="form-group">
+          <label>Enter New Desired Password</label>
+          <input type="password" id="newRequestedPassword">
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('authModal')">Cancel</button>
+        <button class="btn" onclick="handleAuthSubmit()">Proceed</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Add / Edit Product -->
+  <div id="productModal" class="modal">
+    <div class="modal-box">
+      <h3 id="productModalTitle" style="margin-bottom: 1rem;">Add Rope Item</h3>
+      <form onsubmit="saveProduct(event)">
+        <input type="hidden" id="prodId">
+        <input type="hidden" id="prodImageBase64">
+
         <div class="form-group">
           <label>Item Name</label>
-          <input type="text" id="productName" placeholder="e.g. PP Twisted Rope" required>
+          <input type="text" id="prodName" required>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <div class="form-row">
           <div class="form-group">
             <label>Category</label>
-            <input type="text" id="productCategory" placeholder="e.g. PP Ropes, Nylon" required>
+            <input type="text" id="prodCategory" placeholder="e.g. PP, Nylon, Manila" required>
           </div>
           <div class="form-group">
-            <label>Diameter / Specs</label>
-            <input type="text" id="productDiameter" placeholder="e.g. 12mm / 3-Strand" required>
+            <label>Diameter / Specifications</label>
+            <input type="text" id="prodDiameter" placeholder="e.g. 12mm / 3-Strand" required>
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <div class="form-row">
           <div class="form-group">
-            <label>Price (₹ per unit/kg)</label>
-            <input type="number" id="productPrice" min="1" step="0.5" required>
+            <label>MRP (₹)</label>
+            <input type="number" id="prodMrp" min="1" step="0.5" required>
           </div>
           <div class="form-group">
-            <label>Stock Quantity (Kg/Rolls)</label>
-            <input type="number" id="productQty" min="0" required>
+            <label>Selling Price (₹)</label>
+            <input type="number" id="prodPrice" min="1" step="0.5" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Stock Quantity (Units/Kg)</label>
+            <input type="number" id="prodStock" min="0" required>
+          </div>
+          <div class="form-group">
+            <label>Unit Label</label>
+            <input type="text" id="prodUnit" value="Kg" required>
           </div>
         </div>
 
         <div class="form-group">
-          <label>Upload Photo (from your computer/phone)</label>
-          <input type="file" id="productImageFile" accept="image/*" onchange="handleImageFile(this)">
+          <label>Product Photo File</label>
+          <input type="file" accept="image/*" onchange="handleImageUpload(this)">
         </div>
 
         <div class="form-group">
-          <label>Description / Features</label>
-          <textarea id="productDesc" rows="3" placeholder="High tensile, UV stabilized, packaging or marine use..."></textarea>
+          <label>Description</label>
+          <textarea id="prodDesc" rows="2"></textarea>
         </div>
 
-        <div class="form-actions">
-          <button type="button" class="btn btn-secondary" onclick="closeProductModal()">Cancel</button>
-          <button type="submit" class="btn">Save Product</button>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('productModal')">Cancel</button>
+          <button type="submit" class="btn">Save & Update</button>
         </div>
       </form>
     </div>
   </div>
 
+  <!-- MODAL: Create Coupon -->
+  <div id="couponModal" class="modal">
+    <div class="modal-box">
+      <h3 style="margin-bottom: 1rem;">Create Discount Coupon</h3>
+      <div class="form-group">
+        <label>Coupon Code (e.g. ALFA10)</label>
+        <input type="text" id="couponCode" style="text-transform: uppercase;">
+      </div>
+      <div class="form-group">
+        <label>Discount Percentage (%)</label>
+        <input type="number" id="couponPercent" min="1" max="99">
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('couponModal')">Cancel</button>
+        <button class="btn" onclick="saveCoupon()">Save Coupon</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Customer Order / Checkout -->
+  <div id="orderModal" class="modal">
+    <div class="modal-box">
+      <h3 style="margin-bottom: 1rem;">Direct Order Enquiry</h3>
+      <div id="orderSummary" style="font-size: 0.9rem; margin-bottom: 1rem; color: var(--text-muted);"></div>
+      
+      <div class="form-group">
+        <label>Apply Discount Coupon</label>
+        <div style="display: flex; gap: 0.5rem;">
+          <input type="text" id="appliedCouponCode" placeholder="Enter coupon code" style="text-transform: uppercase;">
+          <button class="btn btn-secondary" type="button" onclick="applyCouponToOrder()">Apply</button>
+        </div>
+        <p id="couponFeedback" style="font-size: 0.8rem; margin-top: 0.3rem;"></p>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('orderModal')">Close</button>
+        <button class="btn btn-success" onclick="dispatchWhatsAppOrder()">Proceed to WhatsApp</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    const COMPANY_CONFIG = {
-      name: "ALFA ROPE SUPPLIERS",
-      address: "Ashok Bazar, Afzal Gunj, Hyderabad - 500012",
-      phone: "+91 8555838852",
-      currency: "₹"
-    };
+    // System Constants
+    const ADMIN_PIN = "9290";
+    const OWNER_PIN = "9290";
 
     const INITIAL_PRODUCTS = [
       {
         id: "ALFA-101",
-        name: "High-Density Polypropylene (PP) Twisted Rope",
+        name: "High-Density Polypropylene (PP) Rope",
         category: "PP Ropes",
         diameter: "12mm",
+        mrp: 220,
         price: 180,
+        stock: 450,
         unit: "Kg",
-        quantity: 450,
-        description: "3-Strand virgin grade high-tensile PP rope. UV stabilized for agricultural and industrial tie-downs.",
+        description: "Virgin 3-strand UV stabilized heavy duty rope for agricultural and packaging use.",
         image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80"
       },
       {
         id: "ALFA-102",
-        name: "Heavy-Duty Nylon Braided Rope",
+        name: "Industrial Nylon Braided Scaffolding Rope",
         category: "Nylon Ropes",
         diameter: "16mm",
+        mrp: 300,
         price: 240,
+        stock: 40,
         unit: "Kg",
-        quantity: 180,
-        description: "Multi-strand braided nylon rope with superior shock absorption and abrasion resistance.",
+        description: "Multi-strand shock-absorbing nylon rope engineered for construction scaffolds.",
         image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
       },
       {
         id: "ALFA-103",
-        name: "Eco-Friendly Natural Manila / Coir Rope",
+        name: "Natural Manila / Coir Scaffolding Rope",
         category: "Coir & Natural",
         diameter: "24mm",
+        mrp: 150,
         price: 120,
+        stock: 320,
         unit: "Kg",
-        quantity: 320,
-        description: "Traditional natural fiber rope suitable for marine, construction scaffolding, and heavy packaging.",
+        description: "Heavy duty natural fiber rope for marine, construction, and wrapping.",
         image: "https://images.unsplash.com/photo-1508873535684-277a3cbcc4e8?auto=format&fit=crop&w=600&q=80"
-      },
-      {
-        id: "ALFA-104",
-        name: "Industrial Packaging PP Sutli (Roll)",
-        category: "Twine & Sutli",
-        diameter: "4mm",
-        price: 135,
-        unit: "Roll",
-        quantity: 800,
-        description: "High-tensile packaging twine used for carton sealing, strapping, and general goods dispatch.",
-        image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80"
       }
     ];
 
-    let currentRole = 'customer';
+    // State Variables
+    let currentRole = 'customer'; // 'customer', 'admin', 'owner'
+    let currentCustomer = null;
     let products = [];
-    let searchQuery = "";
+    let customers = [];
+    let coupons = [{ code: "ALFA10", discount: 10 }];
+    let resetRequests = [];
+    let activeOrder = null;
+    let appliedDiscount = 0;
 
     window.onload = () => {
-      const saved = localStorage.getItem('alfa_rope_inventory');
-      products = saved ? JSON.parse(saved) : INITIAL_PRODUCTS;
+      loadStorage();
       renderApp();
     };
 
-    function saveState() {
-      localStorage.setItem('alfa_rope_inventory', JSON.stringify(products));
+    function loadStorage() {
+      products = JSON.parse(localStorage.getItem('alfa_prods')) || INITIAL_PRODUCTS;
+      customers = JSON.parse(localStorage.getItem('alfa_custs')) || [];
+      coupons = JSON.parse(localStorage.getItem('alfa_coupons')) || coupons;
+      resetRequests = JSON.parse(localStorage.getItem('alfa_resets')) || [];
+    }
+
+    function syncStorage() {
+      localStorage.setItem('alfa_prods', JSON.stringify(products));
+      localStorage.setItem('alfa_custs', JSON.stringify(customers));
+      localStorage.setItem('alfa_coupons', JSON.stringify(coupons));
+      localStorage.setItem('alfa_resets', JSON.stringify(resetRequests));
       renderApp();
     }
 
-    function switchRole(role) {
-      currentRole = role;
-      renderApp();
-    }
+    // Role and Tab Controller
+    function switchDashboardTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
 
-    function handleSearch() {
-      searchQuery = document.getElementById('searchInput').value.toLowerCase();
-      renderApp();
+      document.getElementById('adminInventoryView').style.display = tab === 'inventory' ? 'block' : 'none';
+      document.getElementById('couponView').style.display = tab === 'coupons' ? 'block' : 'none';
+      document.getElementById('customerListView').style.display = tab === 'customers' ? 'block' : 'none';
+      document.getElementById('resetRequestsView').style.display = tab === 'resets' ? 'block' : 'none';
     }
 
     function renderApp() {
-      const metricsSection = document.getElementById('metricsSection');
-      const addItemBtn = document.getElementById('addItemBtn');
-      const customerView = document.getElementById('customerView');
-      const adminView = document.getElementById('adminView');
+      const search = (document.getElementById('searchInput').value || '').toLowerCase();
+      const filtered = products.filter(p => p.name.toLowerCase().includes(search) || p.category.toLowerCase().includes(search));
 
-      const filtered = products.filter(p => 
-        p.name.toLowerCase().includes(searchQuery) ||
-        p.category.toLowerCase().includes(searchQuery) ||
-        p.diameter.toLowerCase().includes(searchQuery)
-      );
-
-      if (currentRole === 'customer') {
-        metricsSection.style.display = 'none';
-        addItemBtn.style.display = 'none';
-        customerView.style.display = 'grid';
-        adminView.style.display = 'none';
-        renderCustomerGrid(filtered);
+      // Check for low stock items (< 50)
+      const lowStockItems = products.filter(p => p.stock < 50);
+      const lowAlert = document.getElementById('lowStockAlert');
+      if (lowStockItems.length > 0) {
+        lowAlert.style.display = 'flex';
+        document.getElementById('alertMsg').innerText = `⚠️ Inventory Alert: ${lowStockItems.length} item(s) have low stock (<50 units). Restock recommended.`;
       } else {
-        metricsSection.style.display = 'grid';
-        addItemBtn.style.display = 'inline-flex';
-        customerView.style.display = 'none';
-        adminView.style.display = 'block';
+        lowAlert.style.display = 'none';
+      }
+
+      // Update UI elements based on active role
+      if (currentRole === 'customer') {
+        document.getElementById('metricsPanel').style.display = 'none';
+        document.getElementById('dashboardTabs').style.display = 'none';
+        document.getElementById('adminInventoryView').style.display = 'none';
+        document.getElementById('couponView').style.display = 'none';
+        document.getElementById('customerListView').style.display = 'none';
+        document.getElementById('resetRequestsView').style.display = 'none';
+        document.getElementById('customerStoreView').style.display = 'grid';
+        document.getElementById('addItemBtn').style.display = 'none';
+        document.getElementById('exportBtn').style.display = 'none';
+        
+        renderCustomerCards(filtered);
+      } else {
+        document.getElementById('metricsPanel').style.display = 'grid';
+        document.getElementById('dashboardTabs').style.display = 'flex';
+        document.getElementById('customerStoreView').style.display = 'none';
+        document.getElementById('adminInventoryView').style.display = 'block';
+        document.getElementById('addItemBtn').style.display = 'inline-flex';
+        document.getElementById('exportBtn').style.display = 'inline-flex';
+        
+        document.getElementById('valuationCard').style.display = currentRole === 'owner' ? 'block' : 'none';
+
         renderMetrics();
-        renderAdminTable(filtered);
+        renderAdminInventory(filtered);
+        renderCoupons();
+        renderCustomers();
+        renderResetRequests();
       }
     }
 
-    function renderCustomerGrid(items) {
-      const container = document.getElementById('customerView');
-      if (items.length === 0) {
-        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 3rem;">No products match your search.</p>`;
+    // Render Customer Catalog Cards
+    function renderCustomerCards(items) {
+      const container = document.getElementById('customerStoreView');
+      if (!items.length) {
+        container.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:var(--text-muted); padding:3rem;">No products found.</p>`;
         return;
       }
-      container.innerHTML = items.map(p => `
-        <div class="product-card">
-          <img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300x200?text=Alfa+Ropes'">
-          <div class="product-body">
-            <div>
-              <span class="badge">${p.category} (${p.diameter})</span>
-              <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">${p.name}</h3>
-              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">${p.description}</p>
-            </div>
-            <div>
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.8rem;">
-                <strong style="font-size: 1.3rem; color: var(--primary);">${COMPANY_CONFIG.currency}${p.price} <span style="font-size:0.8rem; color:var(--text-muted);">/ ${p.unit}</span></strong>
-                <span class="stock-tag ${p.quantity > 50 ? 'in-stock' : 'low-stock'}">${p.quantity > 0 ? `In Stock (${p.quantity})` : 'Out of Stock'}</span>
+      container.innerHTML = items.map(p => {
+        const discountPercent = Math.round(((p.mrp - p.price) / p.mrp) * 100);
+        return `
+          <div class="product-card">
+            <img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300x200?text=Alfa+Ropes'">
+            <div class="product-card-body">
+              <div>
+                <span class="badge">${p.category} (${p.diameter})</span>
+                <h3 style="font-size: 1.05rem; margin-bottom: 0.4rem;">${p.name}</h3>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">${p.description}</p>
               </div>
-              <button class="btn" style="width:100%;" onclick="orderWhatsApp('${p.name}', '${p.diameter}')">Enquire on WhatsApp</button>
+              <div>
+                <div class="price-row">
+                  <strong style="font-size:1.3rem; color:var(--primary);">₹${p.price}</strong>
+                  <span class="mrp">₹${p.mrp}</span>
+                  ${discountPercent > 0 ? `<span class="discount-pill">${discountPercent}% OFF</span>` : ''}
+                </div>
+                <div style="font-size:0.8rem; margin-bottom:0.8rem; color:${p.stock > 0 ? 'var(--success)' : 'var(--danger)'}">
+                  ${p.stock > 0 ? `In Stock (${p.stock} ${p.unit})` : 'Out of Stock'}
+                </div>
+                <button class="btn" style="width:100%;" onclick="openOrderModal('${p.id}')">Enquire / Order</button>
+              </div>
             </div>
           </div>
-        </div>
+        `;
+      }).join('');
+    }
+
+    // Render Admin Table
+    function renderAdminInventory(items) {
+      const tbody = document.getElementById('inventoryTableBody');
+      tbody.innerHTML = items.map(p => `
+        <tr>
+          <td><img src="${p.image}" class="table-img"></td>
+          <td><strong>${p.name}</strong><br><small style="color:var(--text-muted);">${p.diameter}</small></td>
+          <td><span class="badge">${p.category}</span></td>
+          <td><input type="number" class="table-input" style="width:75px;" value="${p.mrp}" onchange="quickUpdate('${p.id}', 'mrp', this.value)"></td>
+          <td><input type="number" class="table-input" style="width:75px;" value="${p.price}" onchange="quickUpdate('${p.id}', 'price', this.value)"></td>
+          <td><input type="number" class="table-input" style="width:75px;" value="${p.stock}" onchange="quickUpdate('${p.id}', 'stock', this.value)"></td>
+          <td>
+            <button class="btn btn-secondary btn-sm" onclick="editProduct('${p.id}')">Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteProduct('${p.id}')">Delete</button>
+          </td>
+        </tr>
       `).join('');
     }
 
-    function renderAdminTable(items) {
-      const tbody = document.getElementById('adminTableBody');
-      tbody.innerHTML = items.map(p => `
+    function renderCoupons() {
+      document.getElementById('couponTableBody').innerHTML = coupons.map((c, i) => `
         <tr>
-          <td><img src="${p.image}" class="table-img" onerror="this.src='https://via.placeholder.com/48?text=Rope'"></td>
-          <td><strong>${p.name}</strong><br><small style="color:var(--text-muted);">${p.diameter}</small></td>
-          <td><span class="badge">${p.category}</span></td>
+          <td><strong>${c.code}</strong></td>
+          <td>${c.discount}%</td>
+          <td><span class="discount-pill">ACTIVE</span></td>
+          <td><button class="btn btn-danger btn-sm" onclick="deleteCoupon(${i})">Remove</button></td>
+        </tr>
+      `).join('');
+    }
+
+    function renderCustomers() {
+      document.getElementById('customerTableBody').innerHTML = customers.map(c => `
+        <tr>
+          <td><strong>${c.name}</strong></td>
+          <td>${c.email}</td>
+          <td>${c.phone}</td>
+          <td>${c.date}</td>
+        </tr>
+      `).join('');
+    }
+
+    function renderResetRequests() {
+      document.getElementById('resetTableBody').innerHTML = resetRequests.map((r, i) => `
+        <tr>
+          <td>${r.email}</td>
+          <td><code>${r.newPass}</code></td>
+          <td><span style="color:${r.status === 'Pending' ? 'var(--danger)' : 'var(--success)'};">${r.status}</span></td>
           <td>
-            <input type="number" min="0" class="table-input" style="width: 80px;" value="${p.quantity}" onchange="inlineUpdateStock('${p.id}', this.value)">
-          </td>
-          <td>
-            <input type="number" min="1" step="0.5" class="table-input" style="width: 85px;" value="${p.price}" onchange="inlineUpdatePrice('${p.id}', this.value)">
-          </td>
-          <td>
-            <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 0.8rem; margin-right: 4px;" onclick="editProduct('${p.id}')">Edit</button>
-            <button class="btn btn-danger" style="padding: 4px 8px; font-size: 0.8rem;" onclick="deleteProduct('${p.id}')">Delete</button>
+            ${r.status === 'Pending' ? `<button class="btn btn-success btn-sm" onclick="approveReset(${i})">Approve & Reset</button>` : 'Approved'}
           </td>
         </tr>
       `).join('');
     }
 
     function renderMetrics() {
-      const container = document.getElementById('metricsSection');
-      const totalItems = products.length;
-      const totalUnits = products.reduce((sum, p) => sum + Number(p.quantity), 0);
-      const inventoryValuation = products.reduce((sum, p) => sum + (Number(p.quantity) * Number(p.price)), 0);
+      document.getElementById('metricItems').innerText = products.length;
+      document.getElementById('metricStock').innerText = products.reduce((acc, p) => acc + Number(p.stock), 0).toLocaleString();
+      document.getElementById('metricResets').innerText = resetRequests.filter(r => r.status === 'Pending').length;
+      
+      const totalVal = products.reduce((acc, p) => acc + (Number(p.stock) * Number(p.price)), 0);
+      document.getElementById('metricValue').innerText = '₹' + totalVal.toLocaleString();
+    }
 
-      let html = `
-        <div class="metric-card">
-          <h4>Total Catalog Items</h4>
-          <div class="value">${totalItems}</div>
-        </div>
-        <div class="metric-card">
-          <h4>Total Stock in Warehouse</h4>
-          <div class="value">${totalUnits.toLocaleString()}</div>
-        </div>
-      `;
-
-      if (currentRole === 'owner') {
-        html += `
-          <div class="metric-card">
-            <h4>Total Inventory Value</h4>
-            <div class="value" style="color: var(--primary);">${COMPANY_CONFIG.currency}${inventoryValuation.toLocaleString()}</div>
-          </div>
-          <div class="metric-card">
-            <h4>Privilege Level</h4>
-            <div class="value" style="color: var(--success); font-size: 1.15rem; padding-top: 0.3rem;">Owner (Full Master)</div>
-          </div>
-        `;
+    // Direct Inline Updates
+    function quickUpdate(id, key, val) {
+      const p = products.find(i => i.id === id);
+      if (p) {
+        p[key] = parseFloat(val) || 0;
+        syncStorage();
       }
-      container.innerHTML = html;
     }
 
-    function inlineUpdateStock(id, newQty) {
-      const p = products.find(i => i.id === id);
-      if (p) { p.quantity = parseInt(newQty) || 0; saveState(); }
+    // Search Handler
+    function handleSearch() {
+      renderApp();
     }
 
-    function inlineUpdatePrice(id, newPrice) {
-      const p = products.find(i => i.id === id);
-      if (p) { p.price = parseFloat(newPrice) || 0; saveState(); }
+    // Modal Visibility Helpers
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+    // Authentication Handlers
+    function openAuthModal() { openModal('authModal'); }
+
+    function toggleAuthFields(val) {
+      document.getElementById('registerFields').style.display = val === 'customer_register' ? 'block' : 'none';
+      document.getElementById('passwordField').style.display = val === 'forgot_password' ? 'none' : 'block';
+      document.getElementById('forgotFields').style.display = val === 'forgot_password' ? 'block' : 'none';
+      document.getElementById('passwordLabel').innerText = (val === 'admin' || val === 'owner') ? 'Enter Profile PIN' : 'Password';
     }
 
-    function handleImageFile(input) {
+    function handleAuthSubmit() {
+      const mode = document.getElementById('authRoleSelect').value;
+      const email = document.getElementById('authEmail').value.trim();
+      const pass = document.getElementById('authPassword').value.trim();
+
+      if (mode === 'admin') {
+        if (pass === ADMIN_PIN) {
+          setRole('admin', 'Admin Profile');
+        } else {
+          alert('Incorrect Admin PIN!');
+        }
+      } else if (mode === 'owner') {
+        if (pass === OWNER_PIN) {
+          setRole('owner', 'Owner Master Profile');
+        } else {
+          alert('Incorrect Owner PIN!');
+        }
+      } else if (mode === 'customer_register') {
+        const name = document.getElementById('regName').value.trim();
+        const phone = document.getElementById('regPhone').value.trim();
+        if (!name || !email || !pass) return alert('Fill all registration details.');
+        customers.push({ name, email, phone, pass, date: new Date().toLocaleDateString() });
+        currentCustomer = { name, email, phone };
+        setRole('customer', `Customer: ${name}`);
+        syncStorage();
+      } else if (mode === 'customer_login') {
+        const cust = customers.find(c => c.email === email && c.pass === pass);
+        if (cust) {
+          currentCustomer = cust;
+          setRole('customer', `Customer: ${cust.name}`);
+        } else {
+          alert('Invalid customer email or password.');
+        }
+      } else if (mode === 'forgot_password') {
+        const newPass = document.getElementById('newRequestedPassword').value.trim();
+        if (!email || !newPass) return alert('Provide email and desired new password.');
+        resetRequests.push({ email, newPass, status: 'Pending' });
+        syncStorage();
+        alert('Password reset submitted. Admin/Owner approval is required.');
+        closeModal('authModal');
+      }
+    }
+
+    function setRole(role, label) {
+      currentRole = role;
+      document.getElementById('currentProfileLabel').innerText = label;
+      document.getElementById('logoutBtn').style.display = 'inline-flex';
+      closeModal('authModal');
+      renderApp();
+    }
+
+    function logout() {
+      currentRole = 'customer';
+      currentCustomer = null;
+      document.getElementById('currentProfileLabel').innerText = 'Customer View';
+      document.getElementById('logoutBtn').style.display = 'none';
+      renderApp();
+    }
+
+    function approveReset(index) {
+      const req = resetRequests[index];
+      const cust = customers.find(c => c.email === req.email);
+      if (cust) {
+        cust.pass = req.newPass;
+      }
+      req.status = 'Approved';
+      syncStorage();
+      alert(`Password updated successfully for ${req.email}`);
+    }
+
+    // Photo File Processing
+    function handleImageUpload(input) {
       const file = input.files[0];
       if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          document.getElementById('productImageBase64').value = e.target.result;
+          document.getElementById('prodImageBase64').value = e.target.result;
         };
         reader.readAsDataURL(file);
       }
     }
 
+    // Product Modal & Save
     function openProductModal() {
-      document.getElementById('productForm').reset();
-      document.getElementById('productId').value = '';
-      document.getElementById('productImageBase64').value = '';
-      document.getElementById('modalTitle').innerText = 'Add New Rope Item';
-      document.getElementById('productModal').style.display = 'flex';
-    }
-
-    function closeProductModal() {
-      document.getElementById('productModal').style.display = 'none';
+      document.getElementById('prodId').value = '';
+      document.getElementById('prodImageBase64').value = '';
+      document.getElementById('prodName').value = '';
+      document.getElementById('prodCategory').value = '';
+      document.getElementById('prodDiameter').value = '';
+      document.getElementById('prodMrp').value = '';
+      document.getElementById('prodPrice').value = '';
+      document.getElementById('prodStock').value = '';
+      document.getElementById('prodDesc').value = '';
+      document.getElementById('productModalTitle').innerText = 'Add Rope Item';
+      openModal('productModal');
     }
 
     function editProduct(id) {
       const p = products.find(i => i.id === id);
       if (!p) return;
-      
-      document.getElementById('productId').value = p.id;
-      document.getElementById('productName').value = p.name;
-      document.getElementById('productCategory').value = p.category;
-      document.getElementById('productDiameter').value = p.diameter;
-      document.getElementById('productPrice').value = p.price;
-      document.getElementById('productQty').value = p.quantity;
-      document.getElementById('productDesc').value = p.description;
-      document.getElementById('productImageBase64').value = p.image;
-      
-      document.getElementById('modalTitle').innerText = 'Edit Product Details';
-      document.getElementById('productModal').style.display = 'flex';
+      document.getElementById('prodId').value = p.id;
+      document.getElementById('prodImageBase64').value = p.image;
+      document.getElementById('prodName').value = p.name;
+      document.getElementById('prodCategory').value = p.category;
+      document.getElementById('prodDiameter').value = p.diameter;
+      document.getElementById('prodMrp').value = p.mrp;
+      document.getElementById('prodPrice').value = p.price;
+      document.getElementById('prodStock').value = p.stock;
+      document.getElementById('prodUnit').value = p.unit || 'Kg';
+      document.getElementById('prodDesc').value = p.description;
+      document.getElementById('productModalTitle').innerText = 'Edit Product Details';
+      openModal('productModal');
     }
 
     function saveProduct(e) {
       e.preventDefault();
-      const id = document.getElementById('productId').value;
-      const imageVal = document.getElementById('productImageBase64').value || 'https://via.placeholder.com/300x200?text=Alfa+Ropes';
+      const id = document.getElementById('prodId').value;
+      const img = document.getElementById('prodImageBase64').value || 'https://via.placeholder.com/300x200?text=Alfa+Ropes';
 
-      const productData = {
+      const record = {
         id: id || 'ALFA-' + Date.now().toString().slice(-4),
-        name: document.getElementById('productName').value,
-        category: document.getElementById('productCategory').value,
-        diameter: document.getElementById('productDiameter').value,
-        price: parseFloat(document.getElementById('productPrice').value),
-        unit: 'Kg',
-        quantity: parseInt(document.getElementById('productQty').value),
-        description: document.getElementById('productDesc').value,
-        image: imageVal
+        name: document.getElementById('prodName').value,
+        category: document.getElementById('prodCategory').value,
+        diameter: document.getElementById('prodDiameter').value,
+        mrp: parseFloat(document.getElementById('prodMrp').value),
+        price: parseFloat(document.getElementById('prodPrice').value),
+        stock: parseInt(document.getElementById('prodStock').value),
+        unit: document.getElementById('prodUnit').value,
+        description: document.getElementById('prodDesc').value,
+        image: img
       };
 
       if (id) {
-        const index = products.findIndex(p => p.id === id);
-        products[index] = productData;
+        const idx = products.findIndex(i => i.id === id);
+        products[idx] = record;
       } else {
-        products.push(productData);
+        products.push(record);
       }
-
-      saveState();
-      closeProductModal();
+      syncStorage();
+      closeModal('productModal');
     }
 
     function deleteProduct(id) {
-      if (confirm("Are you sure you want to remove this product from inventory?")) {
-        products = products.filter(p => p.id !== id);
-        saveState();
+      if (confirm('Delete this product from catalog?')) {
+        products = products.filter(i => i.id !== id);
+        syncStorage();
       }
     }
 
-    function orderWhatsApp(name, diameter) {
-      const msg = encodeURIComponent(`Hello Alfa Rope Suppliers, I am interested in placing an order for: ${name} (${diameter}). Please share available stock and bulk quotes.`);
+    // Coupon Creation
+    function openCouponModal() { openModal('couponModal'); }
+    function saveCoupon() {
+      const code = document.getElementById('couponCode').value.trim().toUpperCase();
+      const discount = parseInt(document.getElementById('couponPercent').value);
+      if (!code || !discount) return alert('Enter valid coupon code and percentage.');
+      coupons.push({ code, discount });
+      syncStorage();
+      closeModal('couponModal');
+    }
+
+    function deleteCoupon(idx) {
+      coupons.splice(idx, 1);
+      syncStorage();
+    }
+
+    // Order & Coupon Flow
+    function openOrderModal(id) {
+      activeOrder = products.find(i => i.id === id);
+      appliedDiscount = 0;
+      document.getElementById('appliedCouponCode').value = '';
+      document.getElementById('couponFeedback').innerText = '';
+      
+      document.getElementById('orderSummary').innerHTML = `
+        <strong>${activeOrder.name}</strong> (${activeOrder.diameter})<br>
+        Standard Rate: ₹${activeOrder.price} / ${activeOrder.unit}<br>
+        Available Stock: ${activeOrder.stock} ${activeOrder.unit}
+      `;
+      openModal('orderModal');
+    }
+
+    function applyCouponToOrder() {
+      const code = document.getElementById('appliedCouponCode').value.trim().toUpperCase();
+      const match = coupons.find(c => c.code === code);
+      const fb = document.getElementById('couponFeedback');
+      if (match) {
+        appliedDiscount = match.discount;
+        const discountedPrice = activeOrder.price - (activeOrder.price * (appliedDiscount / 100));
+        fb.style.color = 'var(--success)';
+        fb.innerText = `Coupon '${match.code}' Applied! Final Rate: ₹${discountedPrice.toFixed(2)} / ${activeOrder.unit}`;
+      } else {
+        appliedDiscount = 0;
+        fb.style.color = 'var(--danger)';
+        fb.innerText = `Invalid coupon code.`;
+      }
+    }
+
+    function dispatchWhatsAppOrder() {
+      let finalPrice = activeOrder.price;
+      if (appliedDiscount > 0) {
+        finalPrice = (activeOrder.price - (activeOrder.price * (appliedDiscount / 100))).toFixed(2);
+      }
+      const msg = encodeURIComponent(
+        `Hello Alfa Rope Suppliers,\nI want to place an order for:\n` +
+        `- Product: ${activeOrder.name} (${activeOrder.diameter})\n` +
+        `- Rate: ₹${finalPrice} / ${activeOrder.unit}\n` +
+        `- Customer: ${currentCustomer ? currentCustomer.name + ' (' + currentCustomer.phone + ')' : 'Direct Buyer'}`
+      );
       window.open(`https://wa.me/918555838852?text=${msg}`, '_blank');
+      closeModal('orderModal');
+    }
+
+    // 1-Click Complete Data Export (CSV)
+    function exportDataToCSV() {
+      let csvContent = "data:text/csv;charset=utf-8,";
+      
+      csvContent += "=== ALFA ROPE INVENTORY ===\r\n";
+      csvContent += "ID,Name,Category,Diameter,MRP,Price,Stock,Unit\r\n";
+      products.forEach(p => {
+        csvContent += `"${p.id}","${p.name}","${p.category}","${p.diameter}",${p.mrp},${p.price},${p.stock},"${p.unit}"\r\n`;
+      });
+
+      csvContent += "\r\n=== REGISTERED CUSTOMERS ===\r\n";
+      csvContent += "Name,Email,Phone,Date\r\n";
+      customers.forEach(c => {
+        csvContent += `"${c.name}","${c.email}","${c.phone}","${c.date}"\r\n`;
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `Alfa_Rope_Master_Data_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
   </script>
 </body>
