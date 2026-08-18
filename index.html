@@ -5,18 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>ALFA ROPE SUPPLIERS | Enterprise Industrial & Retail Portal</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="styles.css?v=9.0">
+  <link rel="stylesheet" href="styles.css?v=11.0">
 </head>
 <body>
 
   <!-- Live Dispatch Ticker Marquee -->
   <div class="top-ticker-bar">
     <div class="ticker-content">
-      ⚡ <strong>AUTOMATED REAL-TIME CLOUD:</strong> Daily Wholesale Shipments to Telangana, Andhra Pradesh & All India | Direct Factory Rates on PP, Nylon & Manila Ropes | Call / WhatsApp: +91 8555838852 | Ashok Bazar, Afzal Gunj, Hyderabad
+      ⚡ <strong>LIVE DISPATCH & CLOUD SYNC:</strong> Daily Wholesale Shipments to Telangana, Andhra Pradesh & All India | Direct Factory Rates on PP, Nylon & Manila Ropes | Call / WhatsApp: +91 8555838852 | Ashok Bazar, Afzal Gunj, Hyderabad
     </div>
   </div>
 
-  <!-- Primary E-Commerce Top Header -->
+  <!-- Primary Header -->
   <header>
     <div class="nav-main-tier">
       <div class="brand-group">
@@ -74,7 +74,7 @@
 
   <!-- Workspace -->
   <main>
-    <!-- Live Cloud Sync Notification Indicator -->
+    <!-- Live Cloud Sync Status Badge -->
     <div id="cloudLiveBadge" style="display: flex; align-items: center; justify-content: flex-end; gap: 0.4rem; font-size: 0.75rem; color: var(--success); margin-bottom: 0.5rem;">
       <i class="fa-solid fa-circle-dot" style="animation: blinker 1.5s linear infinite;"></i> <span id="cloudStatusText">Live Automated Cloud Connected</span>
     </div>
@@ -131,15 +131,16 @@
     <!-- Quick Action Controls -->
     <div id="adminActionToolbar" style="display: none; gap: 0.4rem; margin-bottom: 1rem; overflow-x: auto;">
       <button class="btn btn-sm btn-success" onclick="openManualOrderModal()"><i class="fa-solid fa-plus-circle"></i> Direct Manual Order</button>
+      <button class="btn btn-secondary btn-sm" onclick="manualSyncTrigger()"><i class="fa-solid fa-rotate"></i> Sync Cloud Now</button>
       <button class="btn btn-secondary btn-sm" onclick="exportDataCSV()"><i class="fa-solid fa-download"></i> CSV Backup</button>
       <button class="btn btn-sm" onclick="openProductModal()"><i class="fa-solid fa-plus"></i> Add Item</button>
       <button class="btn btn-secondary btn-sm" onclick="openAddCategoryModal()"><i class="fa-solid fa-folder-plus"></i> Add New Category</button>
     </div>
 
-    <!-- TAB 1: Customer Storefront View (Grouped by Category) -->
+    <!-- TAB 1: Customer Storefront View -->
     <div id="customerStoreView"></div>
 
-    <!-- TAB 2: Orders & Tracking View (Admin / Owner) -->
+    <!-- TAB 2: Orders & Tracking View -->
     <div id="ordersTab" class="table-responsive" style="display: none;">
       <table>
         <thead>
@@ -198,12 +199,6 @@
     <div id="advancedTab" style="display: none;">
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
         <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
-          <h4 style="color: var(--primary);"><i class="fa-solid fa-cloud"></i> JSONBin Cloud Setup</h4>
-          <p style="font-size: 0.75rem; color: var(--text-muted);">Configure your live JSONBin ID and Master API Key for real-time order syncing.</p>
-          <button class="btn btn-sm btn-secondary" onclick="openCloudConfigModal()">Edit Cloud API Keys</button>
-        </div>
-
-        <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
           <h4 style="color: var(--primary);"><i class="fa-solid fa-power-off"></i> Store Status Mode</h4>
           <p style="font-size: 0.75rem; color: var(--text-muted);">Toggle store maintenance mode on/off to control customer ordering.</p>
           <button class="btn btn-sm btn-secondary" onclick="toggleStoreMaintenance()"><span id="maintBtnText">Enable Maintenance Mode</span></button>
@@ -216,8 +211,14 @@
         </div>
 
         <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
+          <h4 style="color: var(--primary);"><i class="fa-solid fa-cart-arrow-down"></i> Cart Abandonment Inspector</h4>
+          <p style="font-size: 0.75rem; color: var(--text-muted);">Monitor items left in active carts for customer re-engagement.</p>
+          <button class="btn btn-sm btn-secondary" onclick="inspectActiveCarts()">Inspect Active Carts</button>
+        </div>
+
+        <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
           <h4 style="color: var(--primary);"><i class="fa-solid fa-database"></i> Database Snapshot (JSON)</h4>
-          <p style="font-size: 0.75rem; color: var(--text-muted);">Export complete backup file or restore database locally.</p>
+          <p style="font-size: 0.75rem; color: var(--text-muted);">Export or import full database snapshot including accounts and orders.</p>
           <div style="display: flex; gap: 0.4rem;">
             <button class="btn btn-sm btn-secondary" onclick="downloadJSONBackup()">Export JSON</button>
             <button class="btn btn-sm btn-secondary" onclick="document.getElementById('jsonImportFile').click()">Import JSON</button>
@@ -364,14 +365,14 @@
     <div class="modal-box">
       <div class="auth-nav">
         <button id="tabAuthLogin" class="active" onclick="switchAuthTab('login')">Sign In</button>
-        <button id="tabAuthReg" onclick="switchAuthTab('register')">Register</button>
+        <button id="tabAuthReg" onclick="switchAuthTab('register')">Register Profile</button>
         <button id="tabAuthForgot" onclick="switchAuthTab('forgot')">Forgot</button>
       </div>
 
       <form id="authFormLogin" onsubmit="handleLoginSubmit(event)">
         <div class="form-group">
-          <label>Email Address OR Mobile Number</label>
-          <input type="text" id="loginIdentifier" placeholder="Enter email or 10-digit mobile" required>
+          <label>Email Address OR 10-Digit Mobile Number</label>
+          <input type="text" id="loginIdentifier" placeholder="Enter registered email or mobile number" required>
         </div>
         <div class="form-group">
           <label>Password / Security PIN</label>
@@ -384,7 +385,7 @@
         <p id="authErrorMsg" style="color: var(--danger); font-size: 0.8rem; margin-bottom: 0.8rem; display: none;"></p>
         <div class="modal-actions">
           <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('authModal')">Cancel</button>
-          <button type="submit" class="btn btn-sm">Sign In</button>
+          <button type="submit" class="btn btn-sm" id="authSubmitBtn">Sign In</button>
         </div>
       </form>
 
@@ -406,7 +407,7 @@
           <input type="email" id="regEmail" required>
         </div>
         <div class="form-group">
-          <label>Mobile / WhatsApp Number</label>
+          <label>10-Digit Mobile / WhatsApp Number</label>
           <input type="text" id="regPhone" required>
         </div>
         <div class="form-group">
@@ -419,7 +420,7 @@
         </div>
         <div class="modal-actions">
           <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('authModal')">Cancel</button>
-          <button type="submit" class="btn btn-sm">Register Profile</button>
+          <button type="submit" class="btn btn-sm" id="regSubmitBtn">Register Profile</button>
         </div>
       </form>
 
@@ -517,7 +518,7 @@
       <div id="upiPaymentBox" class="bank-info-card">
         <div class="bank-row">
           <span>Official UPI ID:</span>
-          <span style="font-weight: 700; color: var(--primary);" id="checkoutUpiId">alfaropesuppliers@ybl</span>
+          <span style="font-weight: 700; color: var(--primary);" id="checkoutUpiId">8555838852@ybl</span>
           <span class="copy-chip" onclick="copyText('checkoutUpiId')">Copy UPI</span>
         </div>
         <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">Transfer from Google Pay, PhonePe, or Paytm and enter the 12-digit UTR below:</p>
@@ -638,26 +639,6 @@
       <div class="modal-actions" style="margin-top: 0.8rem;">
         <button class="btn btn-secondary btn-sm" onclick="closeModal('invoiceModal')">Close</button>
         <button class="btn btn-sm" onclick="printReceipt()"><i class="fa-solid fa-print"></i> Print / Save PDF Invoice</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- CLOUD DATABASE API KEYS MODAL -->
-  <div id="cloudConfigModal" class="modal">
-    <div class="modal-box">
-      <h3 style="margin-bottom: 1rem; color: var(--primary); font-size: 1.1rem;"><i class="fa-solid fa-cloud"></i> Automated JSON Cloud Config</h3>
-      <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.8rem;">To connect your own private JSONBin account, paste your Bin ID and Master Key below.</p>
-      <div class="form-group">
-        <label>JSONBin Bin ID</label>
-        <input type="text" id="cfgBinId" placeholder="e.g. 65d2a987..." required>
-      </div>
-      <div class="form-group">
-        <label>JSONBin Master Key (X-Master-Key)</label>
-        <input type="password" id="cfgMasterKey" placeholder="e.g. $2a$10$..." required>
-      </div>
-      <div class="modal-actions">
-        <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('cloudConfigModal')">Cancel</button>
-        <button type="button" class="btn btn-sm" onclick="saveCloudConfig()">Save & Connect Cloud</button>
       </div>
     </div>
   </div>
@@ -970,15 +951,15 @@
       </div>
       <div style="display: flex; gap: 0.8rem; font-size: 0.75rem; justify-content: center;">
         <span style="color: var(--text-muted);"><i class="fa-solid fa-lock"></i> SSL Secured</span>
-        <span style="color: var(--text-muted);"><i class="fa-solid fa-cloud-bolt"></i> Automated Online Cloud Database Sync</span>
+        <span style="color: var(--text-muted);"><i class="fa-solid fa-cloud-bolt"></i> Automated Cloud Connected</span>
       </div>
     </div>
   </footer>
 
   <script>
-    // Live Cloud JSON Configuration
-    let JSONBIN_ID = localStorage.getItem('alfa_jsonbin_id') || "";
-    let JSONBIN_KEY = localStorage.getItem('alfa_jsonbin_key') || "";
+    // Live Cloud JSON Configuration with your Bin ID and Master Key
+    const JSONBIN_ID = "6a844cfdda38895dfef29aa6";
+    const JSONBIN_KEY = "$2a$10$KpE0ewo6ZWvXekmGcgs6ouj1MIMvyDlqniZml5fa39i9THbZ1Krja";
 
     const DEFAULT_CMS = {
       brandTitle: "ALFA <span>ROPES</span>",
@@ -1077,20 +1058,20 @@
     let isStoreMaintenance = false;
     let currentViewingOrder = null;
 
-    window.onload = () => {
+    window.onload = async () => {
       loadStorage();
       validateClientSession12Hours();
       applyCMS();
       buildCategoryNavPills();
       renderApp();
 
-      // Initial cloud pull on load
-      autoSyncFromCloud();
+      // Initial cloud pull
+      await autoSyncFromCloud();
 
-      // Background cloud listener (Every 8 seconds)
+      // Continuous background sync (Every 7 seconds)
       setInterval(() => {
-        autoSyncFromCloud();
-      }, 8000);
+        autoSyncFromCloud(true);
+      }, 7000);
     };
 
     function loadStorage() {
@@ -1152,7 +1133,7 @@
       }
     }
 
-    async function autoSyncFromCloud() {
+    async function autoSyncFromCloud(silent = false) {
       if (!JSONBIN_ID || !JSONBIN_KEY) return;
       try {
         const res = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
@@ -1164,8 +1145,8 @@
         if (res.ok) {
           const result = await res.json();
           const record = result.record;
-          if (record && record.orders) {
-            orders = record.orders;
+          if (record) {
+            if (record.orders) orders = record.orders;
             if (record.products && record.products.length) products = record.products;
             if (record.categoriesList && record.categoriesList.length) categoriesList = record.categoriesList;
             if (record.users && record.users.length) users = record.users;
@@ -1174,7 +1155,7 @@
 
             syncStorage(true);
             buildCategoryNavPills();
-            document.getElementById('cloudStatusText').innerText = "Real-time Cloud Online";
+            document.getElementById('cloudStatusText').innerText = "Live Automated Cloud Connected";
           }
         }
       } catch (err) {
@@ -1182,20 +1163,9 @@
       }
     }
 
-    function openCloudConfigModal() {
-      document.getElementById('cfgBinId').value = JSONBIN_ID;
-      document.getElementById('cfgMasterKey').value = JSONBIN_KEY;
-      openModal('cloudConfigModal');
-    }
-
-    function saveCloudConfig() {
-      JSONBIN_ID = document.getElementById('cfgBinId').value.trim();
-      JSONBIN_KEY = document.getElementById('cfgMasterKey').value.trim();
-      localStorage.setItem('alfa_jsonbin_id', JSONBIN_ID);
-      localStorage.setItem('alfa_jsonbin_key', JSONBIN_KEY);
-      closeModal('cloudConfigModal');
-      autoPushToCloud();
-      alert('Cloud API connected! Orders will now sync automatically across all customer mobile phones.');
+    function manualSyncTrigger() {
+      autoSyncFromCloud();
+      alert('Synchronizing live cloud database...');
     }
 
     function logAudit(action) {
@@ -1663,7 +1633,6 @@
       cartDiscountPercent = 0;
       logAudit(`New Order Placed: ${orderRecord.orderId} (₹${orderRecord.totalAmount})`);
       
-      // Auto push to live cloud database
       syncStorage();
       closeModal('checkoutModal');
       toggleCart(false);
@@ -1686,7 +1655,7 @@
       document.getElementById('profPhone').value = activeUser.phone;
       document.getElementById('profAddress').value = activeUser.address || '';
 
-      const myOrders = orders.filter(o => o.customer.email.toLowerCase() === activeUser.email.toLowerCase() || o.customer.phone === activeUser.phone);
+      const myOrders = orders.filter(o => (o.customer.email && o.customer.email.toLowerCase() === activeUser.email.toLowerCase()) || o.customer.phone === activeUser.phone);
       const pastBox = document.getElementById('custPastOrdersList');
       if (!myOrders.length) {
         pastBox.innerHTML = `<p style="color: var(--text-muted); font-size: 0.8rem; padding: 1rem; text-align: center;">No orders placed yet.</p>`;
@@ -1726,13 +1695,13 @@
       activeUser.phone = document.getElementById('profPhone').value.trim();
       activeUser.address = document.getElementById('profAddress').value.trim();
 
-      const userIdx = users.findIndex(u => u.email.toLowerCase() === activeUser.email.toLowerCase());
+      const userIdx = users.findIndex(u => u.email.toLowerCase() === activeUser.email.toLowerCase() || u.phone === activeUser.phone);
       if (userIdx !== -1) users[userIdx] = activeUser;
 
       syncStorage();
       closeModal('customerProfileModal');
       document.getElementById('userProfileBtn').innerHTML = `<i class="fa-solid fa-user-circle"></i> ${activeUser.name.split(' ')[0]}`;
-      alert('Profile updated and synced to cloud!');
+      alert('Profile updated and synced across all devices!');
     }
 
     function openTrackOrderModal() {
@@ -1837,12 +1806,6 @@
       if (!cart.length) return alert('No active customer session carts currently detected.');
       const cartSummary = cart.map(i => `${i.name} (Qty: ${i.qty}) - ₹${i.price * i.qty}`).join('\n');
       alert(`[Cart Abandonment Inspector]\nCurrent Active Cart Items:\n\n${cartSummary}\n\nTotal: ₹${cart.reduce((s,i)=>s+(i.price*i.qty),0)}`);
-    }
-
-    function saveGSTSetting() {
-      const rate = document.getElementById('gstRateInput').value;
-      logAudit(`Updated GST Tax Rate to ${rate}%`);
-      alert(`GST standard rate set to ${rate}%.`);
     }
 
     function downloadJSONBackup() {
@@ -2090,7 +2053,7 @@
       logAudit(`Modified user profile: ${u.name}`);
       syncStorage();
       closeModal('adminEditCustModal');
-      alert('User updated & synced!');
+      alert('User updated & synced to cloud!');
     }
 
     function approveUserRole(idx) {
@@ -2210,14 +2173,29 @@
       document.getElementById('ownerNotice').style.display = role === 'owner' ? 'block' : 'none';
     }
 
-    function handleLoginSubmit(e) {
+    async function handleLoginSubmit(e) {
       e.preventDefault();
       const identifier = document.getElementById('loginIdentifier').value.trim();
       const passVal = document.getElementById('loginPassword').value.trim();
       const remember = document.getElementById('remember12Hours').checked;
       const errMsg = document.getElementById('authErrorMsg');
+      const submitBtn = document.getElementById('authSubmitBtn');
 
-      const match = users.find(u => (u.email.toLowerCase() === identifier.toLowerCase() || u.phone === identifier || u.name.toLowerCase() === identifier.toLowerCase()) && u.pass === passVal);
+      submitBtn.innerText = "Signing in...";
+      submitBtn.disabled = true;
+
+      // Always pull latest users list from cloud before authenticating
+      await autoSyncFromCloud(true);
+
+      const match = users.find(u => 
+        (u.email.toLowerCase() === identifier.toLowerCase() || 
+         (u.phone && u.phone.replace(/[^0-9]/g, '') === identifier.replace(/[^0-9]/g, '')) || 
+         u.name.toLowerCase() === identifier.toLowerCase()) && 
+        u.pass === passVal
+      );
+
+      submitBtn.innerText = "Sign In";
+      submitBtn.disabled = false;
 
       if (match) {
         if (match.status !== 'Active') {
@@ -2240,12 +2218,12 @@
         closeModal('authModal');
         renderApp();
       } else {
-        errMsg.innerText = "Invalid login credentials.";
+        errMsg.innerText = "Invalid credentials. Please verify your email/phone and password.";
         errMsg.style.display = 'block';
       }
     }
 
-    function handleRegisterSubmit(e) {
+    async function handleRegisterSubmit(e) {
       e.preventDefault();
       const role = document.getElementById('regAccountRole').value;
       const name = document.getElementById('regFullName').value.trim();
@@ -2253,9 +2231,24 @@
       const phone = document.getElementById('regPhone').value.trim();
       const address = document.getElementById('regAddress').value.trim();
       const pass = document.getElementById('regPass').value.trim();
+      const submitBtn = document.getElementById('regSubmitBtn');
 
-      const exists = users.find(u => u.email.toLowerCase() === email.toLowerCase() || u.phone === phone);
-      if (exists) return alert('Account already exists.');
+      submitBtn.innerText = "Creating Account...";
+      submitBtn.disabled = true;
+
+      // Fetch fresh users to prevent duplicate emails/phones
+      await autoSyncFromCloud(true);
+
+      const exists = users.find(u => 
+        u.email.toLowerCase() === email.toLowerCase() || 
+        (u.phone && u.phone.replace(/[^0-9]/g, '') === phone.replace(/[^0-9]/g, ''))
+      );
+
+      if (exists) {
+        submitBtn.innerText = "Register Profile";
+        submitBtn.disabled = false;
+        return alert('An account with this email or mobile number already exists.');
+      }
 
       const newUser = {
         name, email, phone, address, pass, role,
@@ -2264,33 +2257,48 @@
 
       users.push(newUser);
       logAudit(`New ${role.toUpperCase()} registered: ${name}`);
+      
+      // Push immediately to the cloud database
       syncStorage();
+      await autoPushToCloud();
+
+      submitBtn.innerText = "Register Profile";
+      submitBtn.disabled = false;
       closeModal('authModal');
 
       if (role === 'owner') {
-        alert('Owner registration submitted for approval.');
+        alert('Owner registration submitted! Please wait for Admin approval.');
       } else {
-        alert('Registration successful! You can now log in.');
+        alert('Registration successful! You can now log in using your email or mobile number.');
       }
     }
 
-    function handleForgotSubmit(e) {
+    async function handleForgotSubmit(e) {
       e.preventDefault();
       const idVal = document.getElementById('forgotIdentifier').value.trim();
       const newPass = document.getElementById('forgotNewPass').value.trim();
 
-      const user = users.find(u => u.email.toLowerCase() === idVal.toLowerCase() || u.phone === idVal);
+      await autoSyncFromCloud(true);
+
+      const user = users.find(u => 
+        u.email.toLowerCase() === idVal.toLowerCase() || 
+        (u.phone && u.phone.replace(/[^0-9]/g, '') === idVal.replace(/[^0-9]/g, ''))
+      );
+
       if (user) {
         user.pass = newPass;
+        logAudit(`Password reset for ${user.email}`);
         syncStorage();
-        alert('Password updated successfully!');
+        await autoPushToCloud();
+        alert('Password updated successfully! You can now sign in.');
         closeModal('authModal');
       } else {
-        alert('Account not found.');
+        alert('No account found with that email or mobile number.');
       }
     }
 
     function logout() {
+      logAudit(`User logged out: ${activeUser ? activeUser.name : 'Unknown'}`);
       currentRole = 'customer';
       activeUser = null;
       localStorage.removeItem('alfa_auth_session');
@@ -2366,6 +2374,7 @@
     function deleteProduct(id) {
       if (confirm('Delete this product from inventory?')) {
         products = products.filter(i => i.id !== id);
+        logAudit(`Deleted Product ID: ${id}`);
         syncStorage();
         buildCategoryNavPills();
       }
@@ -2377,11 +2386,13 @@
       const discount = parseInt(document.getElementById('newCouponDiscount').value);
       if (!code || !discount) return alert('Enter valid coupon details.');
       coupons.push({ code, discount });
+      logAudit(`Created Coupon: ${code} (${discount}%)`);
       syncStorage();
       closeModal('couponModal');
     }
 
     function deleteCoupon(idx) {
+      logAudit(`Deleted Coupon: ${coupons[idx].code}`);
       coupons.splice(idx, 1);
       syncStorage();
     }
