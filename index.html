@@ -3,21 +3,343 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ALFA ROPE SUPPLIERS - Inventory & Store</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <title>ALFA ROPE SUPPLIERS - Official Portal</title>
+  <style>
+    :root {
+      --primary: #d97706;
+      --primary-dark: #b45309;
+      --dark-bg: #0f172a;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --success: #10b981;
+      --danger: #ef4444;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--dark-bg);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    /* Header & Navigation */
+    header {
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .brand-info h1 {
+      color: var(--primary);
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-info p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .role-switcher {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--dark-bg);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .role-switcher select {
+      background: transparent;
+      color: var(--primary);
+      border: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      outline: none;
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Dashboard Metrics */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .metric-card {
+      background: var(--card-bg);
+      padding: 1.25rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .metric-card h4 {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .metric-card .value {
+      font-size: 1.75rem;
+      font-weight: bold;
+      color: var(--text-main);
+    }
+
+    /* Action Toolbar */
+    .action-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .search-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 0.65rem 1rem;
+      border-radius: 6px;
+      width: 340px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .search-box:focus {
+      border-color: var(--primary);
+    }
+
+    .btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 0.65rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+    }
+
+    .btn-danger:hover {
+      background: #dc2626;
+    }
+
+    /* Product Grid for Customer */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      background: #334155;
+    }
+
+    .product-body {
+      padding: 1.2rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      background: rgba(217, 119, 6, 0.15);
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .stock-tag {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .in-stock { color: var(--success); }
+    .low-stock { color: var(--danger); }
+
+    /* Admin / Owner Table View */
+    .table-container {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    table th, table td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+
+    table th {
+      background: rgba(15, 23, 42, 0.6);
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+
+    .table-img {
+      width: 48px;
+      height: 48px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    .table-input {
+      background: var(--dark-bg);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 0.35rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    /* Modal Form */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.75);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 540px;
+      padding: 1.75rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      background: var(--dark-bg);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 0.65rem;
+      border-radius: 6px;
+      outline: none;
+      font-size: 0.9rem;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: var(--primary);
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.8rem;
+      margin-top: 1.5rem;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Navigation Bar -->
+  <!-- Header -->
   <header>
     <div class="nav-container">
       <div class="brand-info">
         <h1 id="companyName">ALFA ROPE SUPPLIERS</h1>
-        <p id="companyDetails">Ashok Bazar, Afzal Gunj, Hyderabad | +91 8555838852</p>
+        <p id="companyDetails">Ashok Bazar, Afzal Gunj, Hyderabad - 500012 | Contact: +91 8555838852</p>
       </div>
       
       <div class="role-switcher">
-        <label for="roleSelector">Active Profile:</label>
+        <label for="roleSelector">Role Profile:</label>
         <select id="roleSelector" onchange="switchRole(this.value)">
           <option value="customer">Customer Storefront</option>
           <option value="admin">Admin Dashboard</option>
@@ -27,28 +349,30 @@
     </div>
   </header>
 
-  <!-- Main View Container -->
+  <!-- Main View -->
   <main>
-    <!-- Dynamic Role Metrics Panel (Admin/Owner only) -->
+    <!-- Role Metrics (Admin / Owner) -->
     <section id="metricsSection" class="metrics-grid" style="display: none;"></section>
 
     <!-- Toolbar -->
     <div class="action-toolbar">
-      <input type="text" id="searchInput" class="search-box" placeholder="Search by rope name, category, or diameter..." oninput="handleSearch()">
+      <input type="text" id="searchInput" class="search-box" placeholder="Search ropes, categories, diameter..." oninput="handleSearch()">
       <button id="addItemBtn" class="btn" onclick="openProductModal()" style="display: none;">+ Add New Product</button>
     </div>
 
-    <!-- Product Views -->
+    <!-- Product Grid for Customers -->
     <div id="customerView" class="product-grid"></div>
+
+    <!-- Inventory Table for Admin & Owner -->
     <div id="adminView" class="table-container" style="display: none;">
       <table>
         <thead>
           <tr>
             <th>Photo</th>
-            <th>Item Name</th>
+            <th>Item Name & Specs</th>
             <th>Category</th>
-            <th>Stock Qty</th>
-            <th>Price</th>
+            <th>Stock Quantity</th>
+            <th>Price (₹)</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -60,57 +384,333 @@
   <!-- Add/Edit Product Modal -->
   <div id="productModal" class="modal-overlay">
     <div class="modal-content">
-      <h3 id="modalTitle" style="margin-bottom: 1rem;">Add New Product</h3>
+      <h3 id="modalTitle" style="margin-bottom: 1.2rem; color: var(--text-main);">Add New Rope Item</h3>
       <form id="productForm" onsubmit="saveProduct(event)">
         <input type="hidden" id="productId">
+        <input type="hidden" id="productImageBase64">
         
         <div class="form-group">
           <label>Item Name</label>
-          <input type="text" id="productName" required>
+          <input type="text" id="productName" placeholder="e.g. PP Twisted Rope" required>
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
           <div class="form-group">
             <label>Category</label>
-            <input type="text" id="productCategory" placeholder="e.g. PP, Nylon, Manila" required>
+            <input type="text" id="productCategory" placeholder="e.g. PP Ropes, Nylon" required>
           </div>
           <div class="form-group">
-            <label>Diameter / Spec</label>
-            <input type="text" id="productDiameter" placeholder="e.g. 12mm" required>
+            <label>Diameter / Specs</label>
+            <input type="text" id="productDiameter" placeholder="e.g. 12mm / 3-Strand" required>
           </div>
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
           <div class="form-group">
-            <label>Price (₹)</label>
+            <label>Price (₹ per unit/kg)</label>
             <input type="number" id="productPrice" min="1" step="0.5" required>
           </div>
           <div class="form-group">
-            <label>Stock Quantity (Units/Kg)</label>
+            <label>Stock Quantity (Kg/Rolls)</label>
             <input type="number" id="productQty" min="0" required>
           </div>
         </div>
 
         <div class="form-group">
-          <label>Upload Photo File</label>
+          <label>Upload Photo (from your computer/phone)</label>
           <input type="file" id="productImageFile" accept="image/*" onchange="handleImageFile(this)">
-          <input type="hidden" id="productImageBase64">
         </div>
 
         <div class="form-group">
-          <label>Description</label>
-          <textarea id="productDesc" rows="3"></textarea>
+          <label>Description / Features</label>
+          <textarea id="productDesc" rows="3" placeholder="High tensile, UV stabilized, packaging or marine use..."></textarea>
         </div>
 
         <div class="form-actions">
           <button type="button" class="btn btn-secondary" onclick="closeProductModal()">Cancel</button>
-          <button type="submit" class="btn">Save & Update</button>
+          <button type="submit" class="btn">Save Product</button>
         </div>
       </form>
     </div>
   </div>
 
-  <script src="js/data.js"></script>
-  <script src="js/app.js"></script>
+  <script>
+    const COMPANY_CONFIG = {
+      name: "ALFA ROPE SUPPLIERS",
+      address: "Ashok Bazar, Afzal Gunj, Hyderabad - 500012",
+      phone: "+91 8555838852",
+      currency: "₹"
+    };
+
+    const INITIAL_PRODUCTS = [
+      {
+        id: "ALFA-101",
+        name: "High-Density Polypropylene (PP) Twisted Rope",
+        category: "PP Ropes",
+        diameter: "12mm",
+        price: 180,
+        unit: "Kg",
+        quantity: 450,
+        description: "3-Strand virgin grade high-tensile PP rope. UV stabilized for agricultural and industrial tie-downs.",
+        image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        id: "ALFA-102",
+        name: "Heavy-Duty Nylon Braided Rope",
+        category: "Nylon Ropes",
+        diameter: "16mm",
+        price: 240,
+        unit: "Kg",
+        quantity: 180,
+        description: "Multi-strand braided nylon rope with superior shock absorption and abrasion resistance.",
+        image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        id: "ALFA-103",
+        name: "Eco-Friendly Natural Manila / Coir Rope",
+        category: "Coir & Natural",
+        diameter: "24mm",
+        price: 120,
+        unit: "Kg",
+        quantity: 320,
+        description: "Traditional natural fiber rope suitable for marine, construction scaffolding, and heavy packaging.",
+        image: "https://images.unsplash.com/photo-1508873535684-277a3cbcc4e8?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        id: "ALFA-104",
+        name: "Industrial Packaging PP Sutli (Roll)",
+        category: "Twine & Sutli",
+        diameter: "4mm",
+        price: 135,
+        unit: "Roll",
+        quantity: 800,
+        description: "High-tensile packaging twine used for carton sealing, strapping, and general goods dispatch.",
+        image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80"
+      }
+    ];
+
+    let currentRole = 'customer';
+    let products = [];
+    let searchQuery = "";
+
+    window.onload = () => {
+      const saved = localStorage.getItem('alfa_rope_inventory');
+      products = saved ? JSON.parse(saved) : INITIAL_PRODUCTS;
+      renderApp();
+    };
+
+    function saveState() {
+      localStorage.setItem('alfa_rope_inventory', JSON.stringify(products));
+      renderApp();
+    }
+
+    function switchRole(role) {
+      currentRole = role;
+      renderApp();
+    }
+
+    function handleSearch() {
+      searchQuery = document.getElementById('searchInput').value.toLowerCase();
+      renderApp();
+    }
+
+    function renderApp() {
+      const metricsSection = document.getElementById('metricsSection');
+      const addItemBtn = document.getElementById('addItemBtn');
+      const customerView = document.getElementById('customerView');
+      const adminView = document.getElementById('adminView');
+
+      const filtered = products.filter(p => 
+        p.name.toLowerCase().includes(searchQuery) ||
+        p.category.toLowerCase().includes(searchQuery) ||
+        p.diameter.toLowerCase().includes(searchQuery)
+      );
+
+      if (currentRole === 'customer') {
+        metricsSection.style.display = 'none';
+        addItemBtn.style.display = 'none';
+        customerView.style.display = 'grid';
+        adminView.style.display = 'none';
+        renderCustomerGrid(filtered);
+      } else {
+        metricsSection.style.display = 'grid';
+        addItemBtn.style.display = 'inline-flex';
+        customerView.style.display = 'none';
+        adminView.style.display = 'block';
+        renderMetrics();
+        renderAdminTable(filtered);
+      }
+    }
+
+    function renderCustomerGrid(items) {
+      const container = document.getElementById('customerView');
+      if (items.length === 0) {
+        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 3rem;">No products match your search.</p>`;
+        return;
+      }
+      container.innerHTML = items.map(p => `
+        <div class="product-card">
+          <img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300x200?text=Alfa+Ropes'">
+          <div class="product-body">
+            <div>
+              <span class="badge">${p.category} (${p.diameter})</span>
+              <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">${p.name}</h3>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">${p.description}</p>
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.8rem;">
+                <strong style="font-size: 1.3rem; color: var(--primary);">${COMPANY_CONFIG.currency}${p.price} <span style="font-size:0.8rem; color:var(--text-muted);">/ ${p.unit}</span></strong>
+                <span class="stock-tag ${p.quantity > 50 ? 'in-stock' : 'low-stock'}">${p.quantity > 0 ? `In Stock (${p.quantity})` : 'Out of Stock'}</span>
+              </div>
+              <button class="btn" style="width:100%;" onclick="orderWhatsApp('${p.name}', '${p.diameter}')">Enquire on WhatsApp</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderAdminTable(items) {
+      const tbody = document.getElementById('adminTableBody');
+      tbody.innerHTML = items.map(p => `
+        <tr>
+          <td><img src="${p.image}" class="table-img" onerror="this.src='https://via.placeholder.com/48?text=Rope'"></td>
+          <td><strong>${p.name}</strong><br><small style="color:var(--text-muted);">${p.diameter}</small></td>
+          <td><span class="badge">${p.category}</span></td>
+          <td>
+            <input type="number" min="0" class="table-input" style="width: 80px;" value="${p.quantity}" onchange="inlineUpdateStock('${p.id}', this.value)">
+          </td>
+          <td>
+            <input type="number" min="1" step="0.5" class="table-input" style="width: 85px;" value="${p.price}" onchange="inlineUpdatePrice('${p.id}', this.value)">
+          </td>
+          <td>
+            <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 0.8rem; margin-right: 4px;" onclick="editProduct('${p.id}')">Edit</button>
+            <button class="btn btn-danger" style="padding: 4px 8px; font-size: 0.8rem;" onclick="deleteProduct('${p.id}')">Delete</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderMetrics() {
+      const container = document.getElementById('metricsSection');
+      const totalItems = products.length;
+      const totalUnits = products.reduce((sum, p) => sum + Number(p.quantity), 0);
+      const inventoryValuation = products.reduce((sum, p) => sum + (Number(p.quantity) * Number(p.price)), 0);
+
+      let html = `
+        <div class="metric-card">
+          <h4>Total Catalog Items</h4>
+          <div class="value">${totalItems}</div>
+        </div>
+        <div class="metric-card">
+          <h4>Total Stock in Warehouse</h4>
+          <div class="value">${totalUnits.toLocaleString()}</div>
+        </div>
+      `;
+
+      if (currentRole === 'owner') {
+        html += `
+          <div class="metric-card">
+            <h4>Total Inventory Value</h4>
+            <div class="value" style="color: var(--primary);">${COMPANY_CONFIG.currency}${inventoryValuation.toLocaleString()}</div>
+          </div>
+          <div class="metric-card">
+            <h4>Privilege Level</h4>
+            <div class="value" style="color: var(--success); font-size: 1.15rem; padding-top: 0.3rem;">Owner (Full Master)</div>
+          </div>
+        `;
+      }
+      container.innerHTML = html;
+    }
+
+    function inlineUpdateStock(id, newQty) {
+      const p = products.find(i => i.id === id);
+      if (p) { p.quantity = parseInt(newQty) || 0; saveState(); }
+    }
+
+    function inlineUpdatePrice(id, newPrice) {
+      const p = products.find(i => i.id === id);
+      if (p) { p.price = parseFloat(newPrice) || 0; saveState(); }
+    }
+
+    function handleImageFile(input) {
+      const file = input.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          document.getElementById('productImageBase64').value = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function openProductModal() {
+      document.getElementById('productForm').reset();
+      document.getElementById('productId').value = '';
+      document.getElementById('productImageBase64').value = '';
+      document.getElementById('modalTitle').innerText = 'Add New Rope Item';
+      document.getElementById('productModal').style.display = 'flex';
+    }
+
+    function closeProductModal() {
+      document.getElementById('productModal').style.display = 'none';
+    }
+
+    function editProduct(id) {
+      const p = products.find(i => i.id === id);
+      if (!p) return;
+      
+      document.getElementById('productId').value = p.id;
+      document.getElementById('productName').value = p.name;
+      document.getElementById('productCategory').value = p.category;
+      document.getElementById('productDiameter').value = p.diameter;
+      document.getElementById('productPrice').value = p.price;
+      document.getElementById('productQty').value = p.quantity;
+      document.getElementById('productDesc').value = p.description;
+      document.getElementById('productImageBase64').value = p.image;
+      
+      document.getElementById('modalTitle').innerText = 'Edit Product Details';
+      document.getElementById('productModal').style.display = 'flex';
+    }
+
+    function saveProduct(e) {
+      e.preventDefault();
+      const id = document.getElementById('productId').value;
+      const imageVal = document.getElementById('productImageBase64').value || 'https://via.placeholder.com/300x200?text=Alfa+Ropes';
+
+      const productData = {
+        id: id || 'ALFA-' + Date.now().toString().slice(-4),
+        name: document.getElementById('productName').value,
+        category: document.getElementById('productCategory').value,
+        diameter: document.getElementById('productDiameter').value,
+        price: parseFloat(document.getElementById('productPrice').value),
+        unit: 'Kg',
+        quantity: parseInt(document.getElementById('productQty').value),
+        description: document.getElementById('productDesc').value,
+        image: imageVal
+      };
+
+      if (id) {
+        const index = products.findIndex(p => p.id === id);
+        products[index] = productData;
+      } else {
+        products.push(productData);
+      }
+
+      saveState();
+      closeProductModal();
+    }
+
+    function deleteProduct(id) {
+      if (confirm("Are you sure you want to remove this product from inventory?")) {
+        products = products.filter(p => p.id !== id);
+        saveState();
+      }
+    }
+
+    function orderWhatsApp(name, diameter) {
+      const msg = encodeURIComponent(`Hello Alfa Rope Suppliers, I am interested in placing an order for: ${name} (${diameter}). Please share available stock and bulk quotes.`);
+      window.open(`https://wa.me/918555838852?text=${msg}`, '_blank');
+    }
+  </script>
 </body>
 </html>
