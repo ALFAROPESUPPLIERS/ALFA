@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ALFA ROPE SUPPLIERS | Wholesale & Industrial Portal</title>
+  <title>ALFA ROPE SUPPLIERS | Enterprise Wholesale & Retail Portal</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -88,7 +88,7 @@
 
     .nav-search {
       flex: 1;
-      max-width: 500px;
+      max-width: 460px;
       position: relative;
     }
 
@@ -174,7 +174,7 @@
     /* Hero Opening Section */
     .hero-banner {
       background: linear-gradient(180deg, rgba(31, 41, 55, 0.85) 0%, rgba(11, 15, 25, 1) 100%), url('https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
-      padding: 2.8rem 2rem;
+      padding: 2.5rem 2rem;
       border-bottom: 1px solid var(--border-color);
       display: flex;
       align-items: center;
@@ -443,7 +443,7 @@
       border: 1px solid var(--border-color);
       border-radius: 12px;
       width: 100%;
-      max-width: 540px;
+      max-width: 580px;
       padding: 1.8rem;
       max-height: 90vh;
       overflow-y: auto;
@@ -490,6 +490,54 @@
       border-color: var(--primary);
     }
 
+    /* Official Printable Invoice Sheet */
+    .invoice-card {
+      background: #ffffff;
+      color: #111827;
+      padding: 2rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+
+    .invoice-header {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .invoice-table {
+      width: 100%;
+      margin: 1.5rem 0;
+      border-collapse: collapse;
+    }
+
+    .invoice-table th {
+      background: #f3f4f6;
+      color: #374151;
+      padding: 0.6rem;
+      text-align: left;
+      font-size: 0.8rem;
+      border: 1px solid #e5e7eb;
+    }
+
+    .invoice-table td {
+      padding: 0.6rem;
+      border: 1px solid #e5e7eb;
+      color: #1f2937;
+    }
+
+    .invoice-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 1.5rem;
+      border-top: 2px solid #e5e7eb;
+      padding-top: 1rem;
+    }
+
     /* Footer */
     footer {
       background-color: var(--bg-panel);
@@ -531,12 +579,17 @@
       </div>
 
       <div class="nav-actions">
-        <button class="btn btn-secondary btn-sm" onclick="openEnquiryModal()"><i class="fa-regular fa-comment-dots"></i> Enquire / Feedback</button>
+        <button class="btn btn-secondary btn-sm" onclick="openTrackOrderModal()"><i class="fa-solid fa-location-crosshairs"></i> Track Order</button>
+        <button class="btn btn-secondary btn-sm" onclick="openEnquiryModal()"><i class="fa-regular fa-comment-dots"></i> Feedback</button>
+        
         <button class="cart-btn" onclick="toggleCart()">
           <i class="fa-solid fa-cart-shopping"></i> Cart
           <span class="cart-badge" id="cartCount">0</span>
         </button>
-        <div id="roleBadge" class="btn btn-secondary btn-sm" style="display: none;"></div>
+
+        <!-- Dynamic User Profile / Dashboard Button -->
+        <button id="userProfileBtn" class="btn btn-secondary btn-sm" style="display: none;" onclick="openCustomerProfileModal()"></button>
+        
         <button class="btn btn-secondary" onclick="openAuthModal()" id="loginBtn">Portal Login</button>
         <button class="btn btn-danger btn-sm" id="logoutBtn" style="display: none;" onclick="logout()">Logout</button>
       </div>
@@ -556,7 +609,7 @@
     </div>
   </section>
 
-  <!-- Workspace -->
+  <!-- Main Workspace -->
   <main>
     <!-- Role Metrics Dashboard (Admin & Owner) -->
     <div id="metricsPanel" class="metrics-grid" style="display: none;">
@@ -594,13 +647,14 @@
     <div id="managementTabs" class="tab-bar" style="display: none;">
       <button class="tab-btn active" onclick="switchTab('orders')"><i class="fa-solid fa-receipt"></i> Orders & Tracking</button>
       <button class="tab-btn" onclick="switchTab('inventory')"><i class="fa-solid fa-warehouse"></i> Inventory Manager</button>
-      <button class="tab-btn" onclick="switchTab('enquiries')"><i class="fa-solid fa-envelope-open-text"></i> Enquiries / Suggestions</button>
+      <button class="tab-btn" onclick="switchTab('enquiries')"><i class="fa-solid fa-envelope-open-text"></i> Enquiries & Suggestions</button>
       <button class="tab-btn" onclick="switchTab('users')"><i class="fa-solid fa-user-shield"></i> User Accounts & Roles</button>
       <button class="tab-btn" id="cmsTabBtn" style="display: none;" onclick="switchTab('cms')"><i class="fa-solid fa-pen-to-square"></i> Edit Website CMS</button>
       <button class="tab-btn" onclick="switchTab('coupons')"><i class="fa-solid fa-tag"></i> Coupons</button>
       
-      <div style="margin-left: auto; display: flex; gap: 0.5rem;">
-        <button class="btn btn-secondary btn-sm" onclick="exportDataCSV()"><i class="fa-solid fa-download"></i> Download Data (CSV)</button>
+      <div style="margin-left: auto; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <button class="btn btn-sm btn-success" onclick="openManualOrderModal()"><i class="fa-solid fa-plus-circle"></i> Direct Manual Order</button>
+        <button class="btn btn-secondary btn-sm" onclick="exportDataCSV()"><i class="fa-solid fa-download"></i> CSV Backup</button>
         <button class="btn btn-sm" onclick="openProductModal()"><i class="fa-solid fa-plus"></i> Add Item</button>
       </div>
     </div>
@@ -608,7 +662,7 @@
     <!-- TAB 1: Customer Storefront Grid -->
     <div id="customerStoreView" class="product-grid"></div>
 
-    <!-- TAB 2: Orders & Tracking View -->
+    <!-- TAB 2: Orders & Tracking View (Admin / Owner) -->
     <div id="ordersTab" class="table-responsive" style="display: none;">
       <table>
         <thead>
@@ -616,8 +670,8 @@
             <th>Order ID & Date</th>
             <th>Customer & Address</th>
             <th>Items & Total</th>
-            <th>Payment Details</th>
-            <th>Order Status</th>
+            <th>Payment</th>
+            <th>Status</th>
             <th>Tracking No.</th>
             <th>Actions</th>
           </tr>
@@ -652,8 +706,8 @@
             <th>Date</th>
             <th>Name & Contact</th>
             <th>Type</th>
-            <th>Message / Suggestion</th>
-            <th>Status & Reply</th>
+            <th>Message</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody id="enquiriesTableBody"></tbody>
@@ -670,7 +724,7 @@
             <th>Role</th>
             <th>Password</th>
             <th>Status</th>
-            <th>Access Control Actions</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody id="usersTableBody"></tbody>
@@ -706,7 +760,7 @@
             <label>Footer Copyright Statement</label>
             <input type="text" id="cmsCopyright" required>
           </div>
-          <button type="submit" class="btn" style="width: 100%; justify-content: center;">Save & Publish Website Changes</button>
+          <button type="submit" class="btn" style="width: 100%; justify-content: center;">Save & Publish Changes</button>
         </form>
       </div>
     </div>
@@ -745,7 +799,7 @@
         <span>Total:</span>
         <span id="cartTotalPrice" style="color: var(--primary);">₹0</span>
       </div>
-      <button class="btn" style="width: 100%; justify-content: center;" onclick="openCheckoutModal()">Proceed to Buy (Place Order)</button>
+      <button class="btn" style="width: 100%; justify-content: center;" onclick="handleCheckoutEntry()">Proceed to Buy (Place Order)</button>
     </div>
   </div>
 
@@ -771,7 +825,7 @@
         <p id="authErrorMsg" style="color: var(--danger); font-size: 0.85rem; margin-bottom: 1rem; display: none;"></p>
         <div class="modal-actions">
           <button type="button" class="btn btn-secondary" onclick="closeModal('authModal')">Cancel</button>
-          <button type="submit" class="btn">Sign In to Portal</button>
+          <button type="submit" class="btn">Sign In</button>
         </div>
       </form>
 
@@ -783,7 +837,7 @@
             <option value="customer">Customer Profile (Instant Access)</option>
             <option value="owner">Owner Profile (Requires Admin Approval)</option>
           </select>
-          <small id="ownerNotice" style="color: var(--warning); display: none; font-size: 0.75rem; margin-top: 4px;">Owner accounts remain locked until approved by the Admin.</small>
+          <small id="ownerNotice" style="color: var(--warning); display: none; font-size: 0.75rem; margin-top: 4px;">Owner accounts remain locked until approved by Admin.</small>
         </div>
         <div class="form-group">
           <label>Full Name / Business Name</label>
@@ -796,6 +850,10 @@
         <div class="form-group">
           <label>Phone / WhatsApp Number</label>
           <input type="text" id="regPhone" required>
+        </div>
+        <div class="form-group">
+          <label>Complete Delivery Address</label>
+          <textarea id="regAddress" rows="2" placeholder="Street, landmark, city, pincode" required></textarea>
         </div>
         <div class="form-group">
           <label>Password</label>
@@ -826,13 +884,42 @@
     </div>
   </div>
 
-  <!-- CHECKOUT & UPI PAYMENT MODAL -->
+  <!-- CUSTOMER PROFILE & ADDRESS MANAGER MODAL -->
+  <div id="customerProfileModal" class="modal">
+    <div class="modal-box">
+      <h3 style="margin-bottom: 1.2rem;"><i class="fa-solid fa-id-card"></i> My Customer Profile & Address</h3>
+      <form onsubmit="saveCustomerProfile(event)">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="profFullName" required>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="profEmail" readonly style="opacity: 0.7;">
+        </div>
+        <div class="form-group">
+          <label>Phone / WhatsApp Number</label>
+          <input type="text" id="profPhone" required>
+        </div>
+        <div class="form-group">
+          <label>Delivery / Shipping Address</label>
+          <textarea id="profAddress" rows="3" required></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('customerProfileModal')">Close</button>
+          <button type="submit" class="btn">Update Address & Profile</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- CHECKOUT & UPI PAYMENT MODAL (Mandatory Logged-In Details) -->
   <div id="checkoutModal" class="modal">
     <div class="modal-box">
       <h3 style="margin-bottom: 1.2rem;"><i class="fa-solid fa-credit-card"></i> Complete Order & Payment</h3>
       
       <div class="form-group">
-        <label>Your Name / Company</label>
+        <label>Customer Name</label>
         <input type="text" id="orderCustName" required>
       </div>
       <div class="form-group">
@@ -840,7 +927,7 @@
         <input type="text" id="orderCustPhone" required>
       </div>
       <div class="form-group">
-        <label>Delivery / Dispatch Address</label>
+        <label>Delivery / Dispatch Address (<a href="javascript:void(0)" onclick="openCustomerProfileModal()" style="color:var(--primary);">Modify in Profile</a>)</label>
         <textarea id="orderCustAddress" rows="2" required></textarea>
       </div>
       
@@ -859,7 +946,7 @@
         <label>Payment Method</label>
         <select id="paymentMethod" onchange="togglePaymentSection(this.value)">
           <option value="upi">Pay via UPI (GPay / PhonePe / Paytm / QR)</option>
-          <option value="cod">Cash on Delivery / Wholesale Credit Terms</option>
+          <option value="cod">Cash on Delivery / Wholesale Terms</option>
         </select>
       </div>
 
@@ -871,8 +958,8 @@
         </div>
         <p style="font-size: 0.8rem; color: var(--primary); margin-top: 0.5rem; font-weight: 700;" id="upiIdDisplay">UPI: alfaropesuppliers@upi</p>
         <div class="form-group" style="text-align: left; margin-top: 0.8rem;">
-          <label>UPI Reference / Transaction UTR No. (Post-Payment)</label>
-          <input type="text" id="upiTxnId" placeholder="12-digit UTR number">
+          <label>UPI Reference / UTR Number (12 Digits)</label>
+          <input type="text" id="upiTxnId" placeholder="Enter UTR after payment">
         </div>
       </div>
 
@@ -883,7 +970,202 @@
     </div>
   </div>
 
-  <!-- ENQUIRY & SUGGESTION MODAL -->
+  <!-- ORDER TRACKING & INVOICE LOOKUP MODAL (Dual-Key Verification) -->
+  <div id="trackOrderModal" class="modal">
+    <div class="modal-box">
+      <h3 style="margin-bottom: 1.2rem;"><i class="fa-solid fa-truck-ramp-box"></i> Track Order & View Receipt</h3>
+      <div class="form-group">
+        <label>Enter Specific Order ID</label>
+        <input type="text" id="trackInputOrderId" placeholder="e.g. ALFA-ORD-12345" style="text-transform: uppercase;">
+      </div>
+      <div class="form-group">
+        <label>Customer Name (For Privacy Verification)</label>
+        <input type="text" id="trackInputCustName" placeholder="Enter customer name on order">
+      </div>
+      <button class="btn" style="width: 100%; justify-content: center;" onclick="verifyAndTrackOrder()">Verify & View Order Status</button>
+
+      <!-- Track Result Area -->
+      <div id="trackResultBox" style="display: none; margin-top: 1.5rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+          <h4 id="trackResId" style="color: var(--primary);"></h4>
+          <span id="trackResStatus" class="off-badge"></span>
+        </div>
+        <p style="font-size: 0.85rem; margin-bottom: 0.4rem;"><strong>Tracking / LR Transport No:</strong> <span id="trackResLR" style="color: #fff;"></span></p>
+        <p style="font-size: 0.85rem; margin-bottom: 0.4rem;"><strong>Order Total:</strong> <span id="trackResTotal" style="color: var(--primary); font-weight:700;"></span></p>
+        <p style="font-size: 0.85rem; margin-bottom: 0.8rem;"><strong>Delivery Address:</strong> <span id="trackResAddr" style="color: var(--text-muted);"></span></p>
+        
+        <button class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center;" onclick="generateReceiptFromTracking()"><i class="fa-solid fa-receipt"></i> Download / Print Invoice Receipt</button>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('trackOrderModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- OFFICIAL INVOICE / RECEIPT MODAL -->
+  <div id="invoiceModal" class="modal">
+    <div class="modal-box" style="max-width: 650px; background: transparent; border: none; padding: 0;">
+      <div class="invoice-card" id="printableReceiptCard">
+        <div class="invoice-header">
+          <div>
+            <h2 style="color: #000; font-size: 1.3rem; font-weight: 800;">ALFA ROPE SUPPLIERS</h2>
+            <p style="font-size: 0.8rem; color: #4b5563;">Ashok Bazar, Afzal Gunj, Hyderabad - 500012</p>
+            <p style="font-size: 0.8rem; color: #4b5563;">Phone: +91 8555838852 | Email: alfaropesuppliers03@gmail.com</p>
+          </div>
+          <div style="text-align: right;">
+            <span style="font-size: 0.75rem; background: #e5e7eb; color: #111827; padding: 2px 8px; border-radius: 4px; font-weight: 700;">TAX INVOICE</span>
+            <div id="invOrderId" style="font-weight: 800; font-size: 1rem; margin-top: 4px;"></div>
+            <div id="invOrderDate" style="font-size: 0.8rem; color: #6b7280;"></div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.85rem; margin-bottom: 1rem;">
+          <div>
+            <strong style="color: #374151;">Billed & Shipped To:</strong>
+            <div id="invCustName" style="font-weight: 700;"></div>
+            <div id="invCustPhone"></div>
+            <div id="invCustAddress" style="color: #4b5563;"></div>
+          </div>
+          <div style="text-align: right;">
+            <strong style="color: #374151;">Order Logistics Details:</strong>
+            <div>Status: <span id="invStatus" style="font-weight: 700; color: #059669;"></span></div>
+            <div>Payment: <span id="invPaymentMode"></span></div>
+            <div>Tracking / LR: <span id="invTrackingNo"></span></div>
+          </div>
+        </div>
+
+        <table class="invoice-table">
+          <thead>
+            <tr>
+              <th>Item Description</th>
+              <th>Qty</th>
+              <th>Unit Rate</th>
+              <th>Total Amount</th>
+            </tr>
+          </thead>
+          <tbody id="invTableItemsBody"></tbody>
+        </table>
+
+        <div class="invoice-footer">
+          <div style="font-size: 0.75rem; color: #6b7280; max-width: 320px;">
+            * Computer generated sales invoice issued by Alfa Rope Suppliers. Wholesale goods once sold are covered under industrial warranty.
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 0.9rem; color: #4b5563;">Discount Applied: <span id="invDiscountVal">₹0</span></div>
+            <div style="font-size: 1.3rem; font-weight: 800; color: #111827; margin-top: 4px;">Grand Total: <span id="invGrandTotal">₹0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions" style="margin-top: 1rem;">
+        <button class="btn btn-secondary" onclick="closeModal('invoiceModal')">Close</button>
+        <button class="btn" onclick="printReceipt()"><i class="fa-solid fa-print"></i> Print / Save PDF Invoice</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN / OWNER DIRECT MANUAL ORDER BOOKING MODAL -->
+  <div id="manualOrderModal" class="modal">
+    <div class="modal-box">
+      <h3 style="margin-bottom: 1.2rem; color: var(--primary);"><i class="fa-solid fa-file-invoice-dollar"></i> Direct Manual Order Booking (Phone / Walk-In)</h3>
+      <form onsubmit="handleManualOrderSubmit(event)">
+        <div class="form-group">
+          <label>Customer Full Name</label>
+          <input type="text" id="manCustName" required>
+        </div>
+        <div class="form-group">
+          <label>Customer Contact Phone</label>
+          <input type="text" id="manCustPhone" required>
+        </div>
+        <div class="form-group">
+          <label>Delivery Address</label>
+          <textarea id="manCustAddress" rows="2" required></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Select Product</label>
+            <select id="manSelectProduct" onchange="updateManualOrderPrice()"></select>
+          </div>
+          <div class="form-group">
+            <label>Quantity</label>
+            <input type="number" id="manQty" min="1" value="1" oninput="updateManualOrderPrice()" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Calculated Total Amount (₹)</label>
+            <input type="number" id="manTotalAmount" required>
+          </div>
+          <div class="form-group">
+            <label>Payment Method</label>
+            <select id="manPaymentMethod">
+              <option value="UPI">Paid via UPI / GPay</option>
+              <option value="CASH">Cash on Delivery / Direct</option>
+              <option value="CREDIT">Wholesale Credit</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('manualOrderModal')">Cancel</button>
+          <button type="submit" class="btn btn-success">Book & Generate Invoice</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADMIN / OWNER EDIT ORDER MODAL -->
+  <div id="editOrderModal" class="modal">
+    <div class="modal-box">
+      <h3 style="margin-bottom: 1.2rem; color: var(--primary);"><i class="fa-solid fa-pen-to-square"></i> Modify Order Details</h3>
+      <form onsubmit="saveEditedOrder(event)">
+        <input type="hidden" id="editOrderIndex">
+        <div class="form-group">
+          <label>Order ID</label>
+          <input type="text" id="editOrderId" readonly style="opacity: 0.7;">
+        </div>
+        <div class="form-group">
+          <label>Customer Name</label>
+          <input type="text" id="editCustName" required>
+        </div>
+        <div class="form-group">
+          <label>Customer Phone</label>
+          <input type="text" id="editCustPhone" required>
+        </div>
+        <div class="form-group">
+          <label>Delivery Address</label>
+          <textarea id="editCustAddress" rows="2" required></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Total Amount (₹)</label>
+            <input type="number" id="editOrderTotal" required>
+          </div>
+          <div class="form-group">
+            <label>Order Status</label>
+            <select id="editOrderStatus">
+              <option value="Pending Approval">Pending Approval</option>
+              <option value="Accepted">Accepted</option>
+              <option value="Shipped">Shipped</option>
+              <option value="Dispatched">Dispatched</option>
+              <option value="Delivered">Delivered</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Transport / Tracking / LR Number</label>
+          <input type="text" id="editOrderTracking">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('editOrderModal')">Cancel</button>
+          <button type="submit" class="btn">Save & Update Order</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ENQUIRY & FEEDBACK MODAL -->
   <div id="enquiryModal" class="modal">
     <div class="modal-box">
       <h3 style="margin-bottom: 1.2rem;"><i class="fa-regular fa-envelope"></i> Send Enquiry / Suggestion</h3>
@@ -1034,678 +1316,73 @@
     // Master Initial Products with Item-Specific Images
     const INITIAL_PRODUCTS = [
       // --- Ropes & Twines ---
-      { 
-        id: "ALFA-GOWA-30", 
-        name: "Gowa Rope (30 Pcs)", 
-        category: "Ropes", 
-        diameter: "30 Pcs Bundle", 
-        mrp: 110, 
-        price: 85, 
-        stock: 250, 
-        unit: "Bundle", 
-        description: "High-strength commercial Gowa rope bundle (30 pieces packing).", 
-        image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-GOWA-40", 
-        name: "Gowa Rope (40 Pcs)", 
-        category: "Ropes", 
-        diameter: "40 Pcs Bundle", 
-        mrp: 140, 
-        price: 110, 
-        stock: 200, 
-        unit: "Bundle", 
-        description: "Industrial strength Gowa tying rope (40 pieces packing).", 
-        image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-GOWA-50", 
-        name: "Gowa Rope (50 Pcs)", 
-        category: "Ropes", 
-        diameter: "50 Pcs Bundle", 
-        mrp: 190, 
-        price: 150, 
-        stock: 180, 
-        unit: "Bundle", 
-        description: "Heavy-duty bundling Gowa rope (50 pieces packing).", 
-        image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-GOWA-80", 
-        name: "Gowa Rope (80 Pcs)", 
-        category: "Ropes", 
-        diameter: "80 Pcs Bundle", 
-        mrp: 270, 
-        price: 220, 
-        stock: 150, 
-        unit: "Bundle", 
-        description: "Premium wholesale bulk Gowa rope bundle (80 pieces packing).", 
-        image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-NYLON-GEN", 
-        name: "Commercial Nylon Rope", 
-        category: "Nylon Ropes", 
-        diameter: "2mm - 8mm", 
-        mrp: 230, 
-        price: 185, 
-        stock: 500, 
-        unit: "Kg", 
-        description: "Multi-strand high tensile nylon rope. Superior shock resistance and load hauling.", 
-        image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-COTTON-GEN", 
-        name: "Pure Natural Cotton Rope", 
-        category: "Cotton Ropes", 
-        diameter: "4mm - 16mm", 
-        mrp: 145, 
-        price: 110, 
-        stock: 350, 
-        unit: "Kg", 
-        description: "Soft, smooth multi-ply natural twisted white cotton rope.", 
-        image: "https://images.unsplash.com/photo-1508873535684-277a3cbcc4e8?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-PP-YELLOW", 
-        name: "Heavy-Duty PP Yellow Rope", 
-        category: "PP Ropes", 
-        diameter: "6mm - 32mm", 
-        mrp: 260, 
-        price: 210, 
-        stock: 600, 
-        unit: "Kg", 
-        description: "100% virgin polymer PP twisted yellow rope for scaffolding and transport.", 
-        image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-GUNDU-5M", 
-        name: "5 Meter Gundu Rope", 
-        category: "Ropes", 
-        diameter: "5 Meters", 
-        mrp: 75, 
-        price: 50, 
-        stock: 300, 
-        unit: "Dozen", 
-        description: "Pre-cut 5 meter round ball Gundu packaging tying rope (1 Dozen packing).", 
-        image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-SUTLI-SUPER", 
-        name: "Super Plastic Sutli", 
-        category: "Twine & Sutli", 
-        diameter: "Standard", 
-        mrp: 65, 
-        price: 50, 
-        stock: 700, 
-        unit: "Kg", 
-        description: "Commercial grade strapping plastic sutli for general bundling and box sealing.", 
-        image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-SUTLI-CHEETAH", 
-        name: "Cheetah Brand Plastic Sutli", 
-        category: "Twine & Sutli", 
-        diameter: "High Tensile", 
-        mrp: 70, 
-        price: 54, 
-        stock: 650, 
-        unit: "Kg", 
-        description: "Cheetah brand durable strapping sutli for warehouse dispatch.", 
-        image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-SUTLI-MARUTHI", 
-        name: "Maruthi Plastic Sutli", 
-        category: "Twine & Sutli", 
-        diameter: "Fine Gauge", 
-        mrp: 85, 
-        price: 65, 
-        stock: 450, 
-        unit: "Kg", 
-        description: "Maruthi premium grade plastic twine for secure goods bundling.", 
-        image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-SUTLI-ZEN", 
-        name: "1st Zen Virgin Plastic Sutli", 
-        category: "Twine & Sutli", 
-        diameter: "Premium Grade", 
-        mrp: 155, 
-        price: 120, 
-        stock: 300, 
-        unit: "Kg", 
-        description: "Top-tier 1st Zen virgin quality high strength plastic sutli roll.", 
-        image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-DORI-COTTON", 
-        name: "Cotton Lining Dori (4 Wala)", 
-        category: "Twine & Sutli", 
-        diameter: "4 Wala", 
-        mrp: 48, 
-        price: 34, 
-        stock: 400, 
-        unit: "Packet", 
-        description: "Construction marking and packaging 4-ply cotton lining dori.", 
-        image: "https://images.unsplash.com/photo-1508873535684-277a3cbcc4e8?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-DORI-NYLON", 
-        name: "Nylon Lining Dori (4 Wala)", 
-        category: "Twine & Sutli", 
-        diameter: "4 Wala", 
-        mrp: 35, 
-        price: 24, 
-        stock: 450, 
-        unit: "Packet", 
-        description: "High durability nylon line dori for masonry alignment and tie-downs.", 
-        image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80" 
-      },
+      { id: "ALFA-GOWA-30", name: "Gowa Rope (30 Pcs)", category: "Ropes", diameter: "30 Pcs Bundle", mrp: 110, price: 85, stock: 250, unit: "Bundle", description: "High-strength commercial Gowa rope bundle (30 pieces packing).", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-GOWA-40", name: "Gowa Rope (40 Pcs)", category: "Ropes", diameter: "40 Pcs Bundle", mrp: 140, price: 110, stock: 200, unit: "Bundle", description: "Industrial strength Gowa tying rope (40 pieces packing).", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-GOWA-50", name: "Gowa Rope (50 Pcs)", category: "Ropes", diameter: "50 Pcs Bundle", mrp: 190, price: 150, stock: 180, unit: "Bundle", description: "Heavy-duty bundling Gowa rope (50 pieces packing).", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-GOWA-80", name: "Gowa Rope (80 Pcs)", category: "Ropes", diameter: "80 Pcs Bundle", mrp: 270, price: 220, stock: 150, unit: "Bundle", description: "Premium wholesale bulk Gowa rope bundle (80 pieces packing).", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-NYLON-GEN", name: "Commercial Nylon Rope", category: "Nylon Ropes", diameter: "2mm - 8mm", mrp: 230, price: 185, stock: 500, unit: "Kg", description: "Multi-strand high tensile nylon rope. Superior shock resistance and load hauling.", image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-COTTON-GEN", name: "Pure Natural Cotton Rope", category: "Cotton Ropes", diameter: "4mm - 16mm", mrp: 145, price: 110, stock: 350, unit: "Kg", description: "Soft, smooth multi-ply natural twisted white cotton rope.", image: "https://images.unsplash.com/photo-1508873535684-277a3cbcc4e8?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-PP-YELLOW", name: "Heavy-Duty PP Yellow Rope", category: "PP Ropes", diameter: "6mm - 32mm", mrp: 260, price: 210, stock: 600, unit: "Kg", description: "100% virgin polymer PP twisted yellow rope for scaffolding and transport.", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-GUNDU-5M", name: "5 Meter Gundu Rope", category: "Ropes", diameter: "5 Meters", mrp: 75, price: 50, stock: 300, unit: "Dozen", description: "Pre-cut 5 meter round ball Gundu packaging tying rope (1 Dozen packing).", image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-SUTLI-SUPER", name: "Super Plastic Sutli", category: "Twine & Sutli", diameter: "Standard", mrp: 65, price: 50, stock: 700, unit: "Kg", description: "Commercial grade strapping plastic sutli for general bundling and box sealing.", image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-SUTLI-CHEETAH", name: "Cheetah Brand Plastic Sutli", category: "Twine & Sutli", diameter: "High Tensile", mrp: 70, price: 54, stock: 650, unit: "Kg", description: "Cheetah brand durable strapping sutli for warehouse dispatch.", image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-SUTLI-MARUTHI", name: "Maruthi Plastic Sutli", category: "Twine & Sutli", diameter: "Fine Gauge", mrp: 85, price: 65, stock: 450, unit: "Kg", description: "Maruthi premium grade plastic twine for secure goods bundling.", image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-SUTLI-ZEN", name: "1st Zen Virgin Plastic Sutli", category: "Twine & Sutli", diameter: "Premium Grade", mrp: 155, price: 120, stock: 300, unit: "Kg", description: "Top-tier 1st Zen virgin quality high strength plastic sutli roll.", image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-DORI-COTTON", name: "Cotton Lining Dori (4 Wala)", category: "Twine & Sutli", diameter: "4 Wala", mrp: 48, price: 34, stock: 400, unit: "Packet", description: "Construction marking and packaging 4-ply cotton lining dori.", image: "https://images.unsplash.com/photo-1508873535684-277a3cbcc4e8?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-DORI-NYLON", name: "Nylon Lining Dori (4 Wala)", category: "Twine & Sutli", diameter: "4 Wala", mrp: 35, price: 24, stock: 450, unit: "Packet", description: "High durability nylon line dori for masonry alignment and tie-downs.", image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80" },
 
       // --- Brooms ---
-      { 
-        id: "ALFA-BRM-GUNGUROO", 
-        name: "Small Broom - Gunguroo", 
-        category: "Brooms", 
-        diameter: "50 Pc Packing", 
-        mrp: 32, 
-        price: 23, 
-        stock: 500, 
-        unit: "Pc", 
-        description: "Compact domestic Gunguroo broom. Packed in 50 pieces bundle.", 
-        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-BRM-SPLPIPE", 
-        name: "Small Broom - Special Pipe Handle", 
-        category: "Brooms", 
-        diameter: "50 Pc Packing", 
-        mrp: 48, 
-        price: 36, 
-        stock: 400, 
-        unit: "Pc", 
-        description: "Reinforced pipe handle small broom (50 pieces packing).", 
-        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-BRM-MECCAI", 
-        name: "Small Broom - Meccai", 
-        category: "Brooms", 
-        diameter: "50 Pc Packing", 
-        mrp: 25, 
-        price: 17, 
-        stock: 600, 
-        unit: "Pc", 
-        description: "Budget economy Meccai broom (50 pieces packing).", 
-        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-SBRM-GARUDA", 
-        name: "Soft Broom - Garudapuram", 
-        category: "Brooms", 
-        diameter: "25 Pc Packing", 
-        mrp: 60, 
-        price: 44, 
-        stock: 350, 
-        unit: "Pc", 
-        description: "Fine hill-grass soft dust broom - Garudapuram quality (25 pieces packing).", 
-        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-SBRM-MIKE", 
-        name: "Soft Broom - Mike", 
-        category: "Brooms", 
-        diameter: "25 Pc Packing", 
-        mrp: 65, 
-        price: 48, 
-        stock: 300, 
-        unit: "Pc", 
-        description: "Long-lasting fiber Mike soft broom (25 pieces packing).", 
-        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-SBRM-STEEL", 
-        name: "Soft Broom - Steel Handle", 
-        category: "Brooms", 
-        diameter: "25 Pc Packing", 
-        mrp: 95, 
-        price: 70, 
-        stock: 250, 
-        unit: "Pc", 
-        description: "Heavy-duty rust-free steel handle soft floor broom (25 pieces packing).", 
-        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-SBRM-SPLPIPE", 
-        name: "Soft Broom - Premium Special Pipe", 
-        category: "Brooms", 
-        diameter: "25 Pc Packing", 
-        mrp: 145, 
-        price: 110, 
-        stock: 200, 
-        unit: "Pc", 
-        description: "Heavy commercial special pipe handle soft broom (25 pieces packing).", 
-        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-COCO-20", 
-        name: "Coco Broom (Standard 20/-)", 
-        category: "Brooms", 
-        diameter: "50 Pc Packing", 
-        mrp: 28, 
-        price: 20, 
-        stock: 450, 
-        unit: "Pc", 
-        description: "Coconut leaf rib heavy sweeping broom (50 pieces packing).", 
-        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-COCO-28", 
-        name: "Coco Broom (Medium 28/-)", 
-        category: "Brooms", 
-        diameter: "50 Pc Packing", 
-        mrp: 38, 
-        price: 28, 
-        stock: 400, 
-        unit: "Pc", 
-        description: "Durable coconut stick broom for wet & outdoor areas (50 pieces packing).", 
-        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-COCO-36", 
-        name: "Coco Broom (Heavy 36/-)", 
-        category: "Brooms", 
-        diameter: "50 Pc Packing", 
-        mrp: 48, 
-        price: 36, 
-        stock: 350, 
-        unit: "Pc", 
-        description: "Dense coconut stick broom for municipal & road cleaning (50 pieces packing).", 
-        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-COCO-45", 
-        name: "Coco Broom (Super Extra Heavy 45/-)", 
-        category: "Brooms", 
-        diameter: "50 Pc Packing", 
-        mrp: 60, 
-        price: 45, 
-        stock: 300, 
-        unit: "Pc", 
-        description: "Top-grade extra heavy coconut broom for heavy duty outdoor cleaning (50 pieces packing).", 
-        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
-      },
+      { id: "ALFA-BRM-GUNGUROO", name: "Small Broom - Gunguroo", category: "Brooms", diameter: "50 Pc Packing", mrp: 32, price: 23, stock: 500, unit: "Pc", description: "Compact domestic Gunguroo broom. Packed in 50 pieces bundle.", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-BRM-SPLPIPE", name: "Small Broom - Special Pipe Handle", category: "Brooms", diameter: "50 Pc Packing", mrp: 48, price: 36, stock: 400, unit: "Pc", description: "Reinforced pipe handle small broom (50 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-BRM-MECCAI", name: "Small Broom - Meccai", category: "Brooms", diameter: "50 Pc Packing", mrp: 25, price: 17, stock: 600, unit: "Pc", description: "Budget economy Meccai broom (50 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-SBRM-GARUDA", name: "Soft Broom - Garudapuram", category: "Brooms", diameter: "25 Pc Packing", mrp: 60, price: 44, stock: 350, unit: "Pc", description: "Fine hill-grass soft dust broom - Garudapuram quality (25 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-SBRM-MIKE", name: "Soft Broom - Mike", category: "Brooms", diameter: "25 Pc Packing", mrp: 65, price: 48, stock: 300, unit: "Pc", description: "Long-lasting fiber Mike soft broom (25 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-SBRM-STEEL", name: "Soft Broom - Steel Handle", category: "Brooms", diameter: "25 Pc Packing", mrp: 95, price: 70, stock: 250, unit: "Pc", description: "Heavy-duty rust-free steel handle soft floor broom (25 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-SBRM-SPLPIPE", name: "Soft Broom - Premium Special Pipe", category: "Brooms", diameter: "25 Pc Packing", mrp: 145, price: 110, stock: 200, unit: "Pc", description: "Heavy commercial special pipe handle soft broom (25 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-COCO-20", name: "Coco Broom (Standard 20/-)", category: "Brooms", diameter: "50 Pc Packing", mrp: 28, price: 20, stock: 450, unit: "Pc", description: "Coconut leaf rib heavy sweeping broom (50 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-COCO-28", name: "Coco Broom (Medium 28/-)", category: "Brooms", diameter: "50 Pc Packing", mrp: 38, price: 28, stock: 400, unit: "Pc", description: "Durable coconut stick broom for wet & outdoor areas (50 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-COCO-36", name: "Coco Broom (Heavy 36/-)", category: "Brooms", diameter: "50 Pc Packing", mrp: 48, price: 36, stock: 350, unit: "Pc", description: "Dense coconut stick broom for municipal & road cleaning (50 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-COCO-45", name: "Coco Broom (Super Extra Heavy 45/-)", category: "Brooms", diameter: "50 Pc Packing", mrp: 60, price: 45, stock: 300, unit: "Pc", description: "Top-grade extra heavy coconut broom for heavy duty outdoor cleaning (50 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
 
       // --- Wire Netting / Kabootar Jaali ---
-      { 
-        id: "ALFA-JAALI-25-40", 
-        name: "Kabootar Jaali 2.5ft (40 No)", 
-        category: "Wire Netting", 
-        diameter: "2.5 Feet / 40 No", 
-        mrp: 130, 
-        price: 95, 
-        stock: 120, 
-        unit: "Roll", 
-        description: "2.5 feet anti-bird pigeon safety mesh netting roll (40 No gauge).", 
-        image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-JAALI-25-80", 
-        name: "Kabootar Jaali 2.5ft (80 No)", 
-        category: "Wire Netting", 
-        diameter: "2.5 Feet / 80 No", 
-        mrp: 210, 
-        price: 160, 
-        stock: 100, 
-        unit: "Roll", 
-        description: "Heavy 2.5 feet anti-pigeon balcony wire jaali roll (80 No heavy gauge).", 
-        image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-JAALI-3-20", 
-        name: "Kabootar Jaali 3ft (20 No)", 
-        category: "Wire Netting", 
-        diameter: "3 Feet / 20 No", 
-        mrp: 180, 
-        price: 140, 
-        stock: 90, 
-        unit: "Roll", 
-        description: "3 feet width pigeon safety wire jaali roll (20 No gauge).", 
-        image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-JAALI-3-30", 
-        name: "Kabootar Jaali 3ft (30 No)", 
-        category: "Wire Netting", 
-        diameter: "3 Feet / 30 No", 
-        mrp: 280, 
-        price: 220, 
-        stock: 80, 
-        unit: "Roll", 
-        description: "3 feet medium heavy anti-bird protection wire mesh (30 No gauge).", 
-        image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-JAALI-3-40", 
-        name: "Kabootar Jaali 3ft (40 No)", 
-        category: "Wire Netting", 
-        diameter: "3 Feet / 40 No", 
-        mrp: 350, 
-        price: 280, 
-        stock: 75, 
-        unit: "Roll", 
-        description: "3 feet heavy-duty pigeon and bird protection safety mesh roll (40 No gauge).", 
-        image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" 
-      },
+      { id: "ALFA-JAALI-25-40", name: "Kabootar Jaali 2.5ft (40 No)", category: "Wire Netting", diameter: "2.5 Feet / 40 No", mrp: 130, price: 95, stock: 120, unit: "Roll", description: "2.5 feet anti-bird pigeon safety mesh netting roll (40 No gauge).", image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-JAALI-25-80", name: "Kabootar Jaali 2.5ft (80 No)", category: "Wire Netting", diameter: "2.5 Feet / 80 No", mrp: 210, price: 160, stock: 100, unit: "Roll", description: "Heavy 2.5 feet anti-pigeon balcony wire jaali roll (80 No heavy gauge).", image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-JAALI-3-20", name: "Kabootar Jaali 3ft (20 No)", category: "Wire Netting", diameter: "3 Feet / 20 No", mrp: 180, price: 140, stock: 90, unit: "Roll", description: "3 feet width pigeon safety wire jaali roll (20 No gauge).", image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-JAALI-3-30", name: "Kabootar Jaali 3ft (30 No)", category: "Wire Netting", diameter: "3 Feet / 30 No", mrp: 280, price: 220, stock: 80, unit: "Roll", description: "3 feet medium heavy anti-bird protection wire mesh (30 No gauge).", image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-JAALI-3-40", name: "Kabootar Jaali 3ft (40 No)", category: "Wire Netting", diameter: "3 Feet / 40 No", mrp: 350, price: 280, stock: 75, unit: "Roll", description: "3 feet heavy-duty pigeon and bird protection safety mesh roll (40 No gauge).", image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" },
 
       // --- Cleaning Sponges ---
-      { 
-        id: "ALFA-SPG-FANTASY23", 
-        name: "Fantasy Foam Sponge (23 Density)", 
-        category: "Sponges", 
-        diameter: "23 Density / 14 Dozen Bag", 
-        mrp: 95, 
-        price: 70, 
-        stock: 220, 
-        unit: "Dozen", 
-        description: "Soft vehicle washing & polishing foam sponge (14 Dozen packing).", 
-        image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-SPG-FANTASTIC28", 
-        name: "Fantastic Foam Sponge (28 Density)", 
-        category: "Sponges", 
-        diameter: "28 Density / 14 Dozen Bag", 
-        mrp: 110, 
-        price: 84, 
-        stock: 200, 
-        unit: "Dozen", 
-        description: "Medium-density high absorption cleaning sponge (14 Dozen packing).", 
-        image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-SPG-MAXTAR32", 
-        name: "Maxtar Sponge (32 Density)", 
-        category: "Sponges", 
-        diameter: "32 Density / 14 Dozen Bag", 
-        mrp: 145, 
-        price: 110, 
-        stock: 180, 
-        unit: "Dozen", 
-        description: "High-density durable commercial cleaning sponge (14 Dozen packing).", 
-        image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-SPG-PLATINUM40", 
-        name: "Platinum Sponge (40 Density)", 
-        category: "Sponges", 
-        diameter: "40 Density / 14 Dozen Bag", 
-        mrp: 180, 
-        price: 140, 
-        stock: 150, 
-        unit: "Dozen", 
-        description: "Extra heavy 40-density durable sponge for commercial car wash & tile work (14 Dozen packing).", 
-        image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" 
-      },
+      { id: "ALFA-SPG-FANTASY23", name: "Fantasy Foam Sponge (23 Density)", category: "Sponges", diameter: "23 Density / 14 Dozen Bag", mrp: 95, price: 70, stock: 220, unit: "Dozen", description: "Soft vehicle washing & polishing foam sponge (14 Dozen packing).", image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-SPG-FANTASTIC28", name: "Fantastic Foam Sponge (28 Density)", category: "Sponges", diameter: "28 Density / 14 Dozen Bag", mrp: 110, price: 84, stock: 200, unit: "Dozen", description: "Medium-density high absorption cleaning sponge (14 Dozen packing).", image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-SPG-MAXTAR32", name: "Maxtar Sponge (32 Density)", category: "Sponges", diameter: "32 Density / 14 Dozen Bag", mrp: 145, price: 110, stock: 180, unit: "Dozen", description: "High-density durable commercial cleaning sponge (14 Dozen packing).", image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-SPG-PLATINUM40", name: "Platinum Sponge (40 Density)", category: "Sponges", diameter: "40 Density / 14 Dozen Bag", mrp: 180, price: 140, stock: 150, unit: "Dozen", description: "Extra heavy 40-density durable sponge for commercial car wash & tile work (14 Dozen packing).", image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" },
 
       // --- Construction & Tools (Gampa, Powda & Handles) ---
-      { 
-        id: "ALFA-GMP-ULTRA-15", 
-        name: "Gampa - Ultra Brand 15 Inch", 
-        category: "Construction & Tools", 
-        diameter: '15" (60 Pc Bag)', 
-        mrp: 75, 
-        price: 55, 
-        stock: 240, 
-        unit: "Pc", 
-        description: '15" heavy-duty plastic mortar pan/gampa by Ultra (60 pieces bag).', 
-        image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-GMP-ULTRA-17", 
-        name: "Gampa - Ultra Brand 17 Inch", 
-        category: "Construction & Tools", 
-        diameter: '17" (60 Pc Bag)', 
-        mrp: 85, 
-        price: 65, 
-        stock: 240, 
-        unit: "Pc", 
-        description: '17" large capacity construction pan by Ultra (60 pieces bag).', 
-        image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-GMP-CHETAK-15", 
-        name: "Gampa - Chetak Brand 15 Inch", 
-        category: "Construction & Tools", 
-        diameter: '15" (60 Pc Bag)', 
-        mrp: 85, 
-        price: 65, 
-        stock: 200, 
-        unit: "Pc", 
-        description: '15" unbreakable heavy mortar pan by Chetak (60 pieces bag).', 
-        image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-GMP-CHETAK-17", 
-        name: "Gampa - Chetak Brand 17 Inch", 
-        category: "Construction & Tools", 
-        diameter: '17" (60 Pc Bag)', 
-        mrp: 105, 
-        price: 80, 
-        stock: 200, 
-        unit: "Pc", 
-        description: '17" heavy unbreakable mortar pan by Chetak (60 pieces bag).', 
-        image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-POWDA-BLACK", 
-        name: "Powda / Spade (Black Coating)", 
-        category: "Construction & Tools", 
-        diameter: "20 Pc Bundle", 
-        mrp: 2400, 
-        price: 2000, 
-        stock: 40, 
-        unit: "Bundle", 
-        description: "Heavy duty black coated agricultural spade / powda (Set of 20 pieces).", 
-        image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-POWDA-BLUE", 
-        name: "Powda / Spade (Blue Coating)", 
-        category: "Construction & Tools", 
-        diameter: "20 Pc Bundle", 
-        mrp: 2700, 
-        price: 2250, 
-        stock: 35, 
-        unit: "Bundle", 
-        description: "Tempered blue coated steel spade / powda (Set of 20 pieces).", 
-        image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-POWDA-RED", 
-        name: "Powda / Spade (Red Premium)", 
-        category: "Construction & Tools", 
-        diameter: "20 Pc Bundle", 
-        mrp: 2900, 
-        price: 2450, 
-        stock: 30, 
-        unit: "Bundle", 
-        description: "Extra heavy forged steel red powda (Set of 20 pieces).", 
-        image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-HDL-PLASTIC", 
-        name: "Powda Handle - Plastic", 
-        category: "Construction & Tools", 
-        diameter: "50 Pc Bag", 
-        mrp: 55, 
-        price: 40, 
-        stock: 250, 
-        unit: "Pc", 
-        description: "Heavy plastic handle grip for agricultural powda/spades (50 pieces bag).", 
-        image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-HDL-WOOD", 
-        name: "Powda Handle - Wooden", 
-        category: "Construction & Tools", 
-        diameter: "50 Pc Bag", 
-        mrp: 35, 
-        price: 24, 
-        stock: 300, 
-        unit: "Pc", 
-        description: "Solid hardwood handle for powda/spade tools (50 pieces bag).", 
-        image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" 
-      },
+      { id: "ALFA-GMP-ULTRA-15", name: "Gampa - Ultra Brand 15 Inch", category: "Construction & Tools", diameter: '15" (60 Pc Bag)', mrp: 75, price: 55, stock: 240, unit: "Pc", description: '15" heavy-duty plastic mortar pan/gampa by Ultra (60 pieces bag).', image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-GMP-ULTRA-17", name: "Gampa - Ultra Brand 17 Inch", category: "Construction & Tools", diameter: '17" (60 Pc Bag)', mrp: 85, price: 65, stock: 240, unit: "Pc", description: '17" large capacity construction pan by Ultra (60 pieces bag).', image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-GMP-CHETAK-15", name: "Gampa - Chetak Brand 15 Inch", category: "Construction & Tools", diameter: '15" (60 Pc Bag)', mrp: 85, price: 65, stock: 200, unit: "Pc", description: '15" unbreakable heavy mortar pan by Chetak (60 pieces bag).', image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-GMP-CHETAK-17", name: "Gampa - Chetak Brand 17 Inch", category: "Construction & Tools", diameter: '17" (60 Pc Bag)', mrp: 105, price: 80, stock: 200, unit: "Pc", description: '17" heavy unbreakable mortar pan by Chetak (60 pieces bag).', image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-POWDA-BLACK", name: "Powda / Spade (Black Coating)", category: "Construction & Tools", diameter: "20 Pc Bundle", mrp: 2400, price: 2000, stock: 40, unit: "Bundle", description: "Heavy duty black coated agricultural spade / powda (Set of 20 pieces).", image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-POWDA-BLUE", name: "Powda / Spade (Blue Coating)", category: "Construction & Tools", diameter: "20 Pc Bundle", mrp: 2700, price: 2250, stock: 35, unit: "Bundle", description: "Tempered blue coated steel spade / powda (Set of 20 pieces).", image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-POWDA-RED", name: "Powda / Spade (Red Premium)", category: "Construction & Tools", diameter: "20 Pc Bundle", mrp: 2900, price: 2450, stock: 30, unit: "Bundle", description: "Extra heavy forged steel red powda (Set of 20 pieces).", image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-HDL-PLASTIC", name: "Powda Handle - Plastic", category: "Construction & Tools", diameter: "50 Pc Bag", mrp: 55, price: 40, stock: 250, unit: "Pc", description: "Heavy plastic handle grip for agricultural powda/spades (50 pieces bag).", image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-HDL-WOOD", name: "Powda Handle - Wooden", category: "Construction & Tools", diameter: "50 Pc Bag", mrp: 35, price: 24, stock: 300, unit: "Pc", description: "Solid hardwood handle for powda/spade tools (50 pieces bag).", image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" },
 
       // --- Safety Equipment ---
-      { 
-        id: "ALFA-GLV-PRIMA", 
-        name: "Safety Hand Gloves - Prima", 
-        category: "Safety Equipment", 
-        diameter: "12 Pair Packet", 
-        mrp: 45, 
-        price: 30, 
-        stock: 300, 
-        unit: "Pair", 
-        description: "Durable protective industrial safety hand gloves (12 pairs packet).", 
-        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-GLV-GOLD", 
-        name: "Safety Hand Gloves - Gold Touch", 
-        category: "Safety Equipment", 
-        diameter: "12 Pair Packet", 
-        mrp: 52, 
-        price: 38, 
-        stock: 250, 
-        unit: "Pair", 
-        description: "Gold Touch grip-coated work safety gloves (12 pairs packet).", 
-        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-GLV-SENSTOUCH", 
-        name: "Safety Hand Gloves - Senstouch", 
-        category: "Safety Equipment", 
-        diameter: "12 Pair Packet", 
-        mrp: 55, 
-        price: 40, 
-        stock: 250, 
-        unit: "Pair", 
-        description: "Senstouch high-dexterity safety work gloves (12 pairs packet).", 
-        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-GLV-DIAMOND", 
-        name: "Safety Hand Gloves - Diamond Touch", 
-        category: "Safety Equipment", 
-        diameter: "12 Pair Packet", 
-        mrp: 60, 
-        price: 44, 
-        stock: 200, 
-        unit: "Pair", 
-        description: "Diamond Touch reinforced industrial work gloves (12 pairs packet).", 
-        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-GUMBOOT", 
-        name: "Industrial Heavy Duty Gumboots", 
-        category: "Safety Equipment", 
-        diameter: "30 Pair Bag", 
-        mrp: 160, 
-        price: 110, 
-        stock: 120, 
-        unit: "Pair", 
-        description: "Waterproof PVC industrial safety gumboots (30 pairs bag).", 
-        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-HELMET", 
-        name: "Industrial Construction Safety Helmet", 
-        category: "Safety Equipment", 
-        diameter: "50 Pc Bag", 
-        mrp: 85, 
-        price: 55, 
-        stock: 200, 
-        unit: "Pc", 
-        description: "High-impact resistant construction site safety helmet (50 pieces bag).", 
-        image: "https://images.unsplash.com/photo-1578898887932-dce23a595ad4?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-WELD-SUNNY", 
-        name: "Welding Glasses - Sunny", 
-        category: "Safety Equipment", 
-        diameter: "12 Pc Box", 
-        mrp: 35, 
-        price: 22, 
-        stock: 150, 
-        unit: "Pc", 
-        description: "Protective eye-shield welding glasses (12 pieces box).", 
-        image: "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-WELD-DEFENDER", 
-        name: "Welding Glasses - S Defender", 
-        category: "Safety Equipment", 
-        diameter: "12 Pc Box", 
-        mrp: 60, 
-        price: 40, 
-        stock: 120, 
-        unit: "Pc", 
-        description: "S Defender anti-glare welding safety glasses (12 pieces box).", 
-        image: "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-WELD-PLATINUM", 
-        name: "Welding Glasses - Platinum", 
-        category: "Safety Equipment", 
-        diameter: "12 Pc Box", 
-        mrp: 60, 
-        price: 40, 
-        stock: 120, 
-        unit: "Pc", 
-        description: "Platinum protective welding and grinding safety goggles (12 pieces box).", 
-        image: "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=600&q=80" 
-      },
+      { id: "ALFA-GLV-PRIMA", name: "Safety Hand Gloves - Prima", category: "Safety Equipment", diameter: "12 Pair Packet", mrp: 45, price: 30, stock: 300, unit: "Pair", description: "Durable protective industrial safety hand gloves (12 pairs packet).", image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-GLV-GOLD", name: "Safety Hand Gloves - Gold Touch", category: "Safety Equipment", diameter: "12 Pair Packet", mrp: 52, price: 38, stock: 250, unit: "Pair", description: "Gold Touch grip-coated work safety gloves (12 pairs packet).", image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-GLV-SENSTOUCH", name: "Safety Hand Gloves - Senstouch", category: "Safety Equipment", diameter: "12 Pair Packet", mrp: 55, price: 40, stock: 250, unit: "Pair", description: "Senstouch high-dexterity safety work gloves (12 pairs packet).", image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-GLV-DIAMOND", name: "Safety Hand Gloves - Diamond Touch", category: "Safety Equipment", diameter: "12 Pair Packet", mrp: 60, price: 44, stock: 200, unit: "Pair", description: "Diamond Touch reinforced industrial work gloves (12 pairs packet).", image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-GUMBOOT", name: "Industrial Heavy Duty Gumboots", category: "Safety Equipment", diameter: "30 Pair Bag", mrp: 160, price: 110, stock: 120, unit: "Pair", description: "Waterproof PVC industrial safety gumboots (30 pairs bag).", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-HELMET", name: "Industrial Construction Safety Helmet", category: "Safety Equipment", diameter: "50 Pc Bag", mrp: 85, price: 55, stock: 200, unit: "Pc", description: "High-impact resistant construction site safety helmet (50 pieces bag).", image: "https://images.unsplash.com/photo-1578898887932-dce23a595ad4?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-WELD-SUNNY", name: "Welding Glasses - Sunny", category: "Safety Equipment", diameter: "12 Pc Box", mrp: 35, price: 22, stock: 150, unit: "Pc", description: "Protective eye-shield welding glasses (12 pieces box).", image: "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-WELD-DEFENDER", name: "Welding Glasses - S Defender", category: "Safety Equipment", diameter: "12 Pc Box", mrp: 60, price: 40, stock: 120, unit: "Pc", description: "S Defender anti-glare welding safety glasses (12 pieces box).", image: "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-WELD-PLATINUM", name: "Welding Glasses - Platinum", category: "Safety Equipment", diameter: "12 Pc Box", mrp: 60, price: 40, stock: 120, unit: "Pc", description: "Platinum protective welding and grinding safety goggles (12 pieces box).", image: "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=600&q=80" },
 
       // --- Pipes & Hoses ---
-      { 
-        id: "ALFA-PIPE-FOAM", 
-        name: 'Water Pipe 3/4" - Foam Pipe', 
-        category: "Pipes & Hoses", 
-        diameter: '3/4" (20m / 30m Length)', 
-        mrp: 130, 
-        price: 104, 
-        stock: 350, 
-        unit: "Kg", 
-        description: '3/4" flexible foam water garden and industrial hose (Available in 20m & 30m).', 
-        image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-PIPE-BRAIDED", 
-        name: 'Water Pipe 3/4" - Braided Pipe', 
-        category: "Pipes & Hoses", 
-        diameter: '3/4" (20m / 30m Length)', 
-        mrp: 145, 
-        price: 114, 
-        stock: 300, 
-        unit: "Kg", 
-        description: '3/4" reinforced high-pressure braided garden water hose (Available in 20m & 30m).', 
-        image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" 
-      },
-      { 
-        id: "ALFA-PIPE-PETRO", 
-        name: 'Water Pipe 3/4" - Petroleum Pipe', 
-        category: "Pipes & Hoses", 
-        diameter: '3/4" (20m / 30m Length)', 
-        mrp: 185, 
-        price: 146, 
-        stock: 250, 
-        unit: "Kg", 
-        description: '3/4" heavy-duty oil and chemical resistant petroleum delivery pipe (Available in 20m & 30m).', 
-        image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" 
-      }
+      { id: "ALFA-PIPE-FOAM", name: 'Water Pipe 3/4" - Foam Pipe', category: "Pipes & Hoses", diameter: '3/4" (20m / 30m Length)', mrp: 130, price: 104, stock: 350, unit: "Kg", description: '3/4" flexible foam water garden and industrial hose (Available in 20m & 30m).', image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-PIPE-BRAIDED", name: 'Water Pipe 3/4" - Braided Pipe', category: "Pipes & Hoses", diameter: '3/4" (20m / 30m Length)', mrp: 145, price: 114, stock: 300, unit: "Kg", description: '3/4" reinforced high-pressure braided garden water hose (Available in 20m & 30m).', image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-PIPE-PETRO", name: 'Water Pipe 3/4" - Petroleum Pipe', category: "Pipes & Hoses", diameter: '3/4" (20m / 30m Length)', mrp: 185, price: 146, stock: 250, unit: "Kg", description: '3/4" heavy-duty oil and chemical resistant petroleum delivery pipe (Available in 20m & 30m).', image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" }
     ];
 
     // State Variables
@@ -1719,6 +1396,7 @@
     let coupons = [{ code: "ALFA10", discount: 10 }, { code: "BULK20", discount: 20 }];
     let cmsConfig = {};
     let cartDiscountPercent = 0;
+    let currentViewingOrder = null;
 
     window.onload = () => {
       loadStorage();
@@ -1727,9 +1405,9 @@
     };
 
     function loadStorage() {
-      const savedProds = localStorage.getItem('alfa_prods_v4');
+      const savedProds = localStorage.getItem('alfa_prods_v5');
       products = savedProds ? JSON.parse(savedProds) : INITIAL_PRODUCTS;
-      if (!savedProds) localStorage.setItem('alfa_prods_v4', JSON.stringify(INITIAL_PRODUCTS));
+      if (!savedProds) localStorage.setItem('alfa_prods_v5', JSON.stringify(INITIAL_PRODUCTS));
 
       orders = JSON.parse(localStorage.getItem('alfa_orders')) || [];
       users = JSON.parse(localStorage.getItem('alfa_users')) || DEFAULT_USERS;
@@ -1741,7 +1419,7 @@
     }
 
     function syncStorage() {
-      localStorage.setItem('alfa_prods_v4', JSON.stringify(products));
+      localStorage.setItem('alfa_prods_v5', JSON.stringify(products));
       localStorage.setItem('alfa_orders', JSON.stringify(orders));
       localStorage.setItem('alfa_users', JSON.stringify(users));
       localStorage.setItem('alfa_enquiries', JSON.stringify(enquiries));
@@ -1880,7 +1558,7 @@
 
     function buyNow(id) {
       addToCart(id);
-      openCheckoutModal();
+      handleCheckoutEntry();
     }
 
     function toggleCart(forceOpen = false) {
@@ -1943,13 +1621,22 @@
       renderCartDrawer();
     }
 
-    function openCheckoutModal() {
-      if (!cart.length) return alert('Your cart is empty.');
-      if (activeUser) {
-        document.getElementById('orderCustName').value = activeUser.name || '';
-        document.getElementById('orderCustPhone').value = activeUser.phone || '';
-      }
+    // MANDATORY CUSTOMER LOGIN CHECKOUT CONTROLLER
+    function handleCheckoutEntry() {
+      if (!cart.length) return alert('Your shopping cart is empty.');
       
+      // Enforce login requirement
+      if (!activeUser || activeUser.role !== 'customer') {
+        alert('Please log in to your Customer Profile to continue with checkout and delivery address.');
+        openAuthModal();
+        return;
+      }
+
+      // Populate checkout modal from active logged-in profile
+      document.getElementById('orderCustName').value = activeUser.name || '';
+      document.getElementById('orderCustPhone').value = activeUser.phone || '';
+      document.getElementById('orderCustAddress').value = activeUser.address || '';
+
       const totalAmount = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
       const upiUrl = `upi://pay?pa=${encodeURIComponent(cmsConfig.upiId)}&pn=${encodeURIComponent('Alfa Rope Suppliers')}&am=${totalAmount}&cu=INR`;
       document.getElementById('upiQrCodeImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
@@ -1983,27 +1670,32 @@
       const pMethod = document.getElementById('paymentMethod').value;
       const utr = document.getElementById('upiTxnId').value.trim();
 
-      if (!name || !phone || !address) return alert('Please enter all customer & dispatch details.');
-      if (pMethod === 'upi' && !utr) return alert('Please provide the 12-digit UPI reference / UTR number.');
+      if (!name || !phone || !address) return alert('Please provide complete shipping name, phone, and delivery address.');
+      if (pMethod === 'upi' && !utr) return alert('Please enter the 12-digit UPI reference / UTR number from your payment app.');
 
       let total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+      let discountVal = 0;
       if (cartDiscountPercent > 0) {
-        total = total - (total * (cartDiscountPercent / 100));
+        discountVal = Math.round(total * (cartDiscountPercent / 100));
+        total = total - discountVal;
       }
 
       const orderRecord = {
         orderId: "ALFA-ORD-" + Date.now().toString().slice(-5),
         date: new Date().toLocaleDateString(),
-        customer: { name, phone, address },
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        customer: { name, phone, address, email: activeUser ? activeUser.email : 'Direct' },
         items: [...cart],
+        discount: discountVal,
         totalAmount: Math.round(total),
         payment: { method: pMethod.toUpperCase(), utr: utr || 'N/A' },
         status: "Pending Approval",
-        trackingNo: "Not Assigned"
+        trackingNo: "Pending Dispatch"
       };
 
       orders.unshift(orderRecord);
 
+      // Decrement stock
       cart.forEach(cItem => {
         const prod = products.find(p => p.id === cItem.id);
         if (prod) prod.stock = Math.max(0, prod.stock - cItem.qty);
@@ -2015,7 +1707,182 @@
       closeModal('checkoutModal');
       toggleCart(false);
 
-      alert(`Order ${orderRecord.orderId} submitted! Admin & Owner have been notified.`);
+      // Show auto-generated confirmation receipt
+      openInvoiceModal(orderRecord);
+    }
+
+    // CUSTOMER PROFILE MANAGEMENT
+    function openCustomerProfileModal() {
+      if (!activeUser || activeUser.role !== 'customer') return;
+      document.getElementById('profFullName').value = activeUser.name;
+      document.getElementById('profEmail').value = activeUser.email;
+      document.getElementById('profPhone').value = activeUser.phone;
+      document.getElementById('profAddress').value = activeUser.address || '';
+      openModal('customerProfileModal');
+    }
+
+    function saveCustomerProfile(e) {
+      e.preventDefault();
+      activeUser.name = document.getElementById('profFullName').value.trim();
+      activeUser.phone = document.getElementById('profPhone').value.trim();
+      activeUser.address = document.getElementById('profAddress').value.trim();
+
+      const userIdx = users.findIndex(u => u.email.toLowerCase() === activeUser.email.toLowerCase());
+      if (userIdx !== -1) users[userIdx] = activeUser;
+
+      syncStorage();
+      closeModal('customerProfileModal');
+      document.getElementById('userProfileBtn').innerHTML = `<i class="fa-solid fa-user-circle"></i> ${activeUser.name}`;
+      alert('Your customer profile & delivery address have been updated!');
+    }
+
+    // DUAL-KEY ORDER TRACKING
+    function openTrackOrderModal() {
+      document.getElementById('trackResultBox').style.display = 'none';
+      document.getElementById('trackInputOrderId').value = '';
+      document.getElementById('trackInputCustName').value = '';
+      openModal('trackOrderModal');
+    }
+
+    function verifyAndTrackOrder() {
+      const orderId = document.getElementById('trackInputOrderId').value.trim().toUpperCase();
+      const custName = document.getElementById('trackInputCustName').value.trim().toLowerCase();
+
+      if (!orderId || !custName) return alert('Please enter both Order ID and Customer Name.');
+
+      const match = orders.find(o => o.orderId.toUpperCase() === orderId && o.customer.name.toLowerCase().includes(custName));
+
+      if (match) {
+        currentViewingOrder = match;
+        document.getElementById('trackResId').innerText = match.orderId;
+        document.getElementById('trackResStatus').innerText = match.status;
+        document.getElementById('trackResLR').innerText = match.trackingNo || 'Pending Dispatch';
+        document.getElementById('trackResTotal').innerText = `₹${match.totalAmount}`;
+        document.getElementById('trackResAddr').innerText = `${match.customer.name} - ${match.customer.address}`;
+        document.getElementById('trackResultBox').style.display = 'block';
+      } else {
+        alert('No matching order found. Please verify the exact Order ID and Customer Name.');
+      }
+    }
+
+    function generateReceiptFromTracking() {
+      if (currentViewingOrder) {
+        closeModal('trackOrderModal');
+        openInvoiceModal(currentViewingOrder);
+      }
+    }
+
+    // AUTO-GENERATED INVOICE / RECEIPT
+    function openInvoiceModal(order) {
+      currentViewingOrder = order;
+      document.getElementById('invOrderId').innerText = order.orderId;
+      document.getElementById('invOrderDate').innerText = `${order.date} ${order.time || ''}`;
+      document.getElementById('invCustName').innerText = order.customer.name;
+      document.getElementById('invCustPhone').innerText = `Phone: ${order.customer.phone}`;
+      document.getElementById('invCustAddress').innerText = order.customer.address;
+      document.getElementById('invStatus').innerText = order.status;
+      document.getElementById('invPaymentMode').innerText = `${order.payment.method} (Ref: ${order.payment.utr})`;
+      document.getElementById('invTrackingNo').innerText = order.trackingNo;
+
+      document.getElementById('invTableItemsBody').innerHTML = order.items.map(item => `
+        <tr>
+          <td><strong>${item.name}</strong></td>
+          <td>${item.qty} ${item.unit || ''}</td>
+          <td>₹${item.price}</td>
+          <td>₹${item.price * item.qty}</td>
+        </tr>
+      `).join('');
+
+      document.getElementById('invDiscountVal').innerText = `₹${order.discount || 0}`;
+      document.getElementById('invGrandTotal').innerText = `₹${order.totalAmount}`;
+
+      openModal('invoiceModal');
+    }
+
+    function printReceipt() {
+      window.print();
+    }
+
+    // ADMIN / OWNER DIRECT MANUAL ORDER BOOKING
+    function openManualOrderModal() {
+      const prodSelect = document.getElementById('manSelectProduct');
+      prodSelect.innerHTML = products.map(p => `<option value="${p.id}" data-price="${p.price}" data-unit="${p.unit}">${p.name} - ₹${p.price}/${p.unit}</option>`).join('');
+      updateManualOrderPrice();
+      openModal('manualOrderModal');
+    }
+
+    function updateManualOrderPrice() {
+      const select = document.getElementById('manSelectProduct');
+      const selectedOption = select.options[select.selectedIndex];
+      if (!selectedOption) return;
+      const rate = parseFloat(selectedOption.getAttribute('data-price')) || 0;
+      const qty = parseInt(document.getElementById('manQty').value) || 1;
+      document.getElementById('manTotalAmount').value = Math.round(rate * qty);
+    }
+
+    function handleManualOrderSubmit(e) {
+      e.preventDefault();
+      const select = document.getElementById('manSelectProduct');
+      const prodId = select.value;
+      const p = products.find(item => item.id === prodId);
+      const qty = parseInt(document.getElementById('manQty').value) || 1;
+      const totalAmount = parseFloat(document.getElementById('manTotalAmount').value);
+      const name = document.getElementById('manCustName').value.trim();
+      const phone = document.getElementById('manCustPhone').value.trim();
+      const address = document.getElementById('manCustAddress').value.trim();
+      const pMethod = document.getElementById('manPaymentMethod').value;
+
+      const manualOrder = {
+        orderId: "ALFA-DIR-" + Date.now().toString().slice(-5),
+        date: new Date().toLocaleDateString(),
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        customer: { name, phone, address, email: 'Direct Customer' },
+        items: [{ id: p.id, name: p.name, price: p.price, unit: p.unit, qty: qty }],
+        discount: 0,
+        totalAmount: totalAmount,
+        payment: { method: pMethod, utr: 'Direct Shop Sale' },
+        status: "Accepted",
+        trackingNo: "Handed over / Direct"
+      };
+
+      orders.unshift(manualOrder);
+      if (p) p.stock = Math.max(0, p.stock - qty);
+
+      syncStorage();
+      closeModal('manualOrderModal');
+      alert(`Manual order ${manualOrder.orderId} booked successfully!`);
+      openInvoiceModal(manualOrder);
+    }
+
+    // ADMIN / OWNER ORDER EDITING
+    function openEditOrderModal(idx) {
+      const o = orders[idx];
+      document.getElementById('editOrderIndex').value = idx;
+      document.getElementById('editOrderId').value = o.orderId;
+      document.getElementById('editCustName').value = o.customer.name;
+      document.getElementById('editCustPhone').value = o.customer.phone;
+      document.getElementById('editCustAddress').value = o.customer.address;
+      document.getElementById('editOrderTotal').value = o.totalAmount;
+      document.getElementById('editOrderStatus').value = o.status;
+      document.getElementById('editOrderTracking').value = o.trackingNo || '';
+      openModal('editOrderModal');
+    }
+
+    function saveEditedOrder(e) {
+      e.preventDefault();
+      const idx = document.getElementById('editOrderIndex').value;
+      const o = orders[idx];
+
+      o.customer.name = document.getElementById('editCustName').value.trim();
+      o.customer.phone = document.getElementById('editCustPhone').value.trim();
+      o.customer.address = document.getElementById('editCustAddress').value.trim();
+      o.totalAmount = parseFloat(document.getElementById('editOrderTotal').value);
+      o.status = document.getElementById('editOrderStatus').value;
+      o.trackingNo = document.getElementById('editOrderTracking').value.trim();
+
+      syncStorage();
+      closeModal('editOrderModal');
+      alert(`Order ${o.orderId} updated!`);
     }
 
     function renderOrders() {
@@ -2038,39 +1905,19 @@
             <small>Ref: ${o.payment.utr}</small>
           </td>
           <td>
-            <select class="status-select" onchange="updateOrderStatus(${idx}, this.value)">
-              <option value="Pending Approval" ${o.status === 'Pending Approval' ? 'selected' : ''}>⏳ Pending Approval</option>
-              <option value="Accepted" ${o.status === 'Accepted' ? 'selected' : ''}>✅ Accepted</option>
-              <option value="Shipped" ${o.status === 'Shipped' ? 'selected' : ''}>📦 Shipped</option>
-              <option value="Dispatched" ${o.status === 'Dispatched' ? 'selected' : ''}>🚚 Dispatched</option>
-              <option value="Delivered" ${o.status === 'Delivered' ? 'selected' : ''}>🏠 Delivered</option>
-              <option value="Cancelled" ${o.status === 'Cancelled' ? 'selected' : ''}>❌ Cancelled</option>
-            </select>
+            <span class="off-badge" style="background: rgba(245,158,11,0.15); color: var(--primary);">${o.status}</span>
           </td>
           <td>
-            <input type="text" class="status-select" style="width: 130px;" placeholder="LR / Tracking No" value="${o.trackingNo}" onchange="updateOrderTracking(${idx}, this.value)">
+            <small>${o.trackingNo || 'Pending'}</small>
           </td>
           <td>
-            <button class="btn btn-secondary btn-sm" onclick="sendWhatsAppOrderUpdate(${idx})"><i class="fa-brands fa-whatsapp"></i> Update Buyer</button>
+            <div style="display: flex; gap: 0.3rem;">
+              <button class="btn btn-secondary btn-sm" onclick="openInvoiceModal(orders[${idx}])"><i class="fa-solid fa-receipt"></i> Invoice</button>
+              <button class="btn btn-secondary btn-sm" onclick="openEditOrderModal(${idx})"><i class="fa-solid fa-pen"></i> Edit</button>
+            </div>
           </td>
         </tr>
       `).join('');
-    }
-
-    function updateOrderStatus(idx, val) {
-      orders[idx].status = val;
-      syncStorage();
-    }
-
-    function updateOrderTracking(idx, val) {
-      orders[idx].trackingNo = val;
-      syncStorage();
-    }
-
-    function sendWhatsAppOrderUpdate(idx) {
-      const o = orders[idx];
-      const msg = encodeURIComponent(`Alfa Rope Suppliers Update\nOrder ID: ${o.orderId}\nStatus: ${o.status}\nTracking / Transport LR: ${o.trackingNo}\nTotal Amount: ₹${o.totalAmount}`);
-      window.open(`https://wa.me/91${o.customer.phone.replace(/[^0-9]/g, '')}?text=${msg}`, '_blank');
     }
 
     function renderInventory(items) {
@@ -2123,7 +1970,7 @@
     function renderEnquiries() {
       const tbody = document.getElementById('enquiriesTableBody');
       if (!enquiries.length) {
-        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No enquiries or feedback received yet.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No enquiries received yet.</td></tr>`;
         return;
       }
 
@@ -2164,7 +2011,7 @@
           <td>
             ${currentRole === 'admin' ? `
               ${u.status === 'Pending Approval' ? `<button class="btn btn-success btn-sm" onclick="approveUserRole(${idx})">Approve Owner</button>` : ''}
-              ${u.role !== 'admin' ? `<button class="btn btn-danger btn-sm" onclick="deleteUserRecord(${idx})">Revoke / Delete</button>` : '<small>Master Admin</small>'}
+              ${u.role !== 'admin' ? `<button class="btn btn-danger btn-sm" onclick="deleteUserRecord(${idx})">Revoke</button>` : '<small>Master Admin</small>'}
             ` : '<small>Read-Only</small>'}
           </td>
         </tr>
@@ -2245,17 +2092,13 @@
         activeUser = match;
         currentRole = match.role;
         
-        // Show role indicator only when logged in
-        const rBadge = document.getElementById('roleBadge');
-        if (match.role === 'admin') {
-          rBadge.innerHTML = `<i class="fa-solid fa-user-shield"></i> Admin`;
-          rBadge.style.display = 'inline-flex';
-        } else if (match.role === 'owner') {
-          rBadge.innerHTML = `<i class="fa-solid fa-crown"></i> Owner`;
-          rBadge.style.display = 'inline-flex';
+        const profBtn = document.getElementById('userProfileBtn');
+        if (match.role === 'customer') {
+          profBtn.innerHTML = `<i class="fa-solid fa-user-circle"></i> ${match.name}`;
+          profBtn.style.display = 'inline-flex';
         } else {
-          rBadge.innerHTML = `<i class="fa-solid fa-user"></i> ${match.name}`;
-          rBadge.style.display = 'inline-flex';
+          profBtn.innerHTML = `<i class="fa-solid fa-user-shield"></i> ${match.name} (${match.role.toUpperCase()})`;
+          profBtn.style.display = 'inline-flex';
         }
 
         document.getElementById('logoutBtn').style.display = 'inline-flex';
@@ -2274,13 +2117,14 @@
       const name = document.getElementById('regFullName').value.trim();
       const email = document.getElementById('regEmail').value.trim();
       const phone = document.getElementById('regPhone').value.trim();
+      const address = document.getElementById('regAddress').value.trim();
       const pass = document.getElementById('regPass').value.trim();
 
       const exists = users.find(u => u.email.toLowerCase() === email.toLowerCase());
       if (exists) return alert('An account with this email already exists.');
 
       const newUser = {
-        name, email, phone, pass, role,
+        name, email, phone, address, pass, role,
         status: role === 'owner' ? 'Pending Approval' : 'Active'
       };
 
@@ -2291,7 +2135,7 @@
       if (role === 'owner') {
         alert('Owner registration submitted! Please wait for Admin approval.');
       } else {
-        alert('Customer registration successful! You can now log in.');
+        alert('Customer registration successful! You can now log in to proceed.');
       }
     }
 
@@ -2314,7 +2158,7 @@
     function logout() {
       currentRole = 'customer';
       activeUser = null;
-      document.getElementById('roleBadge').style.display = 'none';
+      document.getElementById('userProfileBtn').style.display = 'none';
       document.getElementById('logoutBtn').style.display = 'none';
       document.getElementById('loginBtn').style.display = 'inline-flex';
       renderApp();
