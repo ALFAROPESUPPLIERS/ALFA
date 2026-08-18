@@ -5,13 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>ALFA ROPE SUPPLIERS | Enterprise Industrial & Retail Portal</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="styles.css?v=6.0">
+  <link rel="stylesheet" href="styles.css?v=7.0">
 </head>
 <body>
 
-  <!-- Top Navigation Bar -->
+  <!-- Live Dispatch Ticker Marquee -->
+  <div class="top-ticker-bar">
+    <div class="ticker-content">
+      ⚡ <strong>LIVE DISPATCH:</strong> Daily Wholesale Shipments to Telangana, Andhra Pradesh & All India | Direct Factory Rates on PP, Nylon & Manila Ropes | Call / WhatsApp: +91 8555838852 | Ashok Bazar, Afzal Gunj, Hyderabad
+    </div>
+  </div>
+
+  <!-- Primary E-Commerce Top Header -->
   <header>
-    <div class="nav-container">
+    <div class="nav-main-tier">
       <div class="brand-group">
         <div class="brand-logo-icon"><i class="fa-solid fa-anchor"></i></div>
         <div class="brand">
@@ -26,9 +33,6 @@
       </div>
 
       <div class="nav-actions">
-        <button class="btn btn-secondary btn-sm" onclick="openTrackOrderModal()"><i class="fa-solid fa-location-crosshairs"></i> Track Order</button>
-        <button class="btn btn-secondary btn-sm" onclick="openEnquiryModal()"><i class="fa-regular fa-comment-dots"></i> Feedback</button>
-        
         <button class="cart-btn" onclick="toggleCart()">
           <i class="fa-solid fa-cart-shopping"></i> Cart
           <span class="cart-badge" id="cartCount">0</span>
@@ -39,14 +43,23 @@
         <button class="btn btn-danger btn-sm" id="logoutBtn" style="display: none;" onclick="logout()">Exit</button>
       </div>
     </div>
+
+    <!-- Secondary Navigation Utility Bar -->
+    <div class="nav-sub-tier">
+      <div class="nav-sub-container">
+        <button class="sub-nav-item active" onclick="selectCategory('all')"><i class="fa-solid fa-bars"></i> All Categories</button>
+        <button class="sub-nav-item" onclick="openTrackOrderModal()"><i class="fa-solid fa-location-crosshairs"></i> Track Order Status</button>
+        <button class="sub-nav-item" onclick="openEnquiryModal()"><i class="fa-regular fa-comment-dots"></i> Wholesale Enquiry / Feedback</button>
+      </div>
+    </div>
   </header>
 
-  <!-- Categories Quick Navigation Header -->
+  <!-- Interactive Category Pills Bar -->
   <div class="category-nav-wrapper" id="catNavWrapper">
     <div class="category-nav-container" id="categoryNavContainer"></div>
   </div>
 
-  <!-- Hero Greeting Banner -->
+  <!-- Hero Greeting Section -->
   <section class="hero-banner" id="heroBanner">
     <div class="hero-content">
       <h2 id="dynHeroHeading">Premier <span>Rope, Twine & Hardware</span> Wholesaler</h2>
@@ -110,7 +123,7 @@
       <button class="tab-btn" onclick="switchTab('coupons')"><i class="fa-solid fa-tag"></i> Coupons</button>
     </div>
 
-    <!-- Quick Action Controls for Admin/Owner -->
+    <!-- Quick Action Controls -->
     <div id="adminActionToolbar" style="display: none; gap: 0.4rem; margin-bottom: 1rem; overflow-x: auto;">
       <button class="btn btn-sm btn-success" onclick="openManualOrderModal()"><i class="fa-solid fa-plus-circle"></i> Direct Manual Order</button>
       <button class="btn btn-secondary btn-sm" onclick="exportDataCSV()"><i class="fa-solid fa-download"></i> CSV Backup</button>
@@ -121,7 +134,7 @@
     <!-- TAB 1: Customer Storefront View (Grouped by Category) -->
     <div id="customerStoreView"></div>
 
-    <!-- TAB 2: Orders & Tracking View (Admin / Owner) -->
+    <!-- TAB 2: Orders & Tracking View -->
     <div id="ordersTab" class="table-responsive" style="display: none;">
       <table>
         <thead>
@@ -156,7 +169,7 @@
       </table>
     </div>
 
-    <!-- TAB 4: Category Manager (Admin / Owner) -->
+    <!-- TAB 4: Category Manager -->
     <div id="categoriesTab" style="display: none;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
         <h3>Manage Product Categories</h3>
@@ -176,32 +189,28 @@
       </div>
     </div>
 
-    <!-- TAB 5: 14-Feature Advanced Suite Panel -->
+    <!-- TAB 5: Advanced Suite Panel -->
     <div id="advancedTab" style="display: none;">
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
         
-        <!-- Tool 1: Store Maintenance Switcher -->
         <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
           <h4 style="color: var(--primary);"><i class="fa-solid fa-power-off"></i> Store Status Mode</h4>
           <p style="font-size: 0.75rem; color: var(--text-muted);">Toggle store maintenance mode on/off to control customer ordering.</p>
           <button class="btn btn-sm btn-secondary" onclick="toggleStoreMaintenance()"><span id="maintBtnText">Enable Maintenance Mode</span></button>
         </div>
 
-        <!-- Tool 2: Bulk Category Price Modifier -->
         <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
           <h4 style="color: var(--primary);"><i class="fa-solid fa-tags"></i> Bulk Price Modifier</h4>
           <p style="font-size: 0.75rem; color: var(--text-muted);">Increase or decrease prices across an entire category by percentage.</p>
           <button class="btn btn-sm btn-secondary" onclick="openBulkPriceModal()">Launch Price Adjuster</button>
         </div>
 
-        <!-- Tool 3: Cart Abandonment Inspector -->
         <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
           <h4 style="color: var(--primary);"><i class="fa-solid fa-cart-arrow-down"></i> Cart Abandonment Inspector</h4>
           <p style="font-size: 0.75rem; color: var(--text-muted);">Monitor items left in active carts for customer re-engagement.</p>
           <button class="btn btn-sm btn-secondary" onclick="inspectActiveCarts()">Inspect Active Carts</button>
         </div>
 
-        <!-- Tool 4: GST & Tax Configuration -->
         <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
           <h4 style="color: var(--primary);"><i class="fa-solid fa-calculator"></i> GST & Tax Rate Settings</h4>
           <p style="font-size: 0.75rem; color: var(--text-muted);">Configure GST percentage shown on tax invoices and receipts.</p>
@@ -211,7 +220,6 @@
           </div>
         </div>
 
-        <!-- Tool 5: Direct JSON Database Backup & Restore -->
         <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
           <h4 style="color: var(--primary);"><i class="fa-solid fa-database"></i> Database Snapshot (JSON)</h4>
           <p style="font-size: 0.75rem; color: var(--text-muted);">Export or import full database snapshot including accounts and orders.</p>
@@ -222,7 +230,6 @@
           </div>
         </div>
 
-        <!-- Tool 6: System Audit Log Viewer -->
         <div class="metric-card" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
           <h4 style="color: var(--primary);"><i class="fa-solid fa-list-check"></i> System Activity Logs</h4>
           <p style="font-size: 0.75rem; color: var(--text-muted);">View operational history of orders, price edits, and staff logins.</p>
@@ -232,7 +239,7 @@
       </div>
     </div>
 
-    <!-- TAB 6: Customer Accounts & Role Control Master -->
+    <!-- TAB 6: Customer Accounts -->
     <div id="usersTab" class="table-responsive" style="display: none;">
       <table>
         <thead>
@@ -869,7 +876,7 @@
     </div>
   </div>
 
-  <!-- PRODUCT ADD/EDIT MODAL (With Dynamic Category Selector) -->
+  <!-- PRODUCT ADD/EDIT MODAL -->
   <div id="productModal" class="modal">
     <div class="modal-box">
       <h3 id="productModalHeading" style="margin-bottom: 1rem; font-size: 1.1rem;">Add Product Item</h3>
@@ -1076,13 +1083,13 @@
     };
 
     function loadStorage() {
-      const savedProds = localStorage.getItem('alfa_prods_cat_v1');
+      const savedProds = localStorage.getItem('alfa_prods_enterprise');
       products = savedProds ? JSON.parse(savedProds) : INITIAL_PRODUCTS;
-      if (!savedProds) localStorage.setItem('alfa_prods_cat_v1', JSON.stringify(INITIAL_PRODUCTS));
+      if (!savedProds) localStorage.setItem('alfa_prods_enterprise', JSON.stringify(INITIAL_PRODUCTS));
 
-      const savedCats = localStorage.getItem('alfa_categories_list');
+      const savedCats = localStorage.getItem('alfa_categories_enterprise');
       categoriesList = savedCats ? JSON.parse(savedCats) : DEFAULT_CATEGORIES;
-      if (!savedCats) localStorage.setItem('alfa_categories_list', JSON.stringify(DEFAULT_CATEGORIES));
+      if (!savedCats) localStorage.setItem('alfa_categories_enterprise', JSON.stringify(DEFAULT_CATEGORIES));
 
       orders = JSON.parse(localStorage.getItem('alfa_orders')) || [];
       users = JSON.parse(localStorage.getItem('alfa_users')) || DEFAULT_USERS;
@@ -1096,8 +1103,8 @@
     }
 
     function syncStorage() {
-      localStorage.setItem('alfa_prods_cat_v1', JSON.stringify(products));
-      localStorage.setItem('alfa_categories_list', JSON.stringify(categoriesList));
+      localStorage.setItem('alfa_prods_enterprise', JSON.stringify(products));
+      localStorage.setItem('alfa_categories_enterprise', JSON.stringify(categoriesList));
       localStorage.setItem('alfa_orders', JSON.stringify(orders));
       localStorage.setItem('alfa_users', JSON.stringify(users));
       localStorage.setItem('alfa_enquiries', JSON.stringify(enquiries));
@@ -1205,7 +1212,6 @@
       alert('Settings saved!');
     }
 
-    /* Category Filter Navigation */
     function buildCategoryNavPills() {
       const container = document.getElementById('categoryNavContainer');
       const totalCount = products.length;
@@ -1227,7 +1233,6 @@
 
       container.innerHTML = html;
 
-      // Update dropdowns
       const prodCatSelect = document.getElementById('prodCatSelect');
       if (prodCatSelect) {
         prodCatSelect.innerHTML = categoriesList.map(c => `<option value="${c}">${c}</option>`).join('');
@@ -1245,7 +1250,6 @@
       renderApp();
     }
 
-    /* Category Management (Admin / Owner) */
     function renderCategoryManagerTable() {
       const tbody = document.getElementById('categoriesTableBody');
       tbody.innerHTML = categoriesList.map((cat, idx) => {
@@ -1286,9 +1290,9 @@
       const catName = categoriesList[idx];
       const hasProducts = products.some(p => p.category === catName);
       if (hasProducts) {
-        return alert(`Cannot delete "${catName}" because it currently has active products assigned to it. Please reassign or delete those products first.`);
+        return alert(`Cannot delete "${catName}" because it currently has active products assigned to it.`);
       }
-      if (confirm(`Are you sure you want to delete the category "${catName}"?`)) {
+      if (confirm(`Are you sure you want to delete category "${catName}"?`)) {
         categoriesList.splice(idx, 1);
         logAudit(`Deleted Category: ${catName}`);
         syncStorage();
@@ -1313,7 +1317,6 @@
       if (tabId === 'categories') renderCategoryManagerTable();
     }
 
-    /* Rendering App with Structured Categories */
     function renderApp() {
       const search = (document.getElementById('searchInput').value || '').toLowerCase();
       const adminToolbar = document.getElementById('adminActionToolbar');
@@ -1352,7 +1355,6 @@
       }
     }
 
-    /* Render Customer Storefront Grouped Cleanly by Category */
     function renderStructuredCustomerCatalog(searchQuery) {
       const container = document.getElementById('customerStoreView');
       let displayCategories = selectedCategory === 'all' 
