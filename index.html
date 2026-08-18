@@ -3,173 +3,241 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ALFA ROPE SUPPLIERS | Enterprise Portal</title>
+  <title>ALFA ROPE SUPPLIERS | Industrial Enterprise Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --primary: #f59e0b;
-      --primary-dark: #d97706;
-      --dark-bg: #090d16;
-      --panel-bg: #111827;
-      --card-bg: #1f2937;
-      --border: #374151;
+      --primary-hover: #d97706;
+      --accent: #2563eb;
+      --bg-main: #0b0f19;
+      --bg-panel: #111827;
+      --bg-card: #1f2937;
+      --bg-input: #0d131f;
+      --border-color: #374151;
       --text-main: #f9fafb;
       --text-muted: #9ca3af;
       --success: #10b981;
       --danger: #ef4444;
-      --info: #3b82f6;
+      --info: #0ea5e9;
+      --warning: #f59e0b;
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
     body {
-      background-color: var(--dark-bg);
+      background-color: var(--bg-main);
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
-    /* Top Navigation Bar */
+    /* Modern Navigation Header */
     header {
-      background-color: var(--panel-bg);
-      border-bottom: 1px solid var(--border);
-      padding: 0.8rem 1.5rem;
+      background-color: var(--bg-panel);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.75rem 2rem;
       position: sticky;
       top: 0;
       z-index: 100;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
     }
 
     .nav-container {
-      max-width: 1440px;
+      max-width: 1500px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      gap: 1.5rem;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .brand-logo-icon {
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: #000;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 900;
     }
 
     .brand h1 {
-      color: var(--primary);
-      font-size: 1.4rem;
+      color: var(--text-main);
+      font-size: 1.25rem;
       font-weight: 800;
       letter-spacing: 0.5px;
     }
 
-    .brand p {
-      font-size: 0.75rem;
+    .brand h1 span { color: var(--primary); }
+    .brand p { font-size: 0.75rem; color: var(--text-muted); }
+
+    .nav-search {
+      flex: 1;
+      max-width: 550px;
+      position: relative;
+    }
+
+    .nav-search input {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      padding: 0.65rem 1rem 0.65rem 2.5rem;
+      border-radius: 50px;
+      color: #fff;
+      font-size: 0.9rem;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    .nav-search input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+    }
+
+    .nav-search i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
       color: var(--text-muted);
     }
 
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 0.8rem;
-      flex-wrap: wrap;
+      gap: 1rem;
     }
 
-    .role-badge {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      padding: 0.4rem 0.8rem;
+    /* Buttons */
+    .btn {
+      background: var(--primary);
+      color: #000;
+      border: none;
+      padding: 0.6rem 1.1rem;
       border-radius: 6px;
+      font-weight: 700;
       font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--primary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      text-decoration: none;
     }
 
-    /* Hero Opening Greeting Section */
-    .greeting-hero {
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(17, 24, 39, 0.85) 100%), var(--panel-bg);
-      border-bottom: 1px solid var(--border);
-      padding: 2.5rem 1.5rem;
-      text-align: center;
-    }
+    .btn:hover { background: var(--primary-hover); color: #fff; transform: translateY(-1px); }
+    .btn-secondary { background: var(--bg-card); color: #fff; border: 1px solid var(--border-color); }
+    .btn-secondary:hover { background: #374151; color: var(--primary); }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-danger:hover { background: #dc2626; }
+    .btn-success { background: var(--success); color: #fff; }
+    .btn-sm { padding: 0.35rem 0.65rem; font-size: 0.8rem; }
 
-    .greeting-hero h2 {
-      font-size: 2rem;
+    .cart-btn {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
       color: #fff;
-      margin-bottom: 0.5rem;
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
     }
 
-    .greeting-hero p {
-      color: var(--text-muted);
-      max-width: 700px;
-      margin: 0 auto 1.5rem auto;
-      font-size: 0.95rem;
+    .cart-badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: var(--primary);
+      color: #000;
+      font-size: 0.7rem;
+      font-weight: 900;
+      padding: 2px 6px;
+      border-radius: 50%;
     }
 
-    .hero-contacts {
+    /* Amazon/Flipkart Hero Banner */
+    .hero-banner {
+      background: linear-gradient(180deg, rgba(31, 41, 55, 0.7) 0%, rgba(11, 15, 25, 1) 100%), url('https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      padding: 3rem 2rem;
+      border-bottom: 1px solid var(--border-color);
       display: flex;
-      justify-content: center;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .hero-content h2 { font-size: 2.2rem; font-weight: 900; margin-bottom: 0.5rem; color: #fff; }
+    .hero-content h2 span { color: var(--primary); }
+    .hero-content p { color: var(--text-muted); max-width: 600px; font-size: 0.95rem; }
+
+    .hero-badges {
+      display: flex;
       gap: 1.5rem;
       flex-wrap: wrap;
-      font-size: 0.85rem;
-      color: var(--text-main);
+      background: rgba(17, 24, 39, 0.8);
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(10px);
     }
 
-    /* Main Content Wrapper */
+    .hero-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; }
+    .hero-item i { color: var(--primary); font-size: 1.2rem; }
+
+    /* Main Container */
     main {
-      max-width: 1440px;
-      margin: 1.5rem auto;
+      max-width: 1500px;
+      margin: 2rem auto;
       padding: 0 1.5rem;
       flex-grow: 1;
       width: 100%;
     }
 
-    /* Global Alert Banner */
-    .alert-banner {
-      background: rgba(239, 68, 68, 0.15);
-      border: 1px solid var(--danger);
-      color: #fca5a5;
-      padding: 0.8rem 1.2rem;
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
-      display: none;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.9rem;
-    }
-
-    /* Metrics Grid */
+    /* Enterprise Metric Cards */
     .metrics-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 2rem;
     }
 
     .metric-card {
-      background: var(--panel-bg);
-      padding: 1.2rem;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      position: relative;
+      background: var(--bg-panel);
+      padding: 1.4rem;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    .metric-card h4 {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-bottom: 0.4rem;
-    }
+    .metric-data h4 { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.3rem; }
+    .metric-data .val { font-size: 1.6rem; font-weight: 800; color: #fff; }
+    .metric-icon { font-size: 2rem; opacity: 0.3; }
 
-    .metric-card .val {
-      font-size: 1.7rem;
-      font-weight: 700;
-      color: var(--text-main);
-    }
-
-    /* Control Tabs & Toolbar */
+    /* Navigation Tabs */
     .tab-bar {
       display: flex;
       gap: 0.5rem;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--border-color);
       margin-bottom: 1.5rem;
       overflow-x: auto;
     }
@@ -178,11 +246,14 @@
       background: transparent;
       border: none;
       color: var(--text-muted);
-      padding: 0.6rem 1.2rem;
-      font-weight: 600;
+      padding: 0.75rem 1.2rem;
+      font-weight: 700;
       cursor: pointer;
-      border-bottom: 2px solid transparent;
+      border-bottom: 3px solid transparent;
       white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .tab-btn.active {
@@ -190,77 +261,38 @@
       border-bottom-color: var(--primary);
     }
 
-    .toolbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .search-input {
-      background: var(--panel-bg);
-      border: 1px solid var(--border);
-      color: #fff;
-      padding: 0.6rem 1rem;
-      border-radius: 6px;
-      width: 320px;
-      outline: none;
-    }
-
-    .search-input:focus {
-      border-color: var(--primary);
-    }
-
-    /* Standard Button Styles */
-    .btn {
-      background: var(--primary);
-      color: #111827;
-      border: none;
-      padding: 0.6rem 1.1rem;
-      border-radius: 6px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.85rem;
-    }
-
-    .btn:hover { background: var(--primary-dark); color: #fff; }
-    .btn-secondary { background: var(--card-bg); color: var(--text-main); border: 1px solid var(--border); }
-    .btn-secondary:hover { background: #374151; }
-    .btn-danger { background: var(--danger); color: #fff; }
-    .btn-danger:hover { background: #dc2626; }
-    .btn-success { background: var(--success); color: #fff; }
-    .btn-sm { padding: 0.35rem 0.6rem; font-size: 0.8rem; }
-
-    /* Customer View: Cards */
+    /* Product Cards (Flipkart / Amazon Style) */
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
       gap: 1.5rem;
     }
 
     .product-card {
-      background: var(--panel-bg);
-      border: 1px solid var(--border);
-      border-radius: 10px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      transition: 0.3s;
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      border-color: var(--primary);
     }
 
     .product-card img {
       width: 100%;
-      height: 190px;
+      height: 210px;
       object-fit: cover;
       background: #1f2937;
     }
 
-    .product-card-body {
+    .product-details {
       padding: 1.2rem;
       flex-grow: 1;
       display: flex;
@@ -268,44 +300,50 @@
       justify-content: space-between;
     }
 
-    .badge {
-      display: inline-block;
-      font-size: 0.72rem;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      background: rgba(245, 158, 11, 0.15);
-      color: var(--primary);
-      font-weight: 600;
-      margin-bottom: 0.4rem;
-    }
-
-    .price-row {
-      display: flex;
-      align-items: baseline;
-      gap: 0.5rem;
-      margin: 0.6rem 0;
-    }
-
-    .mrp {
-      text-decoration: line-through;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-
-    .discount-pill {
-      background: rgba(16, 185, 129, 0.2);
-      color: var(--success);
+    .cat-tag {
       font-size: 0.75rem;
       font-weight: 700;
-      padding: 0.1rem 0.4rem;
-      border-radius: 4px;
+      color: var(--primary);
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    .product-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: #fff;
+    }
+
+    .product-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+
+    .price-box {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .selling-price { font-size: 1.4rem; font-weight: 900; color: var(--primary); }
+    .mrp-price { font-size: 0.85rem; color: var(--text-muted); text-decoration: line-through; }
+    .off-badge { background: rgba(16, 185, 129, 0.15); color: var(--success); font-size: 0.75rem; font-weight: 800; padding: 2px 6px; border-radius: 4px; }
+
+    .card-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
     }
 
     /* Tables for Admin / Owner */
-    .table-container {
-      background: var(--panel-bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
+    .table-responsive {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
       overflow-x: auto;
     }
 
@@ -316,35 +354,81 @@
     }
 
     table th, table td {
-      padding: 0.9rem;
-      border-bottom: 1px solid var(--border);
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-color);
       font-size: 0.85rem;
     }
 
     table th {
       background: #172033;
       color: var(--text-muted);
+      font-weight: 700;
       text-transform: uppercase;
-      font-size: 0.75rem;
+    }
+
+    .status-select {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: #fff;
+      padding: 0.35rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      outline: none;
     }
 
     .table-img {
-      width: 44px;
-      height: 44px;
+      width: 48px;
+      height: 48px;
       border-radius: 6px;
       object-fit: cover;
     }
 
-    .table-input {
-      background: var(--dark-bg);
-      border: 1px solid var(--border);
-      color: #fff;
-      padding: 0.35rem 0.5rem;
-      border-radius: 4px;
-      font-size: 0.85rem;
+    /* Cart Slide Drawer */
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 400px;
+      height: 100vh;
+      background: var(--bg-panel);
+      border-left: 1px solid var(--border-color);
+      z-index: 1000;
+      transition: 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.7);
     }
 
-    /* Modal Styling */
+    .cart-drawer.open { right: 0; }
+
+    .cart-header {
+      padding: 1.2rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-items-box {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      background: var(--bg-card);
+      padding: 0.8rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .cart-item img { width: 60px; height: 60px; border-radius: 6px; object-fit: cover; }
+    .cart-footer { padding: 1.2rem; border-top: 1px solid var(--border-color); }
+
+    /* Modals */
     .modal {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -352,151 +436,160 @@
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 1000;
+      z-index: 2000;
       padding: 1rem;
     }
 
     .modal-box {
-      background: var(--panel-bg);
-      border: 1px solid var(--border);
-      border-radius: 10px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
       width: 100%;
-      max-width: 540px;
-      padding: 1.5rem;
+      max-width: 550px;
+      padding: 1.8rem;
       max-height: 90vh;
       overflow-y: auto;
     }
 
-    .form-group {
-      margin-bottom: 1rem;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 0.3rem;
-    }
-
+    .form-group { margin-bottom: 1.1rem; }
+    .form-group label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem; }
     .form-group input, .form-group textarea, .form-group select {
       width: 100%;
-      background: var(--dark-bg);
-      border: 1px solid var(--border);
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
       color: #fff;
-      padding: 0.6rem;
+      padding: 0.7rem;
       border-radius: 6px;
       outline: none;
     }
 
-    .form-group input:focus, .form-group textarea:focus {
-      border-color: var(--primary);
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 0.8rem;
-      margin-top: 1.2rem;
-    }
+    .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 0.8rem; margin-top: 1.5rem; }
   </style>
 </head>
 <body>
 
-  <!-- Navigation Bar -->
+  <!-- Top Enterprise Navbar -->
   <header>
     <div class="nav-container">
-      <div class="brand">
-        <h1>ALFA ROPE SUPPLIERS</h1>
-        <p>Ashok Bazar, Afzal Gunj, Hyderabad - 500012 | Call: +91 8555838852</p>
+      <div class="brand-group">
+        <div class="brand-logo-icon"><i class="fa-solid fa-anchor"></i></div>
+        <div class="brand">
+          <h1>ALFA <span>ROPES</span></h1>
+          <p>Ashok Bazar, Afzal Gunj, Hyderabad | +91 8555838852</p>
+        </div>
       </div>
-      
+
+      <div class="nav-search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Search industrial ropes, nylon, PP, diameters..." oninput="handleSearch()">
+      </div>
+
       <div class="nav-actions">
-        <div class="role-badge" id="currentProfileLabel">Customer View</div>
-        <button class="btn btn-secondary" onclick="openAuthModal()">Switch Profile / Login</button>
+        <button class="cart-btn" onclick="toggleCart()">
+          <i class="fa-solid fa-cart-shopping"></i> Cart
+          <span class="cart-badge" id="cartCount">0</span>
+        </button>
+        <div id="roleBadge" class="btn btn-secondary btn-sm"><i class="fa-solid fa-user"></i> Customer</div>
+        <button class="btn btn-secondary" onclick="openAuthModal()" id="loginBtn">Login / Portal</button>
         <button class="btn btn-danger btn-sm" id="logoutBtn" style="display: none;" onclick="logout()">Logout</button>
       </div>
     </div>
   </header>
 
-  <!-- Opening Greeting Section -->
-  <section class="greeting-hero">
-    <h2>Welcome to Alfa Rope Suppliers</h2>
-    <p>Direct Wholesale & Bulk Distributors of Virgin PP, High-Tensile Nylon, Manila Ropes, Scaffolding & Industrial Packaging Twines.</p>
-    <div class="hero-contacts">
-      <span><strong>Location:</strong> Ashok Bazar, Afzal Gunj, Hyd-12</span>
-      <span><strong>Phone/WhatsApp:</strong> +91 8555838852</span>
-      <span><strong>Email:</strong> alfaropesuppliers03@gmail.com</span>
-      <span><strong>Instagram:</strong> @alfaropesuppliers</span>
+  <!-- Amazon/Flipkart Style Hero Greeting -->
+  <section class="hero-banner">
+    <div class="hero-content">
+      <h2>India's Leading <span>Rope & Twine</span> Wholesaler</h2>
+      <p>Direct factory prices for Polypropylene, Heavy Duty Scaffolding Nylon, Natural Manila, and Industrial Strapping Sutli.</p>
+    </div>
+    <div class="hero-badges">
+      <div class="hero-item"><i class="fa-solid fa-shield-halved"></i> 100% Virgin Polymer Quality</div>
+      <div class="hero-item"><i class="fa-solid fa-truck-fast"></i> Hyderabad Express Dispatch</div>
+      <div class="hero-item"><i class="fa-solid fa-tags"></i> Direct Bulk Wholesale Rates</div>
     </div>
   </section>
 
-  <!-- Main Workspace -->
+  <!-- Main Portal Container -->
   <main>
-    <!-- Inventory Low-Stock Alert -->
-    <div id="lowStockAlert" class="alert-banner">
-      <span id="alertMsg">⚠️ Alert: One or more rope items are running below minimum safety threshold (50 Units/Kg).</span>
-      <button class="btn btn-sm btn-secondary" onclick="this.parentElement.style.display='none'">Dismiss</button>
-    </div>
-
-    <!-- Admin / Owner Professional Metrics Panel -->
+    <!-- Role Metrics Dashboard (Admin & Owner) -->
     <div id="metricsPanel" class="metrics-grid" style="display: none;">
       <div class="metric-card">
-        <h4>Catalog Variety</h4>
-        <div class="val" id="metricItems">0</div>
+        <div class="metric-data">
+          <h4>Total Inventory Items</h4>
+          <div class="val" id="metricItems">0</div>
+        </div>
+        <i class="fa-solid fa-boxes-stacked metric-icon"></i>
       </div>
       <div class="metric-card">
-        <h4>Total Stock (Kg / Units)</h4>
-        <div class="val" id="metricStock">0</div>
+        <div class="metric-data">
+          <h4>Orders (Pending Action)</h4>
+          <div class="val" style="color: var(--warning);" id="metricOrders">0</div>
+        </div>
+        <i class="fa-solid fa-truck-ramp-box metric-icon"></i>
       </div>
-      <div class="metric-card" id="valuationCard" style="display: none;">
-        <h4>Inventory Valuation</h4>
-        <div class="val" style="color: var(--primary);" id="metricValue">₹0</div>
+      <div class="metric-card" id="ownerValuationBox" style="display: none;">
+        <div class="metric-data">
+          <h4>Total Stock Valuation</h4>
+          <div class="val" style="color: var(--primary);" id="metricValue">₹0</div>
+        </div>
+        <i class="fa-solid fa-vault metric-icon"></i>
       </div>
       <div class="metric-card">
-        <h4>Pending Password Resets</h4>
-        <div class="val" style="color: var(--danger);" id="metricResets">0</div>
+        <div class="metric-data">
+          <h4>Registered Customers</h4>
+          <div class="val" style="color: var(--info);" id="metricCustomers">0</div>
+        </div>
+        <i class="fa-solid fa-users metric-icon"></i>
       </div>
     </div>
 
-    <!-- Role-Based Navigation Tabs -->
-    <div id="dashboardTabs" class="tab-bar" style="display: none;">
-      <button class="tab-btn active" onclick="switchDashboardTab('inventory')">Inventory Control</button>
-      <button class="tab-btn" onclick="switchDashboardTab('coupons')">Coupon System</button>
-      <button class="tab-btn" onclick="switchDashboardTab('customers')">Customer Directory</button>
-      <button class="tab-btn" onclick="switchDashboardTab('resets')">Password Reset Requests</button>
-    </div>
-
-    <!-- Primary Action Toolbar -->
-    <div class="toolbar">
-      <input type="text" id="searchInput" class="search-input" placeholder="Search ropes, categories, size..." oninput="handleSearch()">
+    <!-- Management Tabs for Admin / Owner -->
+    <div id="managementTabs" class="tab-bar" style="display: none;">
+      <button class="tab-btn active" onclick="switchTab('orders')"><i class="fa-solid fa-receipt"></i> Orders & Tracking</button>
+      <button class="tab-btn" onclick="switchTab('inventory')"><i class="fa-solid fa-warehouse"></i> Inventory & Price Manager</button>
+      <button class="tab-btn" onclick="switchTab('coupons')"><i class="fa-solid fa-tag"></i> Coupons</button>
+      <button class="tab-btn" onclick="switchTab('customers')"><i class="fa-solid fa-user-group"></i> Customers</button>
+      <button class="tab-btn" onclick="switchTab('resets')"><i class="fa-solid fa-key"></i> Password Approvals</button>
       
-      <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
-        <!-- Download Data Controls -->
-        <button id="exportBtn" class="btn btn-secondary" onclick="exportDataToCSV()" style="display: none;">💾 Download Dashboard Data</button>
-        <button id="addItemBtn" class="btn" onclick="openProductModal()" style="display: none;">+ Add Rope Item</button>
+      <div style="margin-left: auto; display: flex; gap: 0.5rem;">
+        <button class="btn btn-secondary btn-sm" onclick="exportDataCSV()"><i class="fa-solid fa-download"></i> 1-Click Backup</button>
+        <button class="btn btn-sm" onclick="openProductModal()"><i class="fa-solid fa-plus"></i> Add Item</button>
       </div>
     </div>
 
-    <!-- TAB 1: Customer View (Storefront) -->
+    <!-- SECTION 1: Customer Storefront Grid -->
     <div id="customerStoreView" class="product-grid"></div>
 
-    <!-- TAB 2: Admin/Owner Inventory Table -->
-    <div id="adminInventoryView" class="table-container" style="display: none;">
+    <!-- SECTION 2: Orders & Tracking View (Admin/Owner) -->
+    <div id="ordersTab" class="table-responsive" style="display: none;">
       <table>
         <thead>
           <tr>
-            <th>Photo</th>
-            <th>Item & Diameter</th>
+            <th>Order ID & Date</th>
+            <th>Customer & Contact</th>
+            <th>Items & Total</th>
+            <th>Order Status</th>
+            <th>Tracking No / Notes</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="ordersTableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- SECTION 3: Admin / Owner Full Inventory Control -->
+    <div id="inventoryTab" class="table-responsive" style="display: none;">
+      <table>
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Item & Size</th>
             <th>Category</th>
             <th>MRP (₹)</th>
-            <th>Selling Price (₹)</th>
-            <th>Stock Available</th>
+            <th>Selling (₹)</th>
+            <th>Available Stock</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -504,18 +597,18 @@
       </table>
     </div>
 
-    <!-- TAB 3: Coupon Management -->
-    <div id="couponView" style="display: none;">
-      <div class="toolbar">
-        <h3>Active Discount Coupons</h3>
-        <button class="btn" onclick="openCouponModal()">+ Create Coupon</button>
+    <!-- SECTION 4: Coupons -->
+    <div id="couponsTab" style="display: none;">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+        <h3>Discount Vouchers</h3>
+        <button class="btn btn-sm" onclick="openCouponModal()">+ Create Coupon</button>
       </div>
-      <div class="table-container">
+      <div class="table-responsive">
         <table>
           <thead>
             <tr>
               <th>Coupon Code</th>
-              <th>Discount Percentage (%)</th>
+              <th>Discount Percentage</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -525,92 +618,133 @@
       </div>
     </div>
 
-    <!-- TAB 4: Customer Directory View -->
-    <div id="customerListView" class="table-container" style="display: none;">
+    <!-- SECTION 5: Customer Directory -->
+    <div id="customersTab" class="table-responsive" style="display: none;">
       <table>
         <thead>
           <tr>
-            <th>Full Name</th>
+            <th>Name</th>
             <th>Email</th>
-            <th>Contact Number</th>
-            <th>Registered Date</th>
+            <th>Phone</th>
+            <th>Address</th>
           </tr>
         </thead>
-        <tbody id="customerTableBody"></tbody>
+        <tbody id="customersTableBody"></tbody>
       </table>
     </div>
 
-    <!-- TAB 5: Password Reset Pipeline -->
-    <div id="resetRequestsView" class="table-container" style="display: none;">
+    <!-- SECTION 6: Password Resets -->
+    <div id="resetsTab" class="table-responsive" style="display: none;">
       <table>
         <thead>
           <tr>
             <th>User Email</th>
-            <th>Requested New Password</th>
+            <th>New Requested Password</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
         </thead>
-        <tbody id="resetTableBody"></tbody>
+        <tbody id="resetsTableBody"></tbody>
       </table>
     </div>
   </main>
 
-  <!-- MODAL: Authentication & Role Selection -->
+  <!-- CART DRAWER (Amazon Style) -->
+  <div id="cartDrawer" class="cart-drawer">
+    <div class="cart-header">
+      <h3><i class="fa-solid fa-bag-shopping"></i> Shopping Cart</h3>
+      <button class="btn btn-secondary btn-sm" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="cartItemsList" class="cart-items-box"></div>
+    <div class="cart-footer">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700;">
+        <span>Total:</span>
+        <span id="cartTotalPrice" style="color: var(--primary);">₹0</span>
+      </div>
+      <button class="btn" style="width: 100%; justify-content: center;" onclick="openCheckoutModal()">Proceed to Buy (Place Order)</button>
+    </div>
+  </div>
+
+  <!-- MODAL: Authentication -->
   <div id="authModal" class="modal">
     <div class="modal-box">
-      <h3 style="margin-bottom: 1rem;">Select Profile Role & Login</h3>
+      <h3 style="margin-bottom: 1.2rem;">Portal Login & Profile Switch</h3>
       
       <div class="form-group">
         <label>Select Profile</label>
-        <select id="authRoleSelect" onchange="toggleAuthFields(this.value)">
-          <option value="customer_login">Customer Login</option>
-          <option value="customer_register">Customer Register (New Profile)</option>
-          <option value="admin">Admin Profile</option>
-          <option value="owner">Owner Profile</option>
-          <option value="forgot_password">Forgot / Reset Password</option>
+        <select id="authRoleSelect" onchange="handleAuthViewToggle(this.value)">
+          <option value="admin">Admin Portal (Full Access)</option>
+          <option value="owner">Owner Master Access</option>
+          <option value="cust_login">Customer Login</option>
+          <option value="cust_reg">Customer Register</option>
+          <option value="forgot">Forgot Password</option>
         </select>
       </div>
 
-      <!-- Customer Register Fields -->
-      <div id="registerFields" style="display: none;">
+      <div id="regFields" style="display: none;">
         <div class="form-group">
           <label>Full Name</label>
           <input type="text" id="regName">
         </div>
         <div class="form-group">
-          <label>Contact Phone Number</label>
+          <label>Phone Number</label>
           <input type="text" id="regPhone">
         </div>
-      </div>
-
-      <!-- Shared Email / Credentials -->
-      <div id="emailField">
         <div class="form-group">
-          <label>Email Address</label>
-          <input type="email" id="authEmail">
+          <label>Shipping / Shop Address</label>
+          <input type="text" id="regAddress">
         </div>
       </div>
 
-      <!-- Password / PIN Field -->
-      <div id="passwordField">
-        <div class="form-group">
-          <label id="passwordLabel">Customer Password</label>
-          <input type="password" id="authPassword">
-        </div>
+      <div class="form-group" id="userInputGroup">
+        <label id="userLabel">Username / Email</label>
+        <input type="text" id="authUsername" placeholder="e.g. Admin or email">
       </div>
 
-      <!-- Forgot Password New Value -->
-      <div id="forgotFields" style="display: none;">
-        <div class="form-group">
-          <label>Enter New Desired Password</label>
-          <input type="password" id="newRequestedPassword">
-        </div>
+      <div class="form-group" id="passInputGroup">
+        <label>Password / PIN</label>
+        <input type="password" id="authPassword" placeholder="Enter password">
+      </div>
+
+      <div class="form-group" id="forgotPassGroup" style="display: none;">
+        <label>Enter New Desired Password</label>
+        <input type="password" id="newReqPassword">
       </div>
 
       <div class="modal-actions">
         <button class="btn btn-secondary" onclick="closeModal('authModal')">Cancel</button>
-        <button class="btn" onclick="handleAuthSubmit()">Proceed</button>
+        <button class="btn" onclick="executeAuthentication()">Login / Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Checkout / Buy -->
+  <div id="checkoutModal" class="modal">
+    <div class="modal-box">
+      <h3 style="margin-bottom: 1.2rem;"><i class="fa-solid fa-truck"></i> Complete Your Order</h3>
+      <div class="form-group">
+        <label>Your Name / Business Name</label>
+        <input type="text" id="orderCustName" required>
+      </div>
+      <div class="form-group">
+        <label>Phone / WhatsApp Number</label>
+        <input type="text" id="orderCustPhone" required>
+      </div>
+      <div class="form-group">
+        <label>Full Delivery / Dispatch Address</label>
+        <textarea id="orderCustAddress" rows="2" required></textarea>
+      </div>
+      <div class="form-group">
+        <label>Apply Coupon</label>
+        <div style="display: flex; gap: 0.5rem;">
+          <input type="text" id="checkoutCoupon" style="text-transform: uppercase;">
+          <button class="btn btn-secondary" type="button" onclick="applyCartCoupon()">Apply</button>
+        </div>
+        <small id="couponMessage" style="font-size: 0.8rem; margin-top: 4px; display: block;"></small>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('checkoutModal')">Back</button>
+        <button class="btn btn-success" onclick="placeOrderFinal()">Confirm & Place Order</button>
       </div>
     </div>
   </div>
@@ -618,11 +752,11 @@
   <!-- MODAL: Add / Edit Product -->
   <div id="productModal" class="modal">
     <div class="modal-box">
-      <h3 id="productModalTitle" style="margin-bottom: 1rem;">Add Rope Item</h3>
+      <h3 id="productModalHeading" style="margin-bottom: 1rem;">Add Rope Item</h3>
       <form onsubmit="saveProduct(event)">
         <input type="hidden" id="prodId">
         <input type="hidden" id="prodImageBase64">
-
+        
         <div class="form-group">
           <label>Item Name</label>
           <input type="text" id="prodName" required>
@@ -631,39 +765,39 @@
         <div class="form-row">
           <div class="form-group">
             <label>Category</label>
-            <input type="text" id="prodCategory" placeholder="e.g. PP, Nylon, Manila" required>
+            <input type="text" id="prodCat" required>
           </div>
           <div class="form-group">
-            <label>Diameter / Specifications</label>
-            <input type="text" id="prodDiameter" placeholder="e.g. 12mm / 3-Strand" required>
+            <label>Diameter / Specs</label>
+            <input type="text" id="prodDia" required>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label>MRP (₹)</label>
-            <input type="number" id="prodMrp" min="1" step="0.5" required>
+            <input type="number" id="prodMrp" required>
           </div>
           <div class="form-group">
             <label>Selling Price (₹)</label>
-            <input type="number" id="prodPrice" min="1" step="0.5" required>
+            <input type="number" id="prodPrice" required>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label>Stock Quantity (Units/Kg)</label>
-            <input type="number" id="prodStock" min="0" required>
+            <label>Stock Available (Units/Kg)</label>
+            <input type="number" id="prodStock" required>
           </div>
           <div class="form-group">
-            <label>Unit Label</label>
+            <label>Unit (Kg / Roll / Coil)</label>
             <input type="text" id="prodUnit" value="Kg" required>
           </div>
         </div>
 
         <div class="form-group">
-          <label>Product Photo File</label>
-          <input type="file" accept="image/*" onchange="handleImageUpload(this)">
+          <label>Upload Photo</label>
+          <input type="file" accept="image/*" onchange="encodeImg(this)">
         </div>
 
         <div class="form-group">
@@ -679,100 +813,44 @@
     </div>
   </div>
 
-  <!-- MODAL: Create Coupon -->
+  <!-- MODAL: Coupon Modal -->
   <div id="couponModal" class="modal">
     <div class="modal-box">
       <h3 style="margin-bottom: 1rem;">Create Discount Coupon</h3>
       <div class="form-group">
-        <label>Coupon Code (e.g. ALFA10)</label>
-        <input type="text" id="couponCode" style="text-transform: uppercase;">
+        <label>Coupon Code</label>
+        <input type="text" id="newCouponCode" style="text-transform: uppercase;">
       </div>
       <div class="form-group">
         <label>Discount Percentage (%)</label>
-        <input type="number" id="couponPercent" min="1" max="99">
+        <input type="number" id="newCouponDiscount" min="1" max="90">
       </div>
       <div class="modal-actions">
         <button class="btn btn-secondary" onclick="closeModal('couponModal')">Cancel</button>
-        <button class="btn" onclick="saveCoupon()">Save Coupon</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL: Customer Order / Checkout -->
-  <div id="orderModal" class="modal">
-    <div class="modal-box">
-      <h3 style="margin-bottom: 1rem;">Direct Order Enquiry</h3>
-      <div id="orderSummary" style="font-size: 0.9rem; margin-bottom: 1rem; color: var(--text-muted);"></div>
-      
-      <div class="form-group">
-        <label>Apply Discount Coupon</label>
-        <div style="display: flex; gap: 0.5rem;">
-          <input type="text" id="appliedCouponCode" placeholder="Enter coupon code" style="text-transform: uppercase;">
-          <button class="btn btn-secondary" type="button" onclick="applyCouponToOrder()">Apply</button>
-        </div>
-        <p id="couponFeedback" style="font-size: 0.8rem; margin-top: 0.3rem;"></p>
-      </div>
-
-      <div class="modal-actions">
-        <button class="btn btn-secondary" onclick="closeModal('orderModal')">Close</button>
-        <button class="btn btn-success" onclick="dispatchWhatsAppOrder()">Proceed to WhatsApp</button>
+        <button class="btn" onclick="saveNewCoupon()">Save</button>
       </div>
     </div>
   </div>
 
   <script>
-    // System Constants
-    const ADMIN_PIN = "9290";
-    const OWNER_PIN = "9290";
-
+    // System Constants & Initial Catalog
     const INITIAL_PRODUCTS = [
-      {
-        id: "ALFA-101",
-        name: "High-Density Polypropylene (PP) Rope",
-        category: "PP Ropes",
-        diameter: "12mm",
-        mrp: 220,
-        price: 180,
-        stock: 450,
-        unit: "Kg",
-        description: "Virgin 3-strand UV stabilized heavy duty rope for agricultural and packaging use.",
-        image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80"
-      },
-      {
-        id: "ALFA-102",
-        name: "Industrial Nylon Braided Scaffolding Rope",
-        category: "Nylon Ropes",
-        diameter: "16mm",
-        mrp: 300,
-        price: 240,
-        stock: 40,
-        unit: "Kg",
-        description: "Multi-strand shock-absorbing nylon rope engineered for construction scaffolds.",
-        image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-      },
-      {
-        id: "ALFA-103",
-        name: "Natural Manila / Coir Scaffolding Rope",
-        category: "Coir & Natural",
-        diameter: "24mm",
-        mrp: 150,
-        price: 120,
-        stock: 320,
-        unit: "Kg",
-        description: "Heavy duty natural fiber rope for marine, construction, and wrapping.",
-        image: "https://images.unsplash.com/photo-1508873535684-277a3cbcc4e8?auto=format&fit=crop&w=600&q=80"
-      }
+      { id: "ALFA-101", name: "High-Density Polypropylene (PP) Twisted Rope", category: "PP Ropes", diameter: "12mm", mrp: 230, price: 180, stock: 450, unit: "Kg", description: "3-Strand virgin grade high-tensile rope. UV stabilized for heavy industrial & agricultural tie-down.", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-102", name: "Heavy-Duty Nylon Braided Scaffolding Rope", category: "Nylon Ropes", diameter: "16mm", mrp: 310, price: 240, stock: 180, unit: "Kg", description: "Engineered multi-strand nylon for extreme scaffolding shock absorption and load hoisting.", image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-103", name: "Eco Natural Manila / Coir Scaffolding Rope", category: "Coir & Natural", diameter: "24mm", mrp: 160, price: 120, stock: 320, unit: "Kg", description: "Traditional heavy natural fiber rope for marine, construction scaffolding, and heavy packaging.", image: "https://images.unsplash.com/photo-1508873535684-277a3cbcc4e8?auto=format&fit=crop&w=600&q=80" },
+      { id: "ALFA-104", name: "Industrial Packaging PP Sutli (Roll)", category: "Twine & Sutli", diameter: "4mm", mrp: 165, price: 135, stock: 800, unit: "Roll", description: "High-strength packaging twine for carton bundling and commercial dispatch.", image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" }
     ];
 
     // State Variables
     let currentRole = 'customer'; // 'customer', 'admin', 'owner'
-    let currentCustomer = null;
+    let activeCustomer = null;
     let products = [];
+    let cart = [];
+    let orders = [];
     let customers = [];
-    let coupons = [{ code: "ALFA10", discount: 10 }];
+    let coupons = [{ code: "ALFA10", discount: 10 }, { code: "BULK20", discount: 20 }];
     let resetRequests = [];
-    let activeOrder = null;
-    let appliedDiscount = 0;
+    let cartDiscountPercent = 0;
 
     window.onload = () => {
       loadStorage();
@@ -781,103 +859,98 @@
 
     function loadStorage() {
       products = JSON.parse(localStorage.getItem('alfa_prods')) || INITIAL_PRODUCTS;
+      orders = JSON.parse(localStorage.getItem('alfa_orders')) || [];
       customers = JSON.parse(localStorage.getItem('alfa_custs')) || [];
       coupons = JSON.parse(localStorage.getItem('alfa_coupons')) || coupons;
       resetRequests = JSON.parse(localStorage.getItem('alfa_resets')) || [];
+      cart = JSON.parse(localStorage.getItem('alfa_cart')) || [];
+      updateCartBadge();
     }
 
     function syncStorage() {
       localStorage.setItem('alfa_prods', JSON.stringify(products));
+      localStorage.setItem('alfa_orders', JSON.stringify(orders));
       localStorage.setItem('alfa_custs', JSON.stringify(customers));
       localStorage.setItem('alfa_coupons', JSON.stringify(coupons));
       localStorage.setItem('alfa_resets', JSON.stringify(resetRequests));
+      localStorage.setItem('alfa_cart', JSON.stringify(cart));
+      updateCartBadge();
       renderApp();
     }
 
-    // Role and Tab Controller
-    function switchDashboardTab(tab) {
+    // Role View Tabs
+    function switchTab(tabId) {
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
+      event.currentTarget.classList.add('active');
 
-      document.getElementById('adminInventoryView').style.display = tab === 'inventory' ? 'block' : 'none';
-      document.getElementById('couponView').style.display = tab === 'coupons' ? 'block' : 'none';
-      document.getElementById('customerListView').style.display = tab === 'customers' ? 'block' : 'none';
-      document.getElementById('resetRequestsView').style.display = tab === 'resets' ? 'block' : 'none';
+      document.getElementById('ordersTab').style.display = tabId === 'orders' ? 'block' : 'none';
+      document.getElementById('inventoryTab').style.display = tabId === 'inventory' ? 'block' : 'none';
+      document.getElementById('couponsTab').style.display = tabId === 'coupons' ? 'block' : 'none';
+      document.getElementById('customersTab').style.display = tabId === 'customers' ? 'block' : 'none';
+      document.getElementById('resetsTab').style.display = tabId === 'resets' ? 'block' : 'none';
     }
 
     function renderApp() {
       const search = (document.getElementById('searchInput').value || '').toLowerCase();
       const filtered = products.filter(p => p.name.toLowerCase().includes(search) || p.category.toLowerCase().includes(search));
 
-      // Check for low stock items (< 50)
-      const lowStockItems = products.filter(p => p.stock < 50);
-      const lowAlert = document.getElementById('lowStockAlert');
-      if (lowStockItems.length > 0) {
-        lowAlert.style.display = 'flex';
-        document.getElementById('alertMsg').innerText = `⚠️ Inventory Alert: ${lowStockItems.length} item(s) have low stock (<50 units). Restock recommended.`;
-      } else {
-        lowAlert.style.display = 'none';
-      }
-
-      // Update UI elements based on active role
       if (currentRole === 'customer') {
         document.getElementById('metricsPanel').style.display = 'none';
-        document.getElementById('dashboardTabs').style.display = 'none';
-        document.getElementById('adminInventoryView').style.display = 'none';
-        document.getElementById('couponView').style.display = 'none';
-        document.getElementById('customerListView').style.display = 'none';
-        document.getElementById('resetRequestsView').style.display = 'none';
+        document.getElementById('managementTabs').style.display = 'none';
+        document.getElementById('ordersTab').style.display = 'none';
+        document.getElementById('inventoryTab').style.display = 'none';
+        document.getElementById('couponsTab').style.display = 'none';
+        document.getElementById('customersTab').style.display = 'none';
+        document.getElementById('resetsTab').style.display = 'none';
         document.getElementById('customerStoreView').style.display = 'grid';
-        document.getElementById('addItemBtn').style.display = 'none';
-        document.getElementById('exportBtn').style.display = 'none';
-        
-        renderCustomerCards(filtered);
+        renderCustomerCatalog(filtered);
       } else {
         document.getElementById('metricsPanel').style.display = 'grid';
-        document.getElementById('dashboardTabs').style.display = 'flex';
+        document.getElementById('managementTabs').style.display = 'flex';
         document.getElementById('customerStoreView').style.display = 'none';
-        document.getElementById('adminInventoryView').style.display = 'block';
-        document.getElementById('addItemBtn').style.display = 'inline-flex';
-        document.getElementById('exportBtn').style.display = 'inline-flex';
-        
-        document.getElementById('valuationCard').style.display = currentRole === 'owner' ? 'block' : 'none';
+        document.getElementById('ownerValuationBox').style.display = currentRole === 'owner' ? 'flex' : 'none';
 
         renderMetrics();
-        renderAdminInventory(filtered);
+        renderOrders();
+        renderInventory(filtered);
         renderCoupons();
         renderCustomers();
         renderResetRequests();
       }
     }
 
-    // Render Customer Catalog Cards
-    function renderCustomerCards(items) {
+    // Customer Catalog View
+    function renderCustomerCatalog(items) {
       const container = document.getElementById('customerStoreView');
       if (!items.length) {
-        container.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:var(--text-muted); padding:3rem;">No products found.</p>`;
+        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 3rem;">No products match your search.</p>`;
         return;
       }
+
       container.innerHTML = items.map(p => {
-        const discountPercent = Math.round(((p.mrp - p.price) / p.mrp) * 100);
+        const off = Math.round(((p.mrp - p.price) / p.mrp) * 100);
         return `
           <div class="product-card">
             <img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300x200?text=Alfa+Ropes'">
-            <div class="product-card-body">
+            <div class="product-details">
               <div>
-                <span class="badge">${p.category} (${p.diameter})</span>
-                <h3 style="font-size: 1.05rem; margin-bottom: 0.4rem;">${p.name}</h3>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">${p.description}</p>
+                <div class="cat-tag">${p.category} | ${p.diameter}</div>
+                <h3 class="product-title">${p.name}</h3>
+                <p class="product-desc">${p.description}</p>
               </div>
               <div>
-                <div class="price-row">
-                  <strong style="font-size:1.3rem; color:var(--primary);">₹${p.price}</strong>
-                  <span class="mrp">₹${p.mrp}</span>
-                  ${discountPercent > 0 ? `<span class="discount-pill">${discountPercent}% OFF</span>` : ''}
+                <div class="price-box">
+                  <span class="selling-price">₹${p.price}</span>
+                  <span class="mrp-price">₹${p.mrp}</span>
+                  <span class="off-badge">${off}% OFF</span>
                 </div>
                 <div style="font-size:0.8rem; margin-bottom:0.8rem; color:${p.stock > 0 ? 'var(--success)' : 'var(--danger)'}">
-                  ${p.stock > 0 ? `In Stock (${p.stock} ${p.unit})` : 'Out of Stock'}
+                  ${p.stock > 0 ? `<i class="fa-solid fa-check"></i> In Stock (${p.stock} ${p.unit})` : '<i class="fa-solid fa-xmark"></i> Out of Stock'}
                 </div>
-                <button class="btn" style="width:100%;" onclick="openOrderModal('${p.id}')">Enquire / Order</button>
+                <div class="card-actions">
+                  <button class="btn btn-secondary" onclick="addToCart('${p.id}')"><i class="fa-solid fa-cart-plus"></i> Cart</button>
+                  <button class="btn" onclick="buyNow('${p.id}')">Buy Now</button>
+                </div>
               </div>
             </div>
           </div>
@@ -885,17 +958,217 @@
       }).join('');
     }
 
-    // Render Admin Table
-    function renderAdminInventory(items) {
+    // Cart Operations
+    function addToCart(id) {
+      const p = products.find(i => i.id === id);
+      if (!p) return;
+      const exist = cart.find(c => c.id === id);
+      if (exist) {
+        exist.qty += 1;
+      } else {
+        cart.push({ id: p.id, name: p.name, price: p.price, unit: p.unit, image: p.image, qty: 1 });
+      }
+      syncStorage();
+      renderCartDrawer();
+      toggleCart(true);
+    }
+
+    function buyNow(id) {
+      addToCart(id);
+      openCheckoutModal();
+    }
+
+    function toggleCart(forceOpen = false) {
+      const drawer = document.getElementById('cartDrawer');
+      if (forceOpen) {
+        drawer.classList.add('open');
+      } else {
+        drawer.classList.toggle('open');
+      }
+      renderCartDrawer();
+    }
+
+    function updateCartBadge() {
+      const count = cart.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById('cartCount').innerText = count;
+    }
+
+    function renderCartDrawer() {
+      const list = document.getElementById('cartItemsList');
+      if (!cart.length) {
+        list.innerHTML = `<p style="text-align: center; color: var(--text-muted); margin-top: 3rem;">Your cart is empty.</p>`;
+        document.getElementById('cartTotalPrice').innerText = '₹0';
+        return;
+      }
+
+      let subtotal = 0;
+      list.innerHTML = cart.map((item, index) => {
+        const itemTotal = item.price * item.qty;
+        subtotal += itemTotal;
+        return `
+          <div class="cart-item">
+            <img src="${item.image}">
+            <div style="flex: 1;">
+              <strong style="font-size: 0.9rem;">${item.name}</strong>
+              <div style="font-size: 0.8rem; color: var(--primary); margin: 3px 0;">₹${item.price} / ${item.unit}</div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <button class="btn btn-secondary btn-sm" onclick="modCartQty(${index}, -1)">-</button>
+                <span style="font-weight: 700;">${item.qty}</span>
+                <button class="btn btn-secondary btn-sm" onclick="modCartQty(${index}, 1)">+</button>
+                <button class="btn btn-danger btn-sm" style="margin-left: auto;" onclick="removeCartItem(${index})"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('cartTotalPrice').innerText = `₹${subtotal.toLocaleString()}`;
+    }
+
+    function modCartQty(idx, change) {
+      cart[idx].qty += change;
+      if (cart[idx].qty <= 0) cart.splice(idx, 1);
+      syncStorage();
+      renderCartDrawer();
+    }
+
+    function removeCartItem(idx) {
+      cart.splice(idx, 1);
+      syncStorage();
+      renderCartDrawer();
+    }
+
+    // Checkout Flow
+    function openCheckoutModal() {
+      if (!cart.length) return alert('Your cart is empty.');
+      if (activeCustomer) {
+        document.getElementById('orderCustName').value = activeCustomer.name || '';
+        document.getElementById('orderCustPhone').value = activeCustomer.phone || '';
+        document.getElementById('orderCustAddress').value = activeCustomer.address || '';
+      }
+      openModal('checkoutModal');
+    }
+
+    function applyCartCoupon() {
+      const code = document.getElementById('checkoutCoupon').value.trim().toUpperCase();
+      const match = coupons.find(c => c.code === code);
+      const msg = document.getElementById('couponMessage');
+      if (match) {
+        cartDiscountPercent = match.discount;
+        msg.style.color = 'var(--success)';
+        msg.innerText = `Coupon '${match.code}' applied for ${match.discount}% discount!`;
+      } else {
+        cartDiscountPercent = 0;
+        msg.style.color = 'var(--danger)';
+        msg.innerText = 'Invalid coupon code.';
+      }
+    }
+
+    function placeOrderFinal() {
+      const name = document.getElementById('orderCustName').value.trim();
+      const phone = document.getElementById('orderCustPhone').value.trim();
+      const address = document.getElementById('orderCustAddress').value.trim();
+
+      if (!name || !phone || !address) return alert('Please enter complete delivery details.');
+
+      let total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+      if (cartDiscountPercent > 0) {
+        total = total - (total * (cartDiscountPercent / 100));
+      }
+
+      const orderRecord = {
+        orderId: "ALFA-ORD-" + Date.now().toString().slice(-5),
+        date: new Date().toLocaleDateString(),
+        customer: { name, phone, address },
+        items: [...cart],
+        totalAmount: Math.round(total),
+        status: "Pending Approval",
+        trackingNo: "Not Assigned"
+      };
+
+      orders.unshift(orderRecord);
+
+      // Auto decrease stock
+      cart.forEach(cItem => {
+        const prod = products.find(p => p.id === cItem.id);
+        if (prod) prod.stock = Math.max(0, prod.stock - cItem.qty);
+      });
+
+      cart = [];
+      cartDiscountPercent = 0;
+      syncStorage();
+      closeModal('checkoutModal');
+      toggleCart(false);
+
+      // Trigger instant WhatsApp confirmation
+      const waMsg = encodeURIComponent(`Hello Alfa Rope Suppliers, I have placed Order ${orderRecord.orderId} for ₹${orderRecord.totalAmount}. Please approve and dispatch.`);
+      window.open(`https://wa.me/918555838852?text=${waMsg}`, '_blank');
+      alert(`Order ${orderRecord.orderId} placed successfully! Admin & Owner have been notified.`);
+    }
+
+    // Orders Management (Admin/Owner)
+    function renderOrders() {
+      const tbody = document.getElementById('ordersTableBody');
+      if (!orders.length) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No orders placed yet.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = orders.map((o, idx) => `
+        <tr>
+          <td><strong>${o.orderId}</strong><br><small style="color:var(--text-muted);">${o.date}</small></td>
+          <td><strong>${o.customer.name}</strong><br><small>${o.customer.phone}</small><br><small style="color:var(--text-muted);">${o.customer.address}</small></td>
+          <td>
+            ${o.items.map(i => `${i.name} (x${i.qty})`).join('<br>')}
+            <div style="font-weight: 800; color: var(--primary); margin-top: 4px;">Total: ₹${o.totalAmount}</div>
+          </td>
+          <td>
+            <select class="status-select" onchange="updateOrderStatus(${idx}, this.value)">
+              <option value="Pending Approval" ${o.status === 'Pending Approval' ? 'selected' : ''}>⏳ Pending Approval</option>
+              <option value="Accepted" ${o.status === 'Accepted' ? 'selected' : ''}>✅ Accepted</option>
+              <option value="Shipped" ${o.status === 'Shipped' ? 'selected' : ''}>📦 Shipped</option>
+              <option value="Dispatched" ${o.status === 'Dispatched' ? 'selected' : ''}>🚚 Dispatched</option>
+              <option value="Delivered" ${o.status === 'Delivered' ? 'selected' : ''}>🏠 Delivered</option>
+              <option value="Cancelled" ${o.status === 'Cancelled' ? 'selected' : ''}>❌ Cancelled</option>
+            </select>
+          </td>
+          <td>
+            <input type="text" class="status-select" style="width: 140px;" placeholder="Tracking / LR No." value="${o.trackingNo}" onchange="updateOrderTracking(${idx}, this.value)">
+          </td>
+          <td>
+            <button class="btn btn-secondary btn-sm" onclick="shareOrderWhatsApp(${idx})"><i class="fa-brands fa-whatsapp"></i> Update Buyer</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function updateOrderStatus(idx, val) {
+      orders[idx].status = val;
+      syncStorage();
+    }
+
+    function updateOrderTracking(idx, val) {
+      orders[idx].trackingNo = val;
+      syncStorage();
+    }
+
+    function shareOrderWhatsApp(idx) {
+      const o = orders[idx];
+      const msg = encodeURIComponent(`Alfa Rope Suppliers Order Update\nOrder ID: ${o.orderId}\nStatus: ${o.status}\nTracking / LR: ${o.trackingNo}\nTotal: ₹${o.totalAmount}`);
+      window.open(`https://wa.me/91${o.customer.phone.replace(/[^0-9]/g, '')}?text=${msg}`, '_blank');
+    }
+
+    // Inventory Management (Admin/Owner)
+    function renderInventory(items) {
       const tbody = document.getElementById('inventoryTableBody');
       tbody.innerHTML = items.map(p => `
         <tr>
           <td><img src="${p.image}" class="table-img"></td>
           <td><strong>${p.name}</strong><br><small style="color:var(--text-muted);">${p.diameter}</small></td>
-          <td><span class="badge">${p.category}</span></td>
-          <td><input type="number" class="table-input" style="width:75px;" value="${p.mrp}" onchange="quickUpdate('${p.id}', 'mrp', this.value)"></td>
-          <td><input type="number" class="table-input" style="width:75px;" value="${p.price}" onchange="quickUpdate('${p.id}', 'price', this.value)"></td>
-          <td><input type="number" class="table-input" style="width:75px;" value="${p.stock}" onchange="quickUpdate('${p.id}', 'stock', this.value)"></td>
+          <td><span class="cat-tag">${p.category}</span></td>
+          <td><input type="number" class="status-select" style="width: 75px;" value="${p.mrp}" onchange="inlineEdit('${p.id}', 'mrp', this.value)"></td>
+          <td><input type="number" class="status-select" style="width: 75px;" value="${p.price}" onchange="inlineEdit('${p.id}', 'price', this.value)"></td>
+          <td><input type="number" class="status-select" style="width: 75px;" value="${p.stock}" onchange="inlineEdit('${p.id}', 'stock', this.value)"></td>
           <td>
             <button class="btn btn-secondary btn-sm" onclick="editProduct('${p.id}')">Edit</button>
             <button class="btn btn-danger btn-sm" onclick="deleteProduct('${p.id}')">Delete</button>
@@ -904,52 +1177,7 @@
       `).join('');
     }
 
-    function renderCoupons() {
-      document.getElementById('couponTableBody').innerHTML = coupons.map((c, i) => `
-        <tr>
-          <td><strong>${c.code}</strong></td>
-          <td>${c.discount}%</td>
-          <td><span class="discount-pill">ACTIVE</span></td>
-          <td><button class="btn btn-danger btn-sm" onclick="deleteCoupon(${i})">Remove</button></td>
-        </tr>
-      `).join('');
-    }
-
-    function renderCustomers() {
-      document.getElementById('customerTableBody').innerHTML = customers.map(c => `
-        <tr>
-          <td><strong>${c.name}</strong></td>
-          <td>${c.email}</td>
-          <td>${c.phone}</td>
-          <td>${c.date}</td>
-        </tr>
-      `).join('');
-    }
-
-    function renderResetRequests() {
-      document.getElementById('resetTableBody').innerHTML = resetRequests.map((r, i) => `
-        <tr>
-          <td>${r.email}</td>
-          <td><code>${r.newPass}</code></td>
-          <td><span style="color:${r.status === 'Pending' ? 'var(--danger)' : 'var(--success)'};">${r.status}</span></td>
-          <td>
-            ${r.status === 'Pending' ? `<button class="btn btn-success btn-sm" onclick="approveReset(${i})">Approve & Reset</button>` : 'Approved'}
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    function renderMetrics() {
-      document.getElementById('metricItems').innerText = products.length;
-      document.getElementById('metricStock').innerText = products.reduce((acc, p) => acc + Number(p.stock), 0).toLocaleString();
-      document.getElementById('metricResets').innerText = resetRequests.filter(r => r.status === 'Pending').length;
-      
-      const totalVal = products.reduce((acc, p) => acc + (Number(p.stock) * Number(p.price)), 0);
-      document.getElementById('metricValue').innerText = '₹' + totalVal.toLocaleString();
-    }
-
-    // Direct Inline Updates
-    function quickUpdate(id, key, val) {
+    function inlineEdit(id, key, val) {
       const p = products.find(i => i.id === id);
       if (p) {
         p[key] = parseFloat(val) || 0;
@@ -957,97 +1185,152 @@
       }
     }
 
-    // Search Handler
-    function handleSearch() {
-      renderApp();
+    function renderCoupons() {
+      document.getElementById('couponTableBody').innerHTML = coupons.map((c, i) => `
+        <tr>
+          <td><strong>${c.code}</strong></td>
+          <td>${c.discount}%</td>
+          <td><span class="off-badge">ACTIVE</span></td>
+          <td><button class="btn btn-danger btn-sm" onclick="deleteCoupon(${i})">Delete</button></td>
+        </tr>
+      `).join('');
     }
 
-    // Modal Visibility Helpers
+    function renderCustomers() {
+      document.getElementById('customersTableBody').innerHTML = customers.map(c => `
+        <tr>
+          <td><strong>${c.name}</strong></td>
+          <td>${c.email}</td>
+          <td>${c.phone}</td>
+          <td>${c.address}</td>
+        </tr>
+      `).join('');
+    }
+
+    function renderResetRequests() {
+      document.getElementById('resetsTableBody').innerHTML = resetRequests.map((r, i) => `
+        <tr>
+          <td>${r.email}</td>
+          <td><code>${r.newPass}</code></td>
+          <td><span style="color:${r.status === 'Pending' ? 'var(--warning)' : 'var(--success)'}">${r.status}</span></td>
+          <td>${r.status === 'Pending' ? `<button class="btn btn-success btn-sm" onclick="approveReset(${i})">Approve</button>` : 'Approved'}</td>
+        </tr>
+      `).join('');
+    }
+
+    function renderMetrics() {
+      document.getElementById('metricItems').innerText = products.length;
+      document.getElementById('metricOrders').innerText = orders.filter(o => o.status === 'Pending Approval').length;
+      document.getElementById('metricCustomers').innerText = customers.length;
+      const totalVal = products.reduce((sum, p) => sum + (Number(p.stock) * Number(p.price)), 0);
+      document.getElementById('metricValue').innerText = '₹' + totalVal.toLocaleString();
+    }
+
+    // Modal Helpers
     function openModal(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+    function handleSearch() { renderApp(); }
 
     // Authentication Handlers
     function openAuthModal() { openModal('authModal'); }
 
-    function toggleAuthFields(val) {
-      document.getElementById('registerFields').style.display = val === 'customer_register' ? 'block' : 'none';
-      document.getElementById('passwordField').style.display = val === 'forgot_password' ? 'none' : 'block';
-      document.getElementById('forgotFields').style.display = val === 'forgot_password' ? 'block' : 'none';
-      document.getElementById('passwordLabel').innerText = (val === 'admin' || val === 'owner') ? 'Enter Profile PIN' : 'Password';
+    function handleAuthViewToggle(val) {
+      document.getElementById('regFields').style.display = val === 'cust_reg' ? 'block' : 'none';
+      document.getElementById('passInputGroup').style.display = val === 'forgot' ? 'none' : 'block';
+      document.getElementById('forgotPassGroup').style.display = val === 'forgot' ? 'block' : 'none';
+      document.getElementById('userLabel').innerText = (val === 'admin' || val === 'owner') ? 'Username' : 'Email Address';
     }
 
-    function handleAuthSubmit() {
+    function executeAuthentication() {
       const mode = document.getElementById('authRoleSelect').value;
-      const email = document.getElementById('authEmail').value.trim();
+      const user = document.getElementById('authUsername').value.trim();
       const pass = document.getElementById('authPassword').value.trim();
 
+      // ADMIN Credentials: Admin / 9290
       if (mode === 'admin') {
-        if (pass === ADMIN_PIN) {
-          setRole('admin', 'Admin Profile');
+        if (user === 'Admin' && pass === '9290') {
+          currentRole = 'admin';
+          document.getElementById('roleBadge').innerHTML = '<i class="fa-solid fa-user-shield"></i> Admin (100% Control)';
+          document.getElementById('logoutBtn').style.display = 'inline-flex';
+          document.getElementById('loginBtn').style.display = 'none';
+          closeModal('authModal');
+          renderApp();
         } else {
-          alert('Incorrect Admin PIN!');
+          alert('Invalid Admin credentials! Use Username: Admin and Password: 9290');
         }
-      } else if (mode === 'owner') {
-        if (pass === OWNER_PIN) {
-          setRole('owner', 'Owner Master Profile');
+      } 
+      // OWNER Credentials: owner / 9290
+      else if (mode === 'owner') {
+        if (user === 'owner' && pass === '9290') {
+          currentRole = 'owner';
+          document.getElementById('roleBadge').innerHTML = '<i class="fa-solid fa-crown"></i> Owner Master';
+          document.getElementById('logoutBtn').style.display = 'inline-flex';
+          document.getElementById('loginBtn').style.display = 'none';
+          closeModal('authModal');
+          renderApp();
         } else {
-          alert('Incorrect Owner PIN!');
+          alert('Invalid Owner credentials! Use Username: owner and Password: 9290');
         }
-      } else if (mode === 'customer_register') {
+      } 
+      // Customer Registration
+      else if (mode === 'cust_reg') {
         const name = document.getElementById('regName').value.trim();
         const phone = document.getElementById('regPhone').value.trim();
-        if (!name || !email || !pass) return alert('Fill all registration details.');
-        customers.push({ name, email, phone, pass, date: new Date().toLocaleDateString() });
-        currentCustomer = { name, email, phone };
-        setRole('customer', `Customer: ${name}`);
+        const address = document.getElementById('regAddress').value.trim();
+        if (!name || !user || !pass) return alert('Please enter all profile fields.');
+
+        customers.push({ name, email: user, phone, address, pass });
+        activeCustomer = { name, email: user, phone, address };
+        currentRole = 'customer';
+        document.getElementById('roleBadge').innerHTML = `<i class="fa-solid fa-user"></i> ${name}`;
         syncStorage();
-      } else if (mode === 'customer_login') {
-        const cust = customers.find(c => c.email === email && c.pass === pass);
-        if (cust) {
-          currentCustomer = cust;
-          setRole('customer', `Customer: ${cust.name}`);
+        closeModal('authModal');
+      } 
+      // Customer Login
+      else if (mode === 'cust_login') {
+        const match = customers.find(c => c.email === user && c.pass === pass);
+        if (match) {
+          activeCustomer = match;
+          currentRole = 'customer';
+          document.getElementById('roleBadge').innerHTML = `<i class="fa-solid fa-user"></i> ${match.name}`;
+          document.getElementById('logoutBtn').style.display = 'inline-flex';
+          closeModal('authModal');
+          renderApp();
         } else {
-          alert('Invalid customer email or password.');
+          alert('Invalid customer login credentials.');
         }
-      } else if (mode === 'forgot_password') {
-        const newPass = document.getElementById('newRequestedPassword').value.trim();
-        if (!email || !newPass) return alert('Provide email and desired new password.');
-        resetRequests.push({ email, newPass, status: 'Pending' });
+      } 
+      // Forgot Password Request
+      else if (mode === 'forgot') {
+        const newReq = document.getElementById('newReqPassword').value.trim();
+        if (!user || !newReq) return alert('Please enter your email and new desired password.');
+        resetRequests.push({ email: user, newPass: newReq, status: 'Pending' });
         syncStorage();
-        alert('Password reset submitted. Admin/Owner approval is required.');
+        alert('Password reset submitted for Admin/Owner approval.');
         closeModal('authModal');
       }
     }
 
-    function setRole(role, label) {
-      currentRole = role;
-      document.getElementById('currentProfileLabel').innerText = label;
-      document.getElementById('logoutBtn').style.display = 'inline-flex';
-      closeModal('authModal');
-      renderApp();
-    }
-
     function logout() {
       currentRole = 'customer';
-      currentCustomer = null;
-      document.getElementById('currentProfileLabel').innerText = 'Customer View';
+      activeCustomer = null;
+      document.getElementById('roleBadge').innerHTML = '<i class="fa-solid fa-user"></i> Customer';
       document.getElementById('logoutBtn').style.display = 'none';
+      document.getElementById('loginBtn').style.display = 'inline-flex';
       renderApp();
     }
 
-    function approveReset(index) {
-      const req = resetRequests[index];
-      const cust = customers.find(c => c.email === req.email);
-      if (cust) {
-        cust.pass = req.newPass;
-      }
-      req.status = 'Approved';
+    function approveReset(idx) {
+      const r = resetRequests[idx];
+      const cust = customers.find(c => c.email === r.email);
+      if (cust) cust.pass = r.newPass;
+      r.status = 'Approved';
       syncStorage();
-      alert(`Password updated successfully for ${req.email}`);
+      alert(`Password updated for ${r.email}`);
     }
 
-    // Photo File Processing
-    function handleImageUpload(input) {
+    // Product Photo Processing
+    function encodeImg(input) {
       const file = input.files[0];
       if (file) {
         const reader = new FileReader();
@@ -1058,18 +1341,17 @@
       }
     }
 
-    // Product Modal & Save
     function openProductModal() {
       document.getElementById('prodId').value = '';
       document.getElementById('prodImageBase64').value = '';
       document.getElementById('prodName').value = '';
-      document.getElementById('prodCategory').value = '';
-      document.getElementById('prodDiameter').value = '';
+      document.getElementById('prodCat').value = '';
+      document.getElementById('prodDia').value = '';
       document.getElementById('prodMrp').value = '';
       document.getElementById('prodPrice').value = '';
       document.getElementById('prodStock').value = '';
       document.getElementById('prodDesc').value = '';
-      document.getElementById('productModalTitle').innerText = 'Add Rope Item';
+      document.getElementById('productModalHeading').innerText = 'Add Rope Item';
       openModal('productModal');
     }
 
@@ -1079,14 +1361,14 @@
       document.getElementById('prodId').value = p.id;
       document.getElementById('prodImageBase64').value = p.image;
       document.getElementById('prodName').value = p.name;
-      document.getElementById('prodCategory').value = p.category;
-      document.getElementById('prodDiameter').value = p.diameter;
+      document.getElementById('prodCat').value = p.category;
+      document.getElementById('prodDia').value = p.diameter;
       document.getElementById('prodMrp').value = p.mrp;
       document.getElementById('prodPrice').value = p.price;
       document.getElementById('prodStock').value = p.stock;
-      document.getElementById('prodUnit').value = p.unit || 'Kg';
+      document.getElementById('prodUnit').value = p.unit;
       document.getElementById('prodDesc').value = p.description;
-      document.getElementById('productModalTitle').innerText = 'Edit Product Details';
+      document.getElementById('productModalHeading').innerText = 'Edit Product';
       openModal('productModal');
     }
 
@@ -1095,11 +1377,11 @@
       const id = document.getElementById('prodId').value;
       const img = document.getElementById('prodImageBase64').value || 'https://via.placeholder.com/300x200?text=Alfa+Ropes';
 
-      const record = {
+      const item = {
         id: id || 'ALFA-' + Date.now().toString().slice(-4),
         name: document.getElementById('prodName').value,
-        category: document.getElementById('prodCategory').value,
-        diameter: document.getElementById('prodDiameter').value,
+        category: document.getElementById('prodCat').value,
+        diameter: document.getElementById('prodDia').value,
         mrp: parseFloat(document.getElementById('prodMrp').value),
         price: parseFloat(document.getElementById('prodPrice').value),
         stock: parseInt(document.getElementById('prodStock').value),
@@ -1109,10 +1391,10 @@
       };
 
       if (id) {
-        const idx = products.findIndex(i => i.id === id);
-        products[idx] = record;
+        const idx = products.findIndex(p => p.id === id);
+        products[idx] = item;
       } else {
-        products.push(record);
+        products.push(item);
       }
       syncStorage();
       closeModal('productModal');
@@ -1120,17 +1402,17 @@
 
     function deleteProduct(id) {
       if (confirm('Delete this product from catalog?')) {
-        products = products.filter(i => i.id !== id);
+        products = products.filter(p => p.id !== id);
         syncStorage();
       }
     }
 
     // Coupon Creation
     function openCouponModal() { openModal('couponModal'); }
-    function saveCoupon() {
-      const code = document.getElementById('couponCode').value.trim().toUpperCase();
-      const discount = parseInt(document.getElementById('couponPercent').value);
-      if (!code || !discount) return alert('Enter valid coupon code and percentage.');
+    function saveNewCoupon() {
+      const code = document.getElementById('newCouponCode').value.trim().toUpperCase();
+      const discount = parseInt(document.getElementById('newCouponDiscount').value);
+      if (!code || !discount) return alert('Enter valid coupon details.');
       coupons.push({ code, discount });
       syncStorage();
       closeModal('couponModal');
@@ -1141,72 +1423,18 @@
       syncStorage();
     }
 
-    // Order & Coupon Flow
-    function openOrderModal(id) {
-      activeOrder = products.find(i => i.id === id);
-      appliedDiscount = 0;
-      document.getElementById('appliedCouponCode').value = '';
-      document.getElementById('couponFeedback').innerText = '';
-      
-      document.getElementById('orderSummary').innerHTML = `
-        <strong>${activeOrder.name}</strong> (${activeOrder.diameter})<br>
-        Standard Rate: ₹${activeOrder.price} / ${activeOrder.unit}<br>
-        Available Stock: ${activeOrder.stock} ${activeOrder.unit}
-      `;
-      openModal('orderModal');
-    }
+    // 1-Click CSV Data Export
+    function exportDataCSV() {
+      let csv = "data:text/csv;charset=utf-8,";
+      csv += "=== ALFA ROPE INVENTORY ===\r\nID,Name,Category,Diameter,MRP,Price,Stock,Unit\r\n";
+      products.forEach(p => { csv += `"${p.id}","${p.name}","${p.category}","${p.diameter}",${p.mrp},${p.price},${p.stock},"${p.unit}"\r\n`; });
 
-    function applyCouponToOrder() {
-      const code = document.getElementById('appliedCouponCode').value.trim().toUpperCase();
-      const match = coupons.find(c => c.code === code);
-      const fb = document.getElementById('couponFeedback');
-      if (match) {
-        appliedDiscount = match.discount;
-        const discountedPrice = activeOrder.price - (activeOrder.price * (appliedDiscount / 100));
-        fb.style.color = 'var(--success)';
-        fb.innerText = `Coupon '${match.code}' Applied! Final Rate: ₹${discountedPrice.toFixed(2)} / ${activeOrder.unit}`;
-      } else {
-        appliedDiscount = 0;
-        fb.style.color = 'var(--danger)';
-        fb.innerText = `Invalid coupon code.`;
-      }
-    }
+      csv += "\r\n=== ORDERS & DISPATCH ===\r\nOrderID,Date,Customer,Phone,Total,Status,Tracking\r\n";
+      orders.forEach(o => { csv += `"${o.orderId}","${o.date}","${o.customer.name}","${o.customer.phone}",${o.totalAmount},"${o.status}","${o.trackingNo}"\r\n`; });
 
-    function dispatchWhatsAppOrder() {
-      let finalPrice = activeOrder.price;
-      if (appliedDiscount > 0) {
-        finalPrice = (activeOrder.price - (activeOrder.price * (appliedDiscount / 100))).toFixed(2);
-      }
-      const msg = encodeURIComponent(
-        `Hello Alfa Rope Suppliers,\nI want to place an order for:\n` +
-        `- Product: ${activeOrder.name} (${activeOrder.diameter})\n` +
-        `- Rate: ₹${finalPrice} / ${activeOrder.unit}\n` +
-        `- Customer: ${currentCustomer ? currentCustomer.name + ' (' + currentCustomer.phone + ')' : 'Direct Buyer'}`
-      );
-      window.open(`https://wa.me/918555838852?text=${msg}`, '_blank');
-      closeModal('orderModal');
-    }
-
-    // 1-Click Complete Data Export (CSV)
-    function exportDataToCSV() {
-      let csvContent = "data:text/csv;charset=utf-8,";
-      
-      csvContent += "=== ALFA ROPE INVENTORY ===\r\n";
-      csvContent += "ID,Name,Category,Diameter,MRP,Price,Stock,Unit\r\n";
-      products.forEach(p => {
-        csvContent += `"${p.id}","${p.name}","${p.category}","${p.diameter}",${p.mrp},${p.price},${p.stock},"${p.unit}"\r\n`;
-      });
-
-      csvContent += "\r\n=== REGISTERED CUSTOMERS ===\r\n";
-      csvContent += "Name,Email,Phone,Date\r\n";
-      customers.forEach(c => {
-        csvContent += `"${c.name}","${c.email}","${c.phone}","${c.date}"\r\n`;
-      });
-
-      const encodedUri = encodeURI(csvContent);
       const link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", `Alfa_Rope_Master_Data_${new Date().toISOString().slice(0,10)}.csv`);
+      link.setAttribute("href", encodeURI(csv));
+      link.setAttribute("download", `Alfa_Master_Data_${new Date().toISOString().slice(0,10)}.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
