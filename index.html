@@ -38,7 +38,7 @@
       flex-direction: column;
     }
 
-    /* Navigation */
+    /* Enterprise Navigation */
     header {
       background-color: var(--bg-panel);
       border-bottom: 1px solid var(--border-color);
@@ -123,7 +123,7 @@
       gap: 0.8rem;
     }
 
-    /* Buttons */
+    /* Modern Buttons */
     .btn {
       background: var(--primary);
       color: #000;
@@ -171,7 +171,7 @@
       border-radius: 50%;
     }
 
-    /* Hero Opening Section */
+    /* Opening Hero Greeting */
     .hero-banner {
       background: linear-gradient(180deg, rgba(31, 41, 55, 0.85) 0%, rgba(11, 15, 25, 1) 100%), url('https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
       padding: 2.8rem 2rem;
@@ -543,7 +543,7 @@
     </div>
   </header>
 
-  <!-- Opening Hero Greeting Section -->
+  <!-- Hero Greeting -->
   <section class="hero-banner">
     <div class="hero-content">
       <h2 id="dynHeroHeading">Premier <span>Rope, Twine & Hardware</span> Wholesaler</h2>
@@ -556,7 +556,7 @@
     </div>
   </section>
 
-  <!-- Main Workspace -->
+  <!-- Workspace -->
   <main>
     <!-- Role Metrics Dashboard (Admin & Owner) -->
     <div id="metricsPanel" class="metrics-grid" style="display: none;">
@@ -660,7 +660,7 @@
       </table>
     </div>
 
-    <!-- TAB 5: User Profiles, Roles & Access Control -->
+    <!-- TAB 5: User Profiles, Roles & Security Access Control -->
     <div id="usersTab" class="table-responsive" style="display: none;">
       <table>
         <thead>
@@ -749,7 +749,7 @@
     </div>
   </div>
 
-  <!-- AUTHENTICATION & LOGIN MODAL -->
+  <!-- AUTHENTICATION MODAL -->
   <div id="authModal" class="modal">
     <div class="modal-box">
       <div class="auth-nav">
@@ -1031,76 +1031,681 @@
       { name: "Shop Owner", email: "owner", pass: "9290", role: "owner", status: "Active" }
     ];
 
-    // Master Initial Products (Catalog derived from your price list)
+    // Master Initial Products with Item-Specific Images
     const INITIAL_PRODUCTS = [
       // --- Ropes & Twines ---
-      { id: "ALFA-GOWA-30", name: "Gowa Rope (30 Pcs)", category: "Ropes", diameter: "30 Pcs Bundle", mrp: 110, price: 85, stock: 250, unit: "Bundle", description: "High-strength commercial Gowa rope bundle (30 pieces packing).", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-GOWA-40", name: "Gowa Rope (40 Pcs)", category: "Ropes", diameter: "40 Pcs Bundle", mrp: 140, price: 110, stock: 200, unit: "Bundle", description: "Industrial strength Gowa tying rope (40 pieces packing).", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-GOWA-50", name: "Gowa Rope (50 Pcs)", category: "Ropes", diameter: "50 Pcs Bundle", mrp: 190, price: 150, stock: 180, unit: "Bundle", description: "Heavy-duty bundling Gowa rope (50 pieces packing).", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-GOWA-80", name: "Gowa Rope (80 Pcs)", category: "Ropes", diameter: "80 Pcs Bundle", mrp: 270, price: 220, stock: 150, unit: "Bundle", description: "Premium wholesale bulk Gowa rope bundle (80 pieces packing).", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-NYLON-GEN", name: "Commercial Nylon Rope", category: "Nylon Ropes", diameter: "2mm - 8mm", mrp: 230, price: 185, stock: 500, unit: "Kg", description: "Multi-strand high tensile nylon rope. Excellent abrasion resistance and shock load capacity.", image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-COTTON-GEN", name: "Pure Natural Cotton Rope", category: "Cotton Ropes", diameter: "4mm - 16mm", mrp: 145, price: 110, stock: 350, unit: "Kg", description: "Soft, smooth multi-ply natural cotton rope for domestic, industrial, and crafting use.", image: "https://images.unsplash.com/photo-1508873535684-277a3cbcc4e8?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-PP-YELLOW", name: "Heavy-Duty PP Yellow Rope", category: "PP Ropes", diameter: "6mm - 32mm", mrp: 260, price: 210, stock: 600, unit: "Kg", description: "100% virgin polymer PP twisted yellow rope. UV stabilized for scaffolding, transport, and agriculture.", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-GUNDU-5M", name: "5 Meter Gundu Rope", category: "Ropes", diameter: "5 Meters", mrp: 75, price: 50, stock: 300, unit: "Dozen", description: "Pre-cut 5 meter Gundu packaging tying rope (1 Dozen packing).", image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-SUTLI-SUPER", name: "Super Plastic Sutli", category: "Twine & Sutli", diameter: "Standard", mrp: 65, price: 50, stock: 700, unit: "Kg", description: "Commercial grade strapping plastic sutli for general bundling and box sealing.", image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-SUTLI-CHEETAH", name: "Cheetah Brand Plastic Sutli", category: "Twine & Sutli", diameter: "High Tensile", mrp: 70, price: 54, stock: 650, unit: "Kg", description: "Cheetah brand durable strapping sutli for warehouse dispatch.", image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-SUTLI-MARUTHI", name: "Maruthi Plastic Sutli", category: "Twine & Sutli", diameter: "Fine Gauge", mrp: 85, price: 65, stock: 450, unit: "Kg", description: "Maruthi premium grade plastic twine for secure goods bundling.", image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-SUTLI-ZEN", name: "1st Zen Virgin Plastic Sutli", category: "Twine & Sutli", diameter: "Premium Grade", mrp: 155, price: 120, stock: 300, unit: "Kg", description: "Top-tier 1st Zen virgin quality high strength plastic sutli roll.", image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-DORI-COTTON", name: "Cotton Lining Dori (4 Wala)", category: "Twine & Sutli", diameter: "4 Wala", mrp: 48, price: 34, stock: 400, unit: "Packet", description: "Construction marking and packaging 4-ply cotton lining dori.", image: "https://images.unsplash.com/photo-1508873535684-277a3cbcc4e8?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-DORI-NYLON", name: "Nylon Lining Dori (4 Wala)", category: "Twine & Sutli", diameter: "4 Wala", mrp: 35, price: 24, stock: 450, unit: "Packet", description: "High durability nylon line dori for masonry alignment and tie-downs.", image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80" },
+      { 
+        id: "ALFA-GOWA-30", 
+        name: "Gowa Rope (30 Pcs)", 
+        category: "Ropes", 
+        diameter: "30 Pcs Bundle", 
+        mrp: 110, 
+        price: 85, 
+        stock: 250, 
+        unit: "Bundle", 
+        description: "High-strength commercial Gowa rope bundle (30 pieces packing).", 
+        image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-GOWA-40", 
+        name: "Gowa Rope (40 Pcs)", 
+        category: "Ropes", 
+        diameter: "40 Pcs Bundle", 
+        mrp: 140, 
+        price: 110, 
+        stock: 200, 
+        unit: "Bundle", 
+        description: "Industrial strength Gowa tying rope (40 pieces packing).", 
+        image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-GOWA-50", 
+        name: "Gowa Rope (50 Pcs)", 
+        category: "Ropes", 
+        diameter: "50 Pcs Bundle", 
+        mrp: 190, 
+        price: 150, 
+        stock: 180, 
+        unit: "Bundle", 
+        description: "Heavy-duty bundling Gowa rope (50 pieces packing).", 
+        image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-GOWA-80", 
+        name: "Gowa Rope (80 Pcs)", 
+        category: "Ropes", 
+        diameter: "80 Pcs Bundle", 
+        mrp: 270, 
+        price: 220, 
+        stock: 150, 
+        unit: "Bundle", 
+        description: "Premium wholesale bulk Gowa rope bundle (80 pieces packing).", 
+        image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-NYLON-GEN", 
+        name: "Commercial Nylon Rope", 
+        category: "Nylon Ropes", 
+        diameter: "2mm - 8mm", 
+        mrp: 230, 
+        price: 185, 
+        stock: 500, 
+        unit: "Kg", 
+        description: "Multi-strand high tensile nylon rope. Superior shock resistance and load hauling.", 
+        image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-COTTON-GEN", 
+        name: "Pure Natural Cotton Rope", 
+        category: "Cotton Ropes", 
+        diameter: "4mm - 16mm", 
+        mrp: 145, 
+        price: 110, 
+        stock: 350, 
+        unit: "Kg", 
+        description: "Soft, smooth multi-ply natural twisted white cotton rope.", 
+        image: "https://images.unsplash.com/photo-1508873535684-277a3cbcc4e8?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-PP-YELLOW", 
+        name: "Heavy-Duty PP Yellow Rope", 
+        category: "PP Ropes", 
+        diameter: "6mm - 32mm", 
+        mrp: 260, 
+        price: 210, 
+        stock: 600, 
+        unit: "Kg", 
+        description: "100% virgin polymer PP twisted yellow rope for scaffolding and transport.", 
+        image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-GUNDU-5M", 
+        name: "5 Meter Gundu Rope", 
+        category: "Ropes", 
+        diameter: "5 Meters", 
+        mrp: 75, 
+        price: 50, 
+        stock: 300, 
+        unit: "Dozen", 
+        description: "Pre-cut 5 meter round ball Gundu packaging tying rope (1 Dozen packing).", 
+        image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-SUTLI-SUPER", 
+        name: "Super Plastic Sutli", 
+        category: "Twine & Sutli", 
+        diameter: "Standard", 
+        mrp: 65, 
+        price: 50, 
+        stock: 700, 
+        unit: "Kg", 
+        description: "Commercial grade strapping plastic sutli for general bundling and box sealing.", 
+        image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-SUTLI-CHEETAH", 
+        name: "Cheetah Brand Plastic Sutli", 
+        category: "Twine & Sutli", 
+        diameter: "High Tensile", 
+        mrp: 70, 
+        price: 54, 
+        stock: 650, 
+        unit: "Kg", 
+        description: "Cheetah brand durable strapping sutli for warehouse dispatch.", 
+        image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-SUTLI-MARUTHI", 
+        name: "Maruthi Plastic Sutli", 
+        category: "Twine & Sutli", 
+        diameter: "Fine Gauge", 
+        mrp: 85, 
+        price: 65, 
+        stock: 450, 
+        unit: "Kg", 
+        description: "Maruthi premium grade plastic twine for secure goods bundling.", 
+        image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-SUTLI-ZEN", 
+        name: "1st Zen Virgin Plastic Sutli", 
+        category: "Twine & Sutli", 
+        diameter: "Premium Grade", 
+        mrp: 155, 
+        price: 120, 
+        stock: 300, 
+        unit: "Kg", 
+        description: "Top-tier 1st Zen virgin quality high strength plastic sutli roll.", 
+        image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-DORI-COTTON", 
+        name: "Cotton Lining Dori (4 Wala)", 
+        category: "Twine & Sutli", 
+        diameter: "4 Wala", 
+        mrp: 48, 
+        price: 34, 
+        stock: 400, 
+        unit: "Packet", 
+        description: "Construction marking and packaging 4-ply cotton lining dori.", 
+        image: "https://images.unsplash.com/photo-1508873535684-277a3cbcc4e8?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-DORI-NYLON", 
+        name: "Nylon Lining Dori (4 Wala)", 
+        category: "Twine & Sutli", 
+        diameter: "4 Wala", 
+        mrp: 35, 
+        price: 24, 
+        stock: 450, 
+        unit: "Packet", 
+        description: "High durability nylon line dori for masonry alignment and tie-downs.", 
+        image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80" 
+      },
 
       // --- Brooms ---
-      { id: "ALFA-BRM-GUNGUROO", name: "Small Broom - Gunguroo", category: "Brooms", diameter: "50 Pc Packing", mrp: 32, price: 23, stock: 500, unit: "Pc", description: "Compact domestic Gunguroo broom. Packed in 50 pieces bundle.", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-BRM-SPLPIPE", name: "Small Broom - Special Pipe Handle", category: "Brooms", diameter: "50 Pc Packing", mrp: 48, price: 36, stock: 400, unit: "Pc", description: "Reinforced pipe handle small broom (50 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-BRM-MECCAI", name: "Small Broom - Meccai", category: "Brooms", diameter: "50 Pc Packing", mrp: 25, price: 17, stock: 600, unit: "Pc", description: "Budget economy Meccai broom (50 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-SBRM-GARUDA", name: "Soft Broom - Garudapuram", category: "Brooms", diameter: "25 Pc Packing", mrp: 60, price: 44, stock: 350, unit: "Pc", description: "Fine grass soft dust broom - Garudapuram quality (25 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-SBRM-MIKE", name: "Soft Broom - Mike", category: "Brooms", diameter: "25 Pc Packing", mrp: 65, price: 48, stock: 300, unit: "Pc", description: "Long-lasting fiber Mike soft broom (25 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-SBRM-STEEL", name: "Soft Broom - Steel Handle", category: "Brooms", diameter: "25 Pc Packing", mrp: 95, price: 70, stock: 250, unit: "Pc", description: "Heavy-duty steel handle soft floor broom (25 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-SBRM-SPLPIPE", name: "Soft Broom - Premium Special Pipe", category: "Brooms", diameter: "25 Pc Packing", mrp: 145, price: 110, stock: 200, unit: "Pc", description: "Heavy commercial special pipe handle soft broom (25 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-COCO-20", name: "Coco Broom (Standard 20/-)", category: "Brooms", diameter: "50 Pc Packing", mrp: 28, price: 20, stock: 450, unit: "Pc", description: "Coconut leaf rib heavy sweeping broom (50 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-COCO-28", name: "Coco Broom (Medium 28/-)", category: "Brooms", diameter: "50 Pc Packing", mrp: 38, price: 28, stock: 400, unit: "Pc", description: "Durable coconut stick broom for wet & outdoor areas (50 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-COCO-36", name: "Coco Broom (Heavy 36/-)", category: "Brooms", diameter: "50 Pc Packing", mrp: 48, price: 36, stock: 350, unit: "Pc", description: "Dense coconut stick broom for municipal & industrial cleaning (50 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-COCO-45", name: "Coco Broom (Super Extra Heavy 45/-)", category: "Brooms", diameter: "50 Pc Packing", mrp: 60, price: 45, stock: 300, unit: "Pc", description: "Top-grade extra heavy coconut broom for heavy duty outdoor cleaning (50 pieces packing).", image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" },
+      { 
+        id: "ALFA-BRM-GUNGUROO", 
+        name: "Small Broom - Gunguroo", 
+        category: "Brooms", 
+        diameter: "50 Pc Packing", 
+        mrp: 32, 
+        price: 23, 
+        stock: 500, 
+        unit: "Pc", 
+        description: "Compact domestic Gunguroo broom. Packed in 50 pieces bundle.", 
+        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-BRM-SPLPIPE", 
+        name: "Small Broom - Special Pipe Handle", 
+        category: "Brooms", 
+        diameter: "50 Pc Packing", 
+        mrp: 48, 
+        price: 36, 
+        stock: 400, 
+        unit: "Pc", 
+        description: "Reinforced pipe handle small broom (50 pieces packing).", 
+        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-BRM-MECCAI", 
+        name: "Small Broom - Meccai", 
+        category: "Brooms", 
+        diameter: "50 Pc Packing", 
+        mrp: 25, 
+        price: 17, 
+        stock: 600, 
+        unit: "Pc", 
+        description: "Budget economy Meccai broom (50 pieces packing).", 
+        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-SBRM-GARUDA", 
+        name: "Soft Broom - Garudapuram", 
+        category: "Brooms", 
+        diameter: "25 Pc Packing", 
+        mrp: 60, 
+        price: 44, 
+        stock: 350, 
+        unit: "Pc", 
+        description: "Fine hill-grass soft dust broom - Garudapuram quality (25 pieces packing).", 
+        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-SBRM-MIKE", 
+        name: "Soft Broom - Mike", 
+        category: "Brooms", 
+        diameter: "25 Pc Packing", 
+        mrp: 65, 
+        price: 48, 
+        stock: 300, 
+        unit: "Pc", 
+        description: "Long-lasting fiber Mike soft broom (25 pieces packing).", 
+        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-SBRM-STEEL", 
+        name: "Soft Broom - Steel Handle", 
+        category: "Brooms", 
+        diameter: "25 Pc Packing", 
+        mrp: 95, 
+        price: 70, 
+        stock: 250, 
+        unit: "Pc", 
+        description: "Heavy-duty rust-free steel handle soft floor broom (25 pieces packing).", 
+        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-SBRM-SPLPIPE", 
+        name: "Soft Broom - Premium Special Pipe", 
+        category: "Brooms", 
+        diameter: "25 Pc Packing", 
+        mrp: 145, 
+        price: 110, 
+        stock: 200, 
+        unit: "Pc", 
+        description: "Heavy commercial special pipe handle soft broom (25 pieces packing).", 
+        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-COCO-20", 
+        name: "Coco Broom (Standard 20/-)", 
+        category: "Brooms", 
+        diameter: "50 Pc Packing", 
+        mrp: 28, 
+        price: 20, 
+        stock: 450, 
+        unit: "Pc", 
+        description: "Coconut leaf rib heavy sweeping broom (50 pieces packing).", 
+        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-COCO-28", 
+        name: "Coco Broom (Medium 28/-)", 
+        category: "Brooms", 
+        diameter: "50 Pc Packing", 
+        mrp: 38, 
+        price: 28, 
+        stock: 400, 
+        unit: "Pc", 
+        description: "Durable coconut stick broom for wet & outdoor areas (50 pieces packing).", 
+        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-COCO-36", 
+        name: "Coco Broom (Heavy 36/-)", 
+        category: "Brooms", 
+        diameter: "50 Pc Packing", 
+        mrp: 48, 
+        price: 36, 
+        stock: 350, 
+        unit: "Pc", 
+        description: "Dense coconut stick broom for municipal & road cleaning (50 pieces packing).", 
+        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-COCO-45", 
+        name: "Coco Broom (Super Extra Heavy 45/-)", 
+        category: "Brooms", 
+        diameter: "50 Pc Packing", 
+        mrp: 60, 
+        price: 45, 
+        stock: 300, 
+        unit: "Pc", 
+        description: "Top-grade extra heavy coconut broom for heavy duty outdoor cleaning (50 pieces packing).", 
+        image: "https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=600&q=80" 
+      },
 
       // --- Wire Netting / Kabootar Jaali ---
-      { id: "ALFA-JAALI-25-40", name: "Kabootar Jaali 2.5ft (40 No)", category: "Wire Netting", diameter: "2.5 Feet / 40 No", mrp: 130, price: 95, stock: 120, unit: "Roll", description: "2.5 feet anti-bird pigeon safety mesh netting roll (40 No gauge).", image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-JAALI-25-80", name: "Kabootar Jaali 2.5ft (80 No)", category: "Wire Netting", diameter: "2.5 Feet / 80 No", mrp: 210, price: 160, stock: 100, unit: "Roll", description: "Heavy 2.5 feet anti-pigeon balcony jaali roll (80 No heavy gauge).", image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-JAALI-3-20", name: "Kabootar Jaali 3ft (20 No)", category: "Wire Netting", diameter: "3 Feet / 20 No", mrp: 180, price: 140, stock: 90, unit: "Roll", description: "3 feet width pigeon safety wire jaali roll (20 No gauge).", image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-JAALI-3-30", name: "Kabootar Jaali 3ft (30 No)", category: "Wire Netting", diameter: "3 Feet / 30 No", mrp: 280, price: 220, stock: 80, unit: "Roll", description: "3 feet medium heavy anti-bird protection wire mesh (30 No gauge).", image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-JAALI-3-40", name: "Kabootar Jaali 3ft (40 No)", category: "Wire Netting", diameter: "3 Feet / 40 No", mrp: 350, price: 280, stock: 75, unit: "Roll", description: "3 feet heavy-duty pigeon and bird protection safety mesh roll (40 No gauge).", image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" },
+      { 
+        id: "ALFA-JAALI-25-40", 
+        name: "Kabootar Jaali 2.5ft (40 No)", 
+        category: "Wire Netting", 
+        diameter: "2.5 Feet / 40 No", 
+        mrp: 130, 
+        price: 95, 
+        stock: 120, 
+        unit: "Roll", 
+        description: "2.5 feet anti-bird pigeon safety mesh netting roll (40 No gauge).", 
+        image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-JAALI-25-80", 
+        name: "Kabootar Jaali 2.5ft (80 No)", 
+        category: "Wire Netting", 
+        diameter: "2.5 Feet / 80 No", 
+        mrp: 210, 
+        price: 160, 
+        stock: 100, 
+        unit: "Roll", 
+        description: "Heavy 2.5 feet anti-pigeon balcony wire jaali roll (80 No heavy gauge).", 
+        image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-JAALI-3-20", 
+        name: "Kabootar Jaali 3ft (20 No)", 
+        category: "Wire Netting", 
+        diameter: "3 Feet / 20 No", 
+        mrp: 180, 
+        price: 140, 
+        stock: 90, 
+        unit: "Roll", 
+        description: "3 feet width pigeon safety wire jaali roll (20 No gauge).", 
+        image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-JAALI-3-30", 
+        name: "Kabootar Jaali 3ft (30 No)", 
+        category: "Wire Netting", 
+        diameter: "3 Feet / 30 No", 
+        mrp: 280, 
+        price: 220, 
+        stock: 80, 
+        unit: "Roll", 
+        description: "3 feet medium heavy anti-bird protection wire mesh (30 No gauge).", 
+        image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-JAALI-3-40", 
+        name: "Kabootar Jaali 3ft (40 No)", 
+        category: "Wire Netting", 
+        diameter: "3 Feet / 40 No", 
+        mrp: 350, 
+        price: 280, 
+        stock: 75, 
+        unit: "Roll", 
+        description: "3 feet heavy-duty pigeon and bird protection safety mesh roll (40 No gauge).", 
+        image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80" 
+      },
 
-      // --- Sponges ---
-      { id: "ALFA-SPG-FANTASY23", name: "Fantasy Foam Sponge (23 Density)", category: "Sponges", diameter: "23 Density / 14 Dozen Bag", mrp: 95, price: 70, stock: 220, unit: "Dozen", description: "Soft vehicle washing & polishing sponge (14 Dozen packing).", image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-SPG-FANTASTIC28", name: "Fantastic Foam Sponge (28 Density)", category: "Sponges", diameter: "28 Density / 14 Dozen Bag", mrp: 110, price: 84, stock: 200, unit: "Dozen", description: "Medium-density cleaning sponge (14 Dozen packing).", image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-SPG-MAXTAR32", name: "Maxtar Sponge (32 Density)", category: "Sponges", diameter: "32 Density / 14 Dozen Bag", mrp: 145, price: 110, stock: 180, unit: "Dozen", description: "High-density multi-use cleaning sponge (14 Dozen packing).", image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-SPG-PLATINUM40", name: "Platinum Sponge (40 Density)", category: "Sponges", diameter: "40 Density / 14 Dozen Bag", mrp: 180, price: 140, stock: 150, unit: "Dozen", description: "Extra heavy 40-density durable sponge for commercial car wash & tile work (14 Dozen packing).", image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" },
+      // --- Cleaning Sponges ---
+      { 
+        id: "ALFA-SPG-FANTASY23", 
+        name: "Fantasy Foam Sponge (23 Density)", 
+        category: "Sponges", 
+        diameter: "23 Density / 14 Dozen Bag", 
+        mrp: 95, 
+        price: 70, 
+        stock: 220, 
+        unit: "Dozen", 
+        description: "Soft vehicle washing & polishing foam sponge (14 Dozen packing).", 
+        image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-SPG-FANTASTIC28", 
+        name: "Fantastic Foam Sponge (28 Density)", 
+        category: "Sponges", 
+        diameter: "28 Density / 14 Dozen Bag", 
+        mrp: 110, 
+        price: 84, 
+        stock: 200, 
+        unit: "Dozen", 
+        description: "Medium-density high absorption cleaning sponge (14 Dozen packing).", 
+        image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-SPG-MAXTAR32", 
+        name: "Maxtar Sponge (32 Density)", 
+        category: "Sponges", 
+        diameter: "32 Density / 14 Dozen Bag", 
+        mrp: 145, 
+        price: 110, 
+        stock: 180, 
+        unit: "Dozen", 
+        description: "High-density durable commercial cleaning sponge (14 Dozen packing).", 
+        image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-SPG-PLATINUM40", 
+        name: "Platinum Sponge (40 Density)", 
+        category: "Sponges", 
+        diameter: "40 Density / 14 Dozen Bag", 
+        mrp: 180, 
+        price: 140, 
+        stock: 150, 
+        unit: "Dozen", 
+        description: "Extra heavy 40-density durable sponge for commercial car wash & tile work (14 Dozen packing).", 
+        image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" 
+      },
 
-      // --- Construction & Tools (Gampa, Powda, Handles) ---
-      { id: "ALFA-GMP-ULTRA-15", name: "Gampa - Ultra Brand 15 Inch", category: "Construction & Tools", diameter: '15" (60 Pc Bag)', mrp: 75, price: 55, stock: 240, unit: "Pc", description: '15" heavy-duty plastic mortar pan/gampa by Ultra (60 pieces bag).', image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-GMP-ULTRA-17", name: "Gampa - Ultra Brand 17 Inch", category: "Construction & Tools", diameter: '17" (60 Pc Bag)', mrp: 85, price: 65, stock: 240, unit: "Pc", description: '17" large capacity construction pan by Ultra (60 pieces bag).', image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-GMP-CHETAK-15", name: "Gampa - Chetak Brand 15 Inch", category: "Construction & Tools", diameter: '15" (60 Pc Bag)', mrp: 85, price: 65, stock: 200, unit: "Pc", description: '15" unbreakable heavy mortar pan by Chetak (60 pieces bag).', image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-GMP-CHETAK-17", name: "Gampa - Chetak Brand 17 Inch", category: "Construction & Tools", diameter: '17" (60 Pc Bag)', mrp: 105, price: 80, stock: 200, unit: "Pc", description: '17" heavy unbreakable mortar pan by Chetak (60 pieces bag).', image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-POWDA-BLACK", name: "Powda / Spade (Black Coating)", category: "Construction & Tools", diameter: "20 Pc Bundle", mrp: 2400, price: 2000, stock: 40, unit: "Bundle", description: "Heavy duty black coated agricultural spade / powda (Set of 20 pieces).", image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-POWDA-BLUE", name: "Powda / Spade (Blue Coating)", category: "Construction & Tools", diameter: "20 Pc Bundle", mrp: 2700, price: 2250, stock: 35, unit: "Bundle", description: "Tempered blue coated steel spade / powda (Set of 20 pieces).", image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-POWDA-RED", name: "Powda / Spade (Red Premium)", category: "Construction & Tools", diameter: "20 Pc Bundle", mrp: 2900, price: 2450, stock: 30, unit: "Bundle", description: "Extra heavy forged steel red powda (Set of 20 pieces).", image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-HDL-PLASTIC", name: "Powda Handle - Plastic", category: "Construction & Tools", diameter: "50 Pc Bag", mrp: 55, price: 40, stock: 250, unit: "Pc", description: "Heavy plastic handle grip for agricultural powda/spades (50 pieces bag).", image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-HDL-WOOD", name: "Powda Handle - Wooden", category: "Construction & Tools", diameter: "50 Pc Bag", mrp: 35, price: 24, stock: 300, unit: "Pc", description: "Solid hardwood handle for powda/spade tools (50 pieces bag).", image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" },
+      // --- Construction & Tools (Gampa, Powda & Handles) ---
+      { 
+        id: "ALFA-GMP-ULTRA-15", 
+        name: "Gampa - Ultra Brand 15 Inch", 
+        category: "Construction & Tools", 
+        diameter: '15" (60 Pc Bag)', 
+        mrp: 75, 
+        price: 55, 
+        stock: 240, 
+        unit: "Pc", 
+        description: '15" heavy-duty plastic mortar pan/gampa by Ultra (60 pieces bag).', 
+        image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-GMP-ULTRA-17", 
+        name: "Gampa - Ultra Brand 17 Inch", 
+        category: "Construction & Tools", 
+        diameter: '17" (60 Pc Bag)', 
+        mrp: 85, 
+        price: 65, 
+        stock: 240, 
+        unit: "Pc", 
+        description: '17" large capacity construction pan by Ultra (60 pieces bag).', 
+        image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-GMP-CHETAK-15", 
+        name: "Gampa - Chetak Brand 15 Inch", 
+        category: "Construction & Tools", 
+        diameter: '15" (60 Pc Bag)', 
+        mrp: 85, 
+        price: 65, 
+        stock: 200, 
+        unit: "Pc", 
+        description: '15" unbreakable heavy mortar pan by Chetak (60 pieces bag).', 
+        image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-GMP-CHETAK-17", 
+        name: "Gampa - Chetak Brand 17 Inch", 
+        category: "Construction & Tools", 
+        diameter: '17" (60 Pc Bag)', 
+        mrp: 105, 
+        price: 80, 
+        stock: 200, 
+        unit: "Pc", 
+        description: '17" heavy unbreakable mortar pan by Chetak (60 pieces bag).', 
+        image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-POWDA-BLACK", 
+        name: "Powda / Spade (Black Coating)", 
+        category: "Construction & Tools", 
+        diameter: "20 Pc Bundle", 
+        mrp: 2400, 
+        price: 2000, 
+        stock: 40, 
+        unit: "Bundle", 
+        description: "Heavy duty black coated agricultural spade / powda (Set of 20 pieces).", 
+        image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-POWDA-BLUE", 
+        name: "Powda / Spade (Blue Coating)", 
+        category: "Construction & Tools", 
+        diameter: "20 Pc Bundle", 
+        mrp: 2700, 
+        price: 2250, 
+        stock: 35, 
+        unit: "Bundle", 
+        description: "Tempered blue coated steel spade / powda (Set of 20 pieces).", 
+        image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-POWDA-RED", 
+        name: "Powda / Spade (Red Premium)", 
+        category: "Construction & Tools", 
+        diameter: "20 Pc Bundle", 
+        mrp: 2900, 
+        price: 2450, 
+        stock: 30, 
+        unit: "Bundle", 
+        description: "Extra heavy forged steel red powda (Set of 20 pieces).", 
+        image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-HDL-PLASTIC", 
+        name: "Powda Handle - Plastic", 
+        category: "Construction & Tools", 
+        diameter: "50 Pc Bag", 
+        mrp: 55, 
+        price: 40, 
+        stock: 250, 
+        unit: "Pc", 
+        description: "Heavy plastic handle grip for agricultural powda/spades (50 pieces bag).", 
+        image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-HDL-WOOD", 
+        name: "Powda Handle - Wooden", 
+        category: "Construction & Tools", 
+        diameter: "50 Pc Bag", 
+        mrp: 35, 
+        price: 24, 
+        stock: 300, 
+        unit: "Pc", 
+        description: "Solid hardwood handle for powda/spade tools (50 pieces bag).", 
+        image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80" 
+      },
 
       // --- Safety Equipment ---
-      { id: "ALFA-GLV-PRIMA", name: "Safety Hand Gloves - Prima", category: "Safety Equipment", diameter: "12 Pair Packet", mrp: 45, price: 30, stock: 300, unit: "Pair", description: "Durable protective industrial safety hand gloves (12 pairs packet).", image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-GLV-GOLD", name: "Safety Hand Gloves - Gold Touch", category: "Safety Equipment", diameter: "12 Pair Packet", mrp: 52, price: 38, stock: 250, unit: "Pair", description: "Gold Touch grip-coated work safety gloves (12 pairs packet).", image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-GLV-SENSTOUCH", name: "Safety Hand Gloves - Senstouch", category: "Safety Equipment", diameter: "12 Pair Packet", mrp: 55, price: 40, stock: 250, unit: "Pair", description: "Senstouch high-dexterity safety work gloves (12 pairs packet).", image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-GLV-DIAMOND", name: "Safety Hand Gloves - Diamond Touch", category: "Safety Equipment", diameter: "12 Pair Packet", mrp: 60, price: 44, stock: 200, unit: "Pair", description: "Diamond Touch reinforced industrial work gloves (12 pairs packet).", image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-GUMBOOT", name: "Industrial Heavy Duty Gumboots", category: "Safety Equipment", diameter: "30 Pair Bag", mrp: 160, price: 110, stock: 120, unit: "Pair", description: "Waterproof PVC industrial safety gumboots (30 pairs bag).", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-HELMET", name: "Industrial Construction Safety Helmet", category: "Safety Equipment", diameter: "50 Pc Bag", mrp: 85, price: 55, stock: 200, unit: "Pc", description: "High-impact resistant construction site safety helmet (50 pieces bag).", image: "https://images.unsplash.com/photo-1578898887932-dce23a595ad4?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-WELD-SUNNY", name: "Welding Glasses - Sunny", category: "Safety Equipment", diameter: "12 Pc Box", mrp: 35, price: 22, stock: 150, unit: "Pc", description: "Protective eye-shield welding glasses (12 pieces box).", image: "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-WELD-DEFENDER", name: "Welding Glasses - S Defender", category: "Safety Equipment", diameter: "12 Pc Box", mrp: 60, price: 40, stock: 120, unit: "Pc", description: "S Defender anti-glare welding safety glasses (12 pieces box).", image: "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-WELD-PLATINUM", name: "Welding Glasses - Platinum", category: "Safety Equipment", diameter: "12 Pc Box", mrp: 60, price: 40, stock: 120, unit: "Pc", description: "Platinum protective welding and grinding safety goggles (12 pieces box).", image: "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=600&q=80" },
+      { 
+        id: "ALFA-GLV-PRIMA", 
+        name: "Safety Hand Gloves - Prima", 
+        category: "Safety Equipment", 
+        diameter: "12 Pair Packet", 
+        mrp: 45, 
+        price: 30, 
+        stock: 300, 
+        unit: "Pair", 
+        description: "Durable protective industrial safety hand gloves (12 pairs packet).", 
+        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-GLV-GOLD", 
+        name: "Safety Hand Gloves - Gold Touch", 
+        category: "Safety Equipment", 
+        diameter: "12 Pair Packet", 
+        mrp: 52, 
+        price: 38, 
+        stock: 250, 
+        unit: "Pair", 
+        description: "Gold Touch grip-coated work safety gloves (12 pairs packet).", 
+        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-GLV-SENSTOUCH", 
+        name: "Safety Hand Gloves - Senstouch", 
+        category: "Safety Equipment", 
+        diameter: "12 Pair Packet", 
+        mrp: 55, 
+        price: 40, 
+        stock: 250, 
+        unit: "Pair", 
+        description: "Senstouch high-dexterity safety work gloves (12 pairs packet).", 
+        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-GLV-DIAMOND", 
+        name: "Safety Hand Gloves - Diamond Touch", 
+        category: "Safety Equipment", 
+        diameter: "12 Pair Packet", 
+        mrp: 60, 
+        price: 44, 
+        stock: 200, 
+        unit: "Pair", 
+        description: "Diamond Touch reinforced industrial work gloves (12 pairs packet).", 
+        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-GUMBOOT", 
+        name: "Industrial Heavy Duty Gumboots", 
+        category: "Safety Equipment", 
+        diameter: "30 Pair Bag", 
+        mrp: 160, 
+        price: 110, 
+        stock: 120, 
+        unit: "Pair", 
+        description: "Waterproof PVC industrial safety gumboots (30 pairs bag).", 
+        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-HELMET", 
+        name: "Industrial Construction Safety Helmet", 
+        category: "Safety Equipment", 
+        diameter: "50 Pc Bag", 
+        mrp: 85, 
+        price: 55, 
+        stock: 200, 
+        unit: "Pc", 
+        description: "High-impact resistant construction site safety helmet (50 pieces bag).", 
+        image: "https://images.unsplash.com/photo-1578898887932-dce23a595ad4?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-WELD-SUNNY", 
+        name: "Welding Glasses - Sunny", 
+        category: "Safety Equipment", 
+        diameter: "12 Pc Box", 
+        mrp: 35, 
+        price: 22, 
+        stock: 150, 
+        unit: "Pc", 
+        description: "Protective eye-shield welding glasses (12 pieces box).", 
+        image: "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-WELD-DEFENDER", 
+        name: "Welding Glasses - S Defender", 
+        category: "Safety Equipment", 
+        diameter: "12 Pc Box", 
+        mrp: 60, 
+        price: 40, 
+        stock: 120, 
+        unit: "Pc", 
+        description: "S Defender anti-glare welding safety glasses (12 pieces box).", 
+        image: "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-WELD-PLATINUM", 
+        name: "Welding Glasses - Platinum", 
+        category: "Safety Equipment", 
+        diameter: "12 Pc Box", 
+        mrp: 60, 
+        price: 40, 
+        stock: 120, 
+        unit: "Pc", 
+        description: "Platinum protective welding and grinding safety goggles (12 pieces box).", 
+        image: "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=600&q=80" 
+      },
 
       // --- Pipes & Hoses ---
-      { id: "ALFA-PIPE-FOAM", name: 'Water Pipe 3/4" - Foam Pipe', category: "Pipes & Hoses", diameter: '3/4" (20m / 30m Length)', mrp: 130, price: 104, stock: 350, unit: "Kg", description: '3/4" flexible foam water garden and industrial hose (Available in 20m & 30m).', image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-PIPE-BRAIDED", name: 'Water Pipe 3/4" - Braided Pipe', category: "Pipes & Hoses", diameter: '3/4" (20m / 30m Length)', mrp: 145, price: 114, stock: 300, unit: "Kg", description: '3/4" reinforced high-pressure braided garden water hose (Available in 20m & 30m).', image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" },
-      { id: "ALFA-PIPE-PETRO", name: 'Water Pipe 3/4" - Petroleum Pipe', category: "Pipes & Hoses", diameter: '3/4" (20m / 30m Length)', mrp: 185, price: 146, stock: 250, unit: "Kg", description: '3/4" heavy-duty oil and chemical resistant petroleum delivery pipe (Available in 20m & 30m).', image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" }
+      { 
+        id: "ALFA-PIPE-FOAM", 
+        name: 'Water Pipe 3/4" - Foam Pipe', 
+        category: "Pipes & Hoses", 
+        diameter: '3/4" (20m / 30m Length)', 
+        mrp: 130, 
+        price: 104, 
+        stock: 350, 
+        unit: "Kg", 
+        description: '3/4" flexible foam water garden and industrial hose (Available in 20m & 30m).', 
+        image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-PIPE-BRAIDED", 
+        name: 'Water Pipe 3/4" - Braided Pipe', 
+        category: "Pipes & Hoses", 
+        diameter: '3/4" (20m / 30m Length)', 
+        mrp: 145, 
+        price: 114, 
+        stock: 300, 
+        unit: "Kg", 
+        description: '3/4" reinforced high-pressure braided garden water hose (Available in 20m & 30m).', 
+        image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" 
+      },
+      { 
+        id: "ALFA-PIPE-PETRO", 
+        name: 'Water Pipe 3/4" - Petroleum Pipe', 
+        category: "Pipes & Hoses", 
+        diameter: '3/4" (20m / 30m Length)', 
+        mrp: 185, 
+        price: 146, 
+        stock: 250, 
+        unit: "Kg", 
+        description: '3/4" heavy-duty oil and chemical resistant petroleum delivery pipe (Available in 20m & 30m).', 
+        image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" 
+      }
     ];
 
     // State Variables
@@ -1122,10 +1727,9 @@
     };
 
     function loadStorage() {
-      // Load products or seed master list
-      const savedProds = localStorage.getItem('alfa_prods_v2');
+      const savedProds = localStorage.getItem('alfa_prods_v3');
       products = savedProds ? JSON.parse(savedProds) : INITIAL_PRODUCTS;
-      if (!savedProds) localStorage.setItem('alfa_prods_v2', JSON.stringify(INITIAL_PRODUCTS));
+      if (!savedProds) localStorage.setItem('alfa_prods_v3', JSON.stringify(INITIAL_PRODUCTS));
 
       orders = JSON.parse(localStorage.getItem('alfa_orders')) || [];
       users = JSON.parse(localStorage.getItem('alfa_users')) || DEFAULT_USERS;
@@ -1137,7 +1741,7 @@
     }
 
     function syncStorage() {
-      localStorage.setItem('alfa_prods_v2', JSON.stringify(products));
+      localStorage.setItem('alfa_prods_v3', JSON.stringify(products));
       localStorage.setItem('alfa_orders', JSON.stringify(orders));
       localStorage.setItem('alfa_users', JSON.stringify(users));
       localStorage.setItem('alfa_enquiries', JSON.stringify(enquiries));
