@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALFA ROPE SUPPLIERS - Inventory & Store</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <div class="nav-container">
+      <div class="brand-info">
+        <h1 id="companyName">ALFA ROPE SUPPLIERS</h1>
+        <p id="companyDetails">Ashok Bazar, Afzal Gunj, Hyderabad | +91 8555838852</p>
+      </div>
+      
+      <div class="role-switcher">
+        <label for="roleSelector">Active Profile:</label>
+        <select id="roleSelector" onchange="switchRole(this.value)">
+          <option value="customer">Customer Storefront</option>
+          <option value="admin">Admin Dashboard</option>
+          <option value="owner">Owner Analytics & Master</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main View Container -->
+  <main>
+    <!-- Dynamic Role Metrics Panel (Admin/Owner only) -->
+    <section id="metricsSection" class="metrics-grid" style="display: none;"></section>
+
+    <!-- Toolbar -->
+    <div class="action-toolbar">
+      <input type="text" id="searchInput" class="search-box" placeholder="Search by rope name, category, or diameter..." oninput="handleSearch()">
+      <button id="addItemBtn" class="btn" onclick="openProductModal()" style="display: none;">+ Add New Product</button>
+    </div>
+
+    <!-- Product Views -->
+    <div id="customerView" class="product-grid"></div>
+    <div id="adminView" class="table-container" style="display: none;">
+      <table>
+        <thead>
+          <tr>
+            <th>Photo</th>
+            <th>Item Name</th>
+            <th>Category</th>
+            <th>Stock Qty</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="adminTableBody"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Add/Edit Product Modal -->
+  <div id="productModal" class="modal-overlay">
+    <div class="modal-content">
+      <h3 id="modalTitle" style="margin-bottom: 1rem;">Add New Product</h3>
+      <form id="productForm" onsubmit="saveProduct(event)">
+        <input type="hidden" id="productId">
+        
+        <div class="form-group">
+          <label>Item Name</label>
+          <input type="text" id="productName" required>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label>Category</label>
+            <input type="text" id="productCategory" placeholder="e.g. PP, Nylon, Manila" required>
+          </div>
+          <div class="form-group">
+            <label>Diameter / Spec</label>
+            <input type="text" id="productDiameter" placeholder="e.g. 12mm" required>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label>Price (₹)</label>
+            <input type="number" id="productPrice" min="1" step="0.5" required>
+          </div>
+          <div class="form-group">
+            <label>Stock Quantity (Units/Kg)</label>
+            <input type="number" id="productQty" min="0" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Upload Photo File</label>
+          <input type="file" id="productImageFile" accept="image/*" onchange="handleImageFile(this)">
+          <input type="hidden" id="productImageBase64">
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="productDesc" rows="3"></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeProductModal()">Cancel</button>
+          <button type="submit" class="btn">Save & Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
